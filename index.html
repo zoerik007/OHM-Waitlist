@@ -574,65 +574,74 @@
   /* ── MOBILE ─────────────────────────────────────── */
   @media (max-width: 768px) {
 
+    body { font-size: 16px; }
+
     .page {
       grid-template-columns: 1fr;
       grid-template-rows: auto auto;
     }
 
-    /* Left panel — compact header on mobile */
+    /* Left panel — compact on mobile, shows brand essentials only */
     .left {
       min-height: auto;
-      padding: 2.5rem 1.75rem 2rem;
+      padding: 2.25rem 1.5rem 2rem;
     }
 
     .left::after {
-      font-size: 120vw;
-      bottom: -30vw;
-      left: -20vw;
+      font-size: 160vw;
+      bottom: -40vw;
+      left: -30vw;
     }
 
     .wordmark {
+      font-size: 1rem;
+      margin-bottom: 0;
+    }
+
+    /* Left top: logo + wordmark side by side on mobile */
+    .left-top {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
       margin-bottom: 2rem;
+    }
+
+    .left-top-logo {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+      flex-shrink: 0;
     }
 
     .left-content {
       padding: 0;
     }
 
+    .eyebrow {
+      font-size: 9px;
+      margin-bottom: 1rem;
+    }
+
     .headline {
-      font-size: clamp(2.2rem, 9vw, 3rem);
-      margin-bottom: 1.25rem;
+      font-size: clamp(2rem, 10vw, 2.8rem);
+      margin-bottom: 1rem;
+      line-height: 1.05;
     }
 
     .description {
-      font-size: 0.9rem;
-      margin-bottom: 2rem;
+      font-size: 0.875rem;
+      margin-bottom: 0;
+      line-height: 1.75;
     }
 
-    /* Hide the pillars on mobile — keep it focused */
-    .pillars {
-      display: none;
-    }
+    /* Hide pillars and bottom logo on mobile — keep left panel lean */
+    .pillars { display: none; }
+    .left-bottom { display: none; }
 
-    /* Show logo bottom inline with tagline */
-    .left-bottom {
-      padding-top: 2rem;
-      gap: 1rem;
-    }
-
-    .logo-mark {
-      width: 72px;
-      height: 72px;
-    }
-
-    .logo-tagline {
-      font-size: 8px;
-    }
-
-    /* Right panel — full width, generous padding */
+    /* Right panel — full width, comfortable padding */
     .right {
       min-height: auto;
-      padding: 2.5rem 1.75rem 5rem;
+      padding: 2.25rem 1.5rem 4.5rem;
       justify-content: flex-start;
     }
 
@@ -641,37 +650,45 @@
     }
 
     .form-label-top {
-      margin-bottom: 1rem;
+      font-size: 9px;
+      margin-bottom: 0.85rem;
     }
 
     .form-headline {
-      font-size: clamp(1.6rem, 7vw, 2.2rem);
-      margin-bottom: 0.6rem;
+      font-size: clamp(1.6rem, 8vw, 2.2rem);
+      margin-bottom: 0.5rem;
     }
 
     .form-sub {
-      font-size: 0.875rem;
-      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.7;
     }
 
     .count-badge {
       margin-bottom: 1.5rem;
+      padding: 0.35rem 0.85rem;
     }
 
-    .form-group {
-      margin-bottom: 1rem;
-    }
+    .count-text { font-size: 9px; }
 
+    .form-group { margin-bottom: 0.9rem; }
+
+    /* 16px prevents iOS auto-zoom on input focus */
     input[type="text"],
-    input[type="email"] {
-      font-size: 16px; /* prevents iOS zoom on focus */
-      padding: 0.9rem 1rem;
+    input[type="email"],
+    select {
+      font-size: 16px;
+      padding: 0.85rem 1rem;
     }
+
+    label { font-size: 9px; }
 
     .submit-btn {
       margin-top: 1.25rem;
       padding: 1rem;
-      font-size: 12px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
     }
 
     .privacy-note {
@@ -679,37 +696,47 @@
       margin-top: 0.85rem;
     }
 
-    /* Success state mobile */
+    /* Success state */
     .success-state {
-      padding: 2rem 1rem;
+      padding: 1.5rem 0.5rem;
     }
 
     .success-logo {
-      width: 64px;
-      height: 64px;
+      width: 72px;
+      height: 72px;
       margin-bottom: 1.25rem;
     }
 
-    .success-headline {
-      font-size: 1.6rem;
-    }
+    .success-headline { font-size: 1.75rem; }
+    .success-body { font-size: 0.875rem; }
 
     .continue-btn {
       display: block;
       text-align: center;
       padding: 1rem;
+      font-size: 11px;
     }
 
-    /* Footer on mobile */
+    /* Footer anchored to bottom */
     .right-footer {
-      left: 1.75rem;
-      right: 1.75rem;
-      bottom: 1.5rem;
+      left: 1.5rem;
+      right: 1.5rem;
+      bottom: 1.25rem;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.4rem;
       align-items: flex-start;
     }
 
+    .footer-link { font-size: 8.5px; }
+
+  }
+
+  /* Small phones */
+  @media (max-width: 390px) {
+    .left { padding: 2rem 1.25rem 1.75rem; }
+    .right { padding: 2rem 1.25rem 4rem; }
+    .headline { font-size: 1.9rem; }
+    .form-headline { font-size: 1.5rem; }
   }
 
   /* Tablets — slightly adjusted */
@@ -735,7 +762,7 @@
   <!-- ── LEFT SIDE ──────────────────────────────── -->
   <div class="left">
     <div class="left-top">
-      <a href="onlyhumanmade.html" class="wordmark">Only<em>Human</em>Made</a>
+      <a href="https://www.onlyhumanmade.org" class="wordmark">Only<em>Human</em>Made</a>
     </div>
 
     <div class="left-content">
@@ -830,7 +857,7 @@
     </div>
 
     <div class="right-footer">
-      <a href="onlyhumanmade.html" class="footer-link">← Back to main site</a>
+      <a href="https://www.onlyhumanmade.org" class="footer-link">← Back to main site</a>
       <a href="mailto:hello@onlyhumanmade.org" class="footer-link">hello@onlyhumanmade.org</a>
     </div>
   </div>
