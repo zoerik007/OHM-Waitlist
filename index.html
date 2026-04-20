@@ -571,6 +571,161 @@
     transform: translateY(-1px);
   }
 
+  /* ── MOBILE ─────────────────────────────────────── */
+  @media (max-width: 768px) {
+
+    .page {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+    }
+
+    /* Left panel — compact header on mobile */
+    .left {
+      min-height: auto;
+      padding: 2.5rem 1.75rem 2rem;
+    }
+
+    .left::after {
+      font-size: 120vw;
+      bottom: -30vw;
+      left: -20vw;
+    }
+
+    .wordmark {
+      margin-bottom: 2rem;
+    }
+
+    .left-content {
+      padding: 0;
+    }
+
+    .headline {
+      font-size: clamp(2.2rem, 9vw, 3rem);
+      margin-bottom: 1.25rem;
+    }
+
+    .description {
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Hide the pillars on mobile — keep it focused */
+    .pillars {
+      display: none;
+    }
+
+    /* Show logo bottom inline with tagline */
+    .left-bottom {
+      padding-top: 2rem;
+      gap: 1rem;
+    }
+
+    .logo-mark {
+      width: 72px;
+      height: 72px;
+    }
+
+    .logo-tagline {
+      font-size: 8px;
+    }
+
+    /* Right panel — full width, generous padding */
+    .right {
+      min-height: auto;
+      padding: 2.5rem 1.75rem 5rem;
+      justify-content: flex-start;
+    }
+
+    .form-wrap {
+      max-width: 100%;
+    }
+
+    .form-label-top {
+      margin-bottom: 1rem;
+    }
+
+    .form-headline {
+      font-size: clamp(1.6rem, 7vw, 2.2rem);
+      margin-bottom: 0.6rem;
+    }
+
+    .form-sub {
+      font-size: 0.875rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .count-badge {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      font-size: 16px; /* prevents iOS zoom on focus */
+      padding: 0.9rem 1rem;
+    }
+
+    .submit-btn {
+      margin-top: 1.25rem;
+      padding: 1rem;
+      font-size: 12px;
+    }
+
+    .privacy-note {
+      font-size: 8.5px;
+      margin-top: 0.85rem;
+    }
+
+    /* Success state mobile */
+    .success-state {
+      padding: 2rem 1rem;
+    }
+
+    .success-logo {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 1.25rem;
+    }
+
+    .success-headline {
+      font-size: 1.6rem;
+    }
+
+    .continue-btn {
+      display: block;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    /* Footer on mobile */
+    .right-footer {
+      left: 1.75rem;
+      right: 1.75rem;
+      bottom: 1.5rem;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+
+  }
+
+  /* Tablets — slightly adjusted */
+  @media (min-width: 769px) and (max-width: 1024px) {
+
+    .left { padding: 3rem 2.5rem; }
+    .right { padding: 3rem 2.5rem; }
+
+    .headline { font-size: clamp(2.2rem, 4vw, 3rem); }
+
+    .pillar-body { font-size: 0.825rem; }
+
+    .form-headline { font-size: clamp(1.6rem, 2.8vw, 2.2rem); }
+
+  }
+
 </style>
 </head>
 <body>
