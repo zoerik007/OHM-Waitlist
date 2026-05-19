@@ -216,13 +216,20 @@
     padding-top: 2.5rem;
     opacity: 0;
     animation: fadeUp 0.7s ease forwards 0.7s;
+    border-top: 1px solid rgba(245,240,232,0.08);
+  }
+
+  .logo-mark-wrap {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
   }
 
   .logo-mark {
-    width: 112px;
-    height: 112px;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-    flex-shrink: 0;
+    mix-blend-mode: screen;
   }
 
   .logo-tagline {
@@ -232,7 +239,34 @@
     text-transform: uppercase;
     color: rgba(245,240,232,0.3);
     line-height: 1.9;
+    flex: 1;
   }
+
+  .logo-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    text-align: right;
+  }
+
+  .logo-contact-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.3);
+  }
+
+  .logo-contact-email {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: var(--green-lt);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .logo-contact-email:hover { color: var(--cream); }
 
   /* ── RIGHT — FORM SIDE ──────────────────────────── */
   .right {
@@ -425,6 +459,7 @@
     object-fit: contain;
     margin: 0 auto 1.5rem;
     display: block;
+    mix-blend-mode: multiply;
   }
 
   .success-headline {
@@ -801,11 +836,17 @@
     </div>
 
     <div class="left-bottom">
-      <img src="ohm-logo.png" alt="OHM seal" class="logo-mark"/>
+      <div class="logo-mark-wrap">
+        <img src="W_Mono_OHM_Logo_.png" alt="OHM monogram" class="logo-mark"/>
+      </div>
       <div class="logo-tagline">
         OnlyHumanMade.org<br>
         Est. 2026 · A nonprofit<br>
         Certification · Registry · Community
+      </div>
+      <div class="logo-contact">
+        <span class="logo-contact-label">Questions?</span>
+        <a href="mailto:hello@onlyhumanmade.org" class="logo-contact-email">hello@onlyhumanmade.org</a>
       </div>
     </div>
   </div>
