@@ -863,7 +863,7 @@
 
       <div class="count-badge">
         <div class="count-dot"></div>
-        <span class="count-text">487 creators already on the list</span>
+        <span class="count-text"><strong>12</strong> members joined · <strong>488</strong> spots remaining</span>
       </div>
 
       <form id="waitlist-form" onsubmit="handleSubmit(event)" novalidate>
@@ -894,7 +894,7 @@
       <h2 class="success-headline">You're on the list.<br><em>Welcome.</em></h2>
       <p class="success-body">One more step — we just need a few more details to complete your registration. Takes 30 seconds.</p>
       <a id="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSdlwQzYtNnQBjR1dv0BhbqOGxhPYSdSLUtVh7encEgxzQJloQ/viewform" target="_blank" class="continue-btn">Complete my registration →</a>
-      <p class="success-num" id="position-num" style="margin-top:1.5rem;">You are #488 on the waitlist.</p>
+      <p class="success-num" id="position-num" style="margin-top:1.5rem;">You are #13 on the waitlist.</p>
     </div>
 
     <div class="right-footer">
@@ -906,7 +906,7 @@
 </div>
 
 <script>
-  let count = 487;
+  let count = 12;
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -933,6 +933,8 @@
 
     count++;
     document.getElementById('position-num').textContent = `You are #${count} on the waitlist.`;
+    const remaining = 500 - count;
+    document.querySelector('.count-text').innerHTML = `<strong>${count}</strong> members joined · <strong>${remaining}</strong> spots remaining`;
 
     const formWrap = document.getElementById('form-wrap');
     const successState = document.getElementById('success-state');
