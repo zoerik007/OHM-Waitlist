@@ -906,7 +906,36 @@
 </div>
 
 <script>
-  let count = 12;
+  // ── LIVE WAITLIST COUNT FROM GOOGLE SHEETS ───────────────
+  const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRUPX5cvPNmHvYxG2IE8y6LA_IwS_c2Cxh5y_OywL-DjpkjxDMq_mt7iKFPJz-oDkVyrMXf6kFxpXAR/pub?output=csv';
+  const TOTAL_SPOTS = 500;
+
+  let count = 12; // fallback if fetch fails
+
+  async function loadCount() {
+    try {
+      const res  = await fetch(SHEET_CSV);
+      const text = await res.text();
+      // Count rows minus the header row
+      const rows = text.trim().split('\n').filter(r => r.trim().length > 0);
+      const real = Math.max(0, rows.length - 1); // subtract header
+      if (real > 0) count = real;
+    } catch (e) {
+      console.log('Using fallback count:', count);
+    }
+    updateBadge();
+  }
+
+  function updateBadge() {
+    const remaining = TOTAL_SPOTS - count;
+    const badge = document.querySelector('.count-text');
+    if (badge) {
+      badge.innerHTML = `<strong>${count}</strong> members joined · <strong>${remaining}</strong> spots remaining`;
+    }
+  }
+
+  // Load on page open
+  loadCount();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -933,8 +962,7 @@
 
     count++;
     document.getElementById('position-num').textContent = `You are #${count} on the waitlist.`;
-    const remaining = 500 - count;
-    document.querySelector('.count-text').innerHTML = `<strong>${count}</strong> members joined · <strong>${remaining}</strong> spots remaining`;
+    updateBadge();
 
     const formWrap = document.getElementById('form-wrap');
     const successState = document.getElementById('success-state');
