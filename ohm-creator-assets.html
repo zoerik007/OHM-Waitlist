@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OHM Certified — Creator Asset Pack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700;1,900&family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#1A1714; --cream:#F5F0E8; --cream-deep:#EDE6D8;
+  --green:#5A6B53; --green-lt:#97B886; --green-pale:#C8DCC0;
+  --green-dark:#3D4D37; --warm-gray:#8A8278;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{
+  background:var(--cream-deep);
+  font-family:'Lora',Georgia,serif;
+  min-height:100vh;
+  padding:3rem 1.5rem 5rem;
+}
+
+/* ── HEADER ───────────────────────────────── */
+.page-header{
+  max-width:800px;margin:0 auto 3rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:1.1rem;font-weight:900;
+  color:var(--ink);text-decoration:none;
+}
+.nav-logo em{font-style:italic;color:var(--green);}
+.verify-link{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--green);text-decoration:none;
+  border-bottom:1px solid rgba(90,107,83,0.3);
+  padding-bottom:1px;transition:color 0.2s;
+}
+.verify-link:hover{color:var(--ink);}
+
+/* ── HERO MESSAGE ─────────────────────────── */
+.hero-msg{
+  max-width:800px;margin:0 auto 3rem;
+  background:var(--ink);
+  border-radius:4px;
+  padding:2.5rem;
+  position:relative;overflow:hidden;
+}
+.hero-msg::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:3px;
+  background:var(--green);
+}
+.hero-eyebrow{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--green-lt);margin-bottom:1rem;
+  display:flex;align-items:center;gap:0.6rem;
+}
+.hero-eyebrow-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--green-lt);
+}
+.hero-headline{
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:clamp(1.6rem,3vw,2.4rem);
+  font-weight:700;color:var(--cream);
+  margin-bottom:0.5rem;line-height:1.15;
+}
+.hero-headline em{font-style:italic;color:var(--green-lt);}
+.hero-sub{
+  font-size:0.9rem;color:rgba(245,240,232,0.5);
+  line-height:1.85;max-width:500px;
+}
+
+/* ── SECTION LABEL ────────────────────────── */
+.section-label{
+  max-width:800px;margin:0 auto 1rem;
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--green);display:flex;align-items:center;gap:1rem;
+}
+.section-label::after{
+  content:'';flex:1;height:1px;
+  background:rgba(26,23,20,0.1);max-width:60px;
+}
+.section-hint{
+  max-width:800px;margin:0.5rem auto 2rem;
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.06em;color:var(--warm-gray);
+}
+
+/* ── REGISTRY CARD ────────────────────────── */
+.registry-card{
+  max-width:800px;margin:0 auto;
+  background:var(--ink);border-radius:4px;
+  padding:2.5rem;position:relative;overflow:hidden;
+  margin-bottom:1rem;
+}
+.rc-top-bar{
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--green);
+}
+.rc-inner{
+  display:grid;grid-template-columns:1fr 120px;
+  gap:2rem;align-items:start;
+}
+.rc-eyebrow{
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--green);margin-bottom:0.75rem;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.rc-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--green-lt);}
+.rc-logo{
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:1.1rem;font-weight:900;
+  color:var(--cream);margin-bottom:1.75rem;
+}
+.rc-logo em{font-style:italic;color:var(--green-lt);}
+.rc-work{
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:1.5rem;font-weight:700;
+  color:var(--cream);line-height:1.2;margin-bottom:0.3rem;
+}
+.rc-creator{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(245,240,232,0.4);margin-bottom:1.75rem;
+}
+.rc-meta{display:flex;gap:2.5rem;margin-bottom:1.75rem;}
+.rc-meta-item{display:flex;flex-direction:column;gap:4px;}
+.rc-meta-label{
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:rgba(245,240,232,0.25);
+}
+.rc-meta-val{
+  font-family:'DM Mono',monospace;font-size:11px;
+  color:var(--green-lt);letter-spacing:0.06em;
+}
+.rc-divider{height:1px;background:rgba(245,240,232,0.08);margin-bottom:1.25rem;}
+.rc-bottom{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;}
+.rc-badge{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  background:rgba(90,107,83,0.15);
+  border:1px solid rgba(90,107,83,0.3);
+  border-radius:99px;padding:0.3rem 0.85rem;
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:0.1em;text-transform:uppercase;color:var(--green-lt);
+}
+.rc-url{
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:0.06em;color:rgba(245,240,232,0.2);
+}
+.rc-right{
+  display:flex;flex-direction:column;
+  align-items:center;gap:0.75rem;
+  padding-top:0.5rem;
+}
+.rc-mono-circle{
+  width:100px;height:100px;border-radius:50%;
+  border:1.5px solid rgba(90,107,83,0.35);
+  background:rgba(90,107,83,0.06);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.rc-mono{width:70px;height:70px;object-fit:contain;opacity:0.75;}
+.rc-tier{
+  font-family:'DM Mono',monospace;font-size:8px;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:rgba(245,240,232,0.2);
+}
+
+/* ── DOWNLOAD BUTTON ──────────────────────── */
+.download-btn{
+  display:block;max-width:800px;margin:0 auto 3rem;
+  text-align:center;padding:1rem;
+  background:var(--ink);color:var(--cream);
+  border:none;border-radius:2px;cursor:pointer;
+  font-family:'DM Mono',monospace;font-size:11px;
+  letter-spacing:0.15em;text-transform:uppercase;
+  transition:background 0.2s;text-decoration:none;
+}
+.download-btn:hover{background:var(--green);}
+
+/* ── SEAL BADGES ──────────────────────────── */
+.badges-grid{
+  max-width:800px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;
+  margin-bottom:1rem;
+}
+.seal-dark{
+  background:var(--ink);border-radius:4px;
+  padding:1.5rem;display:flex;align-items:center;
+  gap:1rem;position:relative;overflow:hidden;
+}
+.seal-dark::before,.seal-light::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--green);
+}
+.seal-mono{width:42px;height:42px;object-fit:contain;flex-shrink:0;}
+.seal-mono-green{
+  width:42px;height:42px;object-fit:contain;flex-shrink:0;
+  filter:brightness(0) saturate(100%) invert(38%) sepia(15%) saturate(600%) hue-rotate(83deg) brightness(85%);
+}
+.seal-div-dark{width:1px;height:36px;background:rgba(245,240,232,0.1);flex-shrink:0;}
+.seal-div-light{width:1px;height:36px;background:rgba(26,23,20,0.1);flex-shrink:0;}
+.seal-text-d{display:flex;flex-direction:column;gap:2px;}
+.seal-title-d{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--green-lt);}
+.seal-sub-d{font-family:'Playfair Display',serif;font-size:12px;font-style:italic;color:rgba(245,240,232,0.5);}
+.seal-id-d{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.08em;color:rgba(245,240,232,0.2);margin-top:2px;}
+.seal-light{
+  background:var(--cream);border:1px solid rgba(90,107,83,0.15);
+  border-radius:4px;padding:1.5rem;display:flex;
+  align-items:center;gap:1rem;position:relative;overflow:hidden;
+}
+.seal-text-l{display:flex;flex-direction:column;gap:2px;}
+.seal-title-l{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--green);}
+.seal-sub-l{font-family:'Playfair Display',serif;font-size:12px;font-style:italic;color:var(--warm-gray);}
+.seal-id-l{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.08em;color:rgba(26,23,20,0.25);margin-top:2px;}
+
+/* ── WIDGET + CODE ────────────────────────── */
+.widget-wrap{max-width:800px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1rem;}
+.widget-card{
+  background:var(--cream);
+  border:1px solid rgba(26,23,20,0.08);
+  border-radius:4px;overflow:hidden;
+}
+.wc-header{
+  background:var(--ink);padding:0.6rem 1rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.wc-hl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,240,232,0.35);}
+.wc-live{display:flex;align-items:center;gap:0.35rem;font-family:'DM Mono',monospace;font-size:9px;color:var(--green-lt);}
+.wc-dot{width:5px;height:5px;border-radius:50%;background:var(--green-lt);}
+.wc-body{padding:1rem;display:flex;align-items:center;gap:0.75rem;}
+.wc-icon{
+  width:44px;height:44px;border-radius:50%;
+  border:1.5px solid var(--green);
+  background:rgba(90,107,83,0.08);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;overflow:hidden;
+}
+.wc-icon-img{width:28px;height:28px;object-fit:contain;filter:brightness(0) saturate(100%) invert(38%) sepia(15%) saturate(600%) hue-rotate(83deg) brightness(85%);}
+.wc-info{flex:1;}
+.wc-verified{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:2px;}
+.wc-name{font-family:'Playfair Display',serif;font-size:0.9rem;font-weight:700;color:var(--ink);margin-bottom:1px;}
+.wc-work{font-size:0.75rem;color:var(--warm-gray);font-style:italic;}
+.wc-btn{
+  font-family:'DM Mono',monospace;font-size:8px;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--green);border:1px solid rgba(90,107,83,0.25);
+  border-radius:2px;padding:0.4rem 0.7rem;
+  background:transparent;cursor:pointer;white-space:nowrap;
+}
+.code-block{
+  background:var(--ink);border-radius:4px;padding:1.25rem;
+  font-family:'DM Mono',monospace;font-size:10px;
+  color:var(--green-lt);line-height:1.9;
+  letter-spacing:0.04em;
+}
+.cc{color:rgba(245,240,232,0.2);}
+.ct{color:var(--green-pale);}
+.ca{color:var(--green-lt);}
+.cv{color:rgba(245,240,232,0.65);}
+
+@media(max-width:600px){
+  .badges-grid,.widget-wrap,.rc-inner{grid-template-columns:1fr;}
+  .rc-right{display:none;}
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.fade{opacity:0;animation:fadeUp 0.7s ease forwards;}
+.fade:nth-child(1){animation-delay:0.1s}
+.fade:nth-child(2){animation-delay:0.2s}
+.fade:nth-child(3){animation-delay:0.3s}
+.fade:nth-child(4){animation-delay:0.4s}
+.fade:nth-child(5){animation-delay:0.5s}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <a href="onlyhumanmade.html" class="nav-logo">Only<em>Human</em>Made</a>
+  <a href="ohm-registry.html" class="verify-link">View your registry entry ↗</a>
+</div>
+
+<!-- HERO -->
+<div class="hero-msg fade">
+  <div class="rc-top-bar"></div>
+  <p class="hero-eyebrow"><span class="rc-eyebrow-dot"></span>Certification confirmed</p>
+  <h1 class="hero-headline">Your work is certified.<br><em>Here are your assets.</em></h1>
+  <p class="hero-sub">Everything you need to prove your work is human-made — badges for your portfolio, a registry card to share, and an embeddable widget for your site. All tied to your permanent blockchain record.</p>
+</div>
+
+<!-- REGISTRY CARD -->
+<p class="section-label fade">Registry card</p>
+<p class="section-hint fade">Right-click → Save image to download · Share on LinkedIn, Twitter, or Instagram</p>
+
+<div class="registry-card fade" id="registry-card">
+  <div class="rc-top-bar"></div>
+  <div class="rc-inner">
+    <div class="rc-left">
+      <div class="rc-eyebrow"><div class="rc-eyebrow-dot"></div>Certification confirmed</div>
+      <div class="rc-logo">Only<em>Human</em>Made</div>
+      <p class="rc-work" id="rc-work">Loading...</p>
+      <p class="rc-creator" id="rc-creator">Loading...</p>
+      <div class="rc-meta">
+        <div class="rc-meta-item">
+          <span class="rc-meta-label">Registry ID</span>
+          <span class="rc-meta-val" id="rc-id">—</span>
+        </div>
+        <div class="rc-meta-item">
+          <span class="rc-meta-label">Certified</span>
+          <span class="rc-meta-val" id="rc-date">—</span>
+        </div>
+        <div class="rc-meta-item">
+          <span class="rc-meta-label">Tier</span>
+          <span class="rc-meta-val" id="rc-tier">—</span>
+        </div>
+      </div>
+      <div class="rc-divider"></div>
+      <div class="rc-bottom">
+        <div class="rc-badge"><div class="rc-eyebrow-dot"></div>Blockchain verified</div>
+        <span class="rc-url" id="rc-url">onlyhumanmade.org/r/—</span>
+      </div>
+    </div>
+    <div class="rc-right">
+      <div class="rc-mono-circle">
+        <img src="W_Mono_OHM_Logo_.png" class="rc-mono" alt="OHM seal"/>
+      </div>
+      <span class="rc-tier" id="rc-tier-badge">Est. 2026 · Nonprofit</span>
+    </div>
+  </div>
+</div>
+
+<a href="#" class="download-btn fade" id="polygonscan-link" target="_blank">View on Polygonscan ↗</a>
+
+<!-- SEAL BADGES -->
+<p class="section-label fade">Seal badges</p>
+<p class="section-hint fade">Right-click → Save image · Use the dark version on light backgrounds, light version on dark</p>
+
+<div class="badges-grid fade">
+  <div class="seal-dark">
+    <img src="W_Mono_OHM_Logo_.png" class="seal-mono" alt="OHM monogram"/>
+    <div class="seal-div-dark"></div>
+    <div class="seal-text-d">
+      <span class="seal-title-d">OHM Certified</span>
+      <span class="seal-sub-d">Human-made · Verified</span>
+      <span class="seal-id-d" id="badge-id-1">onlyhumanmade.org</span>
+    </div>
+  </div>
+  <div class="seal-light">
+    <img src="W_Mono_OHM_Logo_.png" class="seal-mono-green" alt="OHM monogram"/>
+    <div class="seal-div-light"></div>
+    <div class="seal-text-l">
+      <span class="seal-title-l">OHM Certified</span>
+      <span class="seal-sub-l">Human-made · Verified</span>
+      <span class="seal-id-l" id="badge-id-2">onlyhumanmade.org</span>
+    </div>
+  </div>
+</div>
+
+<!-- WIDGET + CODE -->
+<p class="section-label fade">Embeddable widget</p>
+<p class="section-hint fade">Paste the code into any website — it verifies live against the blockchain</p>
+
+<div class="widget-wrap fade">
+  <div class="widget-card">
+    <div class="wc-header">
+      <span class="wc-hl">OHM Verified · Polygon</span>
+      <div class="wc-live"><div class="wc-dot"></div>Live</div>
+    </div>
+    <div class="wc-body">
+      <div class="wc-icon">
+        <img src="W_Mono_OHM_Logo_.png" class="wc-icon-img" alt="OHM"/>
+      </div>
+      <div class="wc-info">
+        <p class="wc-verified">✓ OHM Certified · Human-made</p>
+        <p class="wc-name" id="wc-name">Loading...</p>
+        <p class="wc-work" id="wc-work">Loading...</p>
+      </div>
+      <button class="wc-btn">Verify ↗</button>
+    </div>
+  </div>
+
+  <div class="code-block" id="code-block">
+    <span class="cc">&lt;!-- OHM Verified seal --&gt;</span><br>
+    <span class="ct">&lt;script</span><br>
+    &nbsp;&nbsp;<span class="ca">src</span>=<span class="cv">"https://onlyhumanmade.org/widget.js"</span><br>
+    &nbsp;&nbsp;<span class="ca">data-cert</span>=<span class="cv" id="code-cert">"OHM-00000"</span><br>
+    &nbsp;&nbsp;<span class="ca">data-theme</span>=<span class="cv">"light"</span><br>
+    <span class="ct">&gt;&lt;/script&gt;</span>
+  </div>
+</div>
+
+<script>
+// Read URL parameters — Zapier passes these in the link
+function getParam(name, fallback) {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(name) || fallback;
+}
+
+const certId   = getParam('id',       'OHM-00441');
+const name     = getParam('name',     'Mara Okonkwo');
+const work     = getParam('work',     'The Last Migration');
+const category = getParam('cat',      'Illustration');
+const tier     = getParam('tier',     'Studio');
+const date     = getParam('date',     new Date().toLocaleDateString('en-US', {day:'numeric', month:'short', year:'numeric'}));
+const txHash   = getParam('tx',       '');
+
+// Populate registry card
+document.getElementById('rc-work').textContent    = work;
+document.getElementById('rc-creator').textContent = name + ' · ' + category;
+document.getElementById('rc-id').textContent      = certId;
+document.getElementById('rc-date').textContent    = date;
+document.getElementById('rc-tier').textContent    = tier;
+document.getElementById('rc-url').textContent     = 'onlyhumanmade.org/r/' + certId;
+
+// Populate badges
+document.getElementById('badge-id-1').textContent = certId;
+document.getElementById('badge-id-2').textContent = certId;
+
+// Populate widget
+document.getElementById('wc-name').textContent  = name;
+document.getElementById('wc-work').textContent  = work;
+document.getElementById('code-cert').textContent = '"' + certId + '"';
+
+// Polygonscan link
+const psLink = document.getElementById('polygonscan-link');
+if (txHash) {
+  psLink.href = 'https://amoy.polygonscan.com/tx/' + txHash;
+  psLink.textContent = 'View on Polygonscan ↗';
+} else {
+  psLink.href = 'https://amoy.polygonscan.com/address/0x0A44b7B5d25E076073Fe711A447D1047203534eb';
+  psLink.textContent = 'View OHM Registry on Polygonscan ↗';
+}
+</script>
+</body>
+</html>
