@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700;1,900&family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 :root {
   --ink:#1A1714; --cream:#F5F0E8; --cream-deep:#EDE6D8;
@@ -175,17 +176,31 @@ body{
   color:rgba(245,240,232,0.2);
 }
 
-/* ── DOWNLOAD BUTTON ──────────────────────── */
-.download-btn{
-  display:block;max-width:800px;margin:0 auto 3rem;
-  text-align:center;padding:1rem;
+/* ── DOWNLOAD BUTTONS ─────────────────────── */
+.dl-btn {
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:var(--green);color:var(--cream);
+  border:none;border-radius:2px;cursor:pointer;
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.15em;text-transform:uppercase;
+  padding:0.75rem 1.5rem;transition:background 0.2s,transform 0.15s;
+  margin-top:0.75rem;
+}
+.dl-btn:hover{background:var(--green-dark);transform:translateY(-1px);}
+.dl-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+.dl-btn-light {
+  display:inline-flex;align-items:center;gap:0.5rem;
   background:var(--ink);color:var(--cream);
   border:none;border-radius:2px;cursor:pointer;
-  font-family:'DM Mono',monospace;font-size:11px;
+  font-family:'DM Mono',monospace;font-size:10px;
   letter-spacing:0.15em;text-transform:uppercase;
-  transition:background 0.2s;text-decoration:none;
+  padding:0.75rem 1.5rem;transition:background 0.2s,transform 0.15s;
+  margin-top:0.75rem;
 }
-.download-btn:hover{background:var(--green);}
+.dl-btn-light:hover{background:var(--green);transform:translateY(-1px);}
+.dl-btn-light:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+.dl-row{max-width:800px;margin:0 auto 2.5rem;display:flex;gap:1rem;flex-wrap:wrap;}
+.dl-hint{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.08em;color:var(--warm-gray);margin-top:0.4rem;}
 
 /* ── SEAL BADGES ──────────────────────────── */
 .badges-grid{
@@ -298,7 +313,7 @@ body{
 
 <!-- REGISTRY CARD -->
 <p class="section-label fade">Registry card</p>
-<p class="section-hint fade">Right-click → Save image to download · Share on LinkedIn, Twitter, or Instagram</p>
+<p class="section-hint fade">Your shareable announcement graphic · Post on LinkedIn, Twitter, Instagram</p>
 
 <div class="registry-card fade" id="registry-card">
   <div class="rc-top-bar"></div>
@@ -337,14 +352,18 @@ body{
   </div>
 </div>
 
-<a href="#" class="download-btn fade" id="polygonscan-link" target="_blank">View on Polygonscan ↗</a>
+<div class="dl-row fade">
+  <button class="dl-btn" onclick="downloadGraphic('registry-card','OHM-Registry-Card')">↓ Download registry card</button>
+  <a href="#" class="dl-btn-light" id="polygonscan-link" target="_blank">View on Polygonscan ↗</a>
+</div>
 
 <!-- SEAL BADGES -->
 <p class="section-label fade">Seal badges</p>
-<p class="section-hint fade">Right-click → Save image · Use the dark version on light backgrounds, light version on dark</p>
+<p class="section-hint fade">Dark version for light backgrounds · Light version for dark backgrounds</p>
 
 <div class="badges-grid fade">
-  <div class="seal-dark">
+  <div id="seal-dark-wrap">
+  <div class="seal-dark" id="seal-dark">
     <img src="W_Mono_OHM_Logo_.png" class="seal-mono" alt="OHM monogram"/>
     <div class="seal-div-dark"></div>
     <div class="seal-text-d">
@@ -353,7 +372,10 @@ body{
       <span class="seal-id-d" id="badge-id-1">onlyhumanmade.org</span>
     </div>
   </div>
-  <div class="seal-light">
+  <button class="dl-btn" style="width:100%" onclick="downloadGraphic('seal-dark','OHM-Seal-Badge-Dark')">↓ Download dark badge</button>
+  </div>
+  <div id="seal-light-wrap">
+  <div class="seal-light" id="seal-light">
     <img src="W_Mono_OHM_Logo_.png" class="seal-mono-green" alt="OHM monogram"/>
     <div class="seal-div-light"></div>
     <div class="seal-text-l">
@@ -362,14 +384,17 @@ body{
       <span class="seal-id-l" id="badge-id-2">onlyhumanmade.org</span>
     </div>
   </div>
+  <button class="dl-btn-light" style="width:100%" onclick="downloadGraphic('seal-light','OHM-Seal-Badge-Light')">↓ Download light badge</button>
+  </div>
 </div>
 
 <!-- WIDGET + CODE -->
 <p class="section-label fade">Embeddable widget</p>
-<p class="section-hint fade">Paste the code into any website — it verifies live against the blockchain</p>
+<p class="section-hint fade">Download the widget preview · Paste the code into any website</p>
 
 <div class="widget-wrap fade">
-  <div class="widget-card">
+  <div>
+  <div class="widget-card" id="widget-card">
     <div class="wc-header">
       <span class="wc-hl">OHM Verified · Polygon</span>
       <div class="wc-live"><div class="wc-dot"></div>Live</div>
@@ -386,6 +411,8 @@ body{
       <button class="wc-btn">Verify ↗</button>
     </div>
   </div>
+  <button class="dl-btn" style="width:100%;margin-top:0.75rem" onclick="downloadGraphic('widget-card','OHM-Widget-Preview')">↓ Download widget graphic</button>
+  </div>
 
   <div class="code-block" id="code-block">
     <span class="cc">&lt;!-- OHM Verified seal --&gt;</span><br>
@@ -398,10 +425,64 @@ body{
 </div>
 
 <script>
-// Read URL parameters — Zapier passes these in the link
+// ── DOWNLOAD FUNCTION ─────────────────────────────────────
+async function downloadGraphic(elementId, filename) {
+  const el  = document.getElementById(elementId);
+  const btn = event.target;
+
+  btn.disabled = true;
+  btn.textContent = 'Generating...';
+
+  try {
+    const canvas = await html2canvas(el, {
+      scale: 3,           // 3x resolution for crisp social images
+      useCORS: true,
+      backgroundColor: null,
+      logging: false,
+    });
+
+    const link      = document.createElement('a');
+    link.download   = filename + '.png';
+    link.href       = canvas.toDataURL('image/png');
+    link.click();
+
+    btn.textContent = '✓ Downloaded';
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.textContent = btn.textContent.includes('dark') || btn.textContent.includes('Dark')
+        ? '↓ Download dark badge'
+        : btn.textContent.includes('light') || btn.textContent.includes('Light')
+        ? '↓ Download light badge'
+        : btn.textContent.includes('widget') || btn.textContent.includes('Widget')
+        ? '↓ Download widget graphic'
+        : '↓ Download registry card';
+    }, 2500);
+
+  } catch(err) {
+    console.error('Download error:', err);
+    btn.disabled    = false;
+    btn.textContent = 'Try again';
+  }
+}
+
+// ── URL PARAMS ────────────────────────────────────────────
 function getParam(name, fallback) {
-  const params = new URLSearchParams(window.location.search);
-  return params.get(name) || fallback;
+  // Get full URL and try to extract params even if malformed
+  const fullUrl = window.location.href;
+  const paramStr = fullUrl.includes('?') ? fullUrl.split('?')[1] : '';
+  if (!paramStr) return fallback;
+
+  // Find the parameter value
+  const regex = new RegExp('[?&]' + name + '=([^&]*)');
+  const match = paramStr.match(regex);
+  if (!match) return fallback;
+
+  // Decode — handle %20, +, and raw spaces
+  try {
+    return decodeURIComponent(match[1].replace(/\+/g, ' '));
+  } catch(e) {
+    return match[1] || fallback;
+  }
 }
 
 const certId   = getParam('id',       'OHM-00441');
