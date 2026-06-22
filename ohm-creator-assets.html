@@ -97,13 +97,13 @@ body{
 /* ── REGISTRY CARD ────────────────────────── */
 .registry-card{
   max-width:800px;margin:0 auto;
-  background:var(--ink);border-radius:4px;
+  background:#1A1714;border-radius:4px;
   padding:2.5rem;position:relative;overflow:hidden;
   margin-bottom:1rem;
 }
 .rc-top-bar{
   position:absolute;top:0;left:0;right:0;height:3px;
-  background:var(--green);
+  background:#5A6B53;
 }
 .rc-inner{
   display:grid;grid-template-columns:1fr 120px;
@@ -112,50 +112,50 @@ body{
 .rc-eyebrow{
   font-family:'DM Mono',monospace;font-size:9px;
   letter-spacing:0.22em;text-transform:uppercase;
-  color:var(--green);margin-bottom:0.75rem;
+  color:#5A6B53;margin-bottom:0.75rem;
   display:flex;align-items:center;gap:0.5rem;
 }
-.rc-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--green-lt);}
+.rc-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:#97B886;}
 .rc-logo{
   font-family:'Playfair Display',Georgia,serif;
   font-size:1.1rem;font-weight:900;
-  color:var(--cream);margin-bottom:1.75rem;
+  color:#F5F0E8;margin-bottom:1.75rem;
 }
-.rc-logo em{font-style:italic;color:var(--green-lt);}
+.rc-logo em{font-style:italic;color:#97B886;}
 .rc-work{
   font-family:'Playfair Display',Georgia,serif;
   font-size:1.5rem;font-weight:700;
-  color:var(--cream);line-height:1.2;margin-bottom:0.3rem;
+  color:#F5F0E8;line-height:1.2;margin-bottom:0.3rem;
 }
 .rc-creator{
   font-family:'DM Mono',monospace;font-size:10px;
   letter-spacing:0.1em;text-transform:uppercase;
-  color:rgba(245,240,232,0.4);margin-bottom:1.75rem;
+  color:#8A8278;margin-bottom:1.75rem;
 }
 .rc-meta{display:flex;gap:2.5rem;margin-bottom:1.75rem;}
 .rc-meta-item{display:flex;flex-direction:column;gap:4px;}
 .rc-meta-label{
   font-family:'DM Mono',monospace;font-size:9px;
   letter-spacing:0.15em;text-transform:uppercase;
-  color:rgba(245,240,232,0.25);
+  color:#5A6B53;
 }
 .rc-meta-val{
   font-family:'DM Mono',monospace;font-size:11px;
-  color:var(--green-lt);letter-spacing:0.06em;
+  color:#97B886;letter-spacing:0.06em;
 }
-.rc-divider{height:1px;background:rgba(245,240,232,0.08);margin-bottom:1.25rem;}
+.rc-divider{height:1px;background:#2E2925;margin-bottom:1.25rem;}
 .rc-bottom{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;}
 .rc-badge{
   display:inline-flex;align-items:center;gap:0.4rem;
-  background:rgba(90,107,83,0.15);
-  border:1px solid rgba(90,107,83,0.3);
+  background:#2E3A29;
+  border:1px solid #5A6B53;
   border-radius:99px;padding:0.3rem 0.85rem;
   font-family:'DM Mono',monospace;font-size:9px;
-  letter-spacing:0.1em;text-transform:uppercase;color:var(--green-lt);
+  letter-spacing:0.1em;text-transform:uppercase;color:#97B886;
 }
 .rc-url{
   font-family:'DM Mono',monospace;font-size:9px;
-  letter-spacing:0.06em;color:rgba(245,240,232,0.5);
+  letter-spacing:0.06em;color:#5A6B53;
 }
 .rc-right{
   display:flex;flex-direction:column;
@@ -164,8 +164,8 @@ body{
 }
 .rc-mono-circle{
   width:100px;height:100px;border-radius:50%;
-  border:1.5px solid rgba(90,107,83,0.35);
-  background:rgba(90,107,83,0.06);
+  border:1.5px solid #5A6B53;
+  background:#2E3A29;
   display:flex;align-items:center;justify-content:center;
   overflow:hidden;
 }
@@ -173,7 +173,7 @@ body{
 .rc-tier{
   font-family:'DM Mono',monospace;font-size:8px;
   letter-spacing:0.15em;text-transform:uppercase;
-  color:rgba(245,240,232,0.5);
+  color:#5A6B53;
 }
 
 /* ── DOWNLOAD BUTTONS ─────────────────────── */
@@ -209,18 +209,17 @@ body{
   margin-bottom:1rem;
 }
 .seal-dark{
-  background:var(--ink);border-radius:4px;
+  background:#1A1714;border-radius:4px;
   padding:1.5rem;display:flex;align-items:center;
   gap:1rem;position:relative;overflow:hidden;
 }
 .seal-dark::before,.seal-light::before{
   content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:var(--green);
+  background:#5A6B53;
 }
 .seal-mono{width:42px;height:42px;object-fit:contain;flex-shrink:0;}
 .seal-mono-green{
   width:42px;height:42px;object-fit:contain;flex-shrink:0;
-  filter:brightness(0) saturate(100%) invert(38%) sepia(15%) saturate(600%) hue-rotate(83deg) brightness(85%);
 }
 .seal-div-dark{width:1px;height:36px;background:rgba(245,240,232,0.25);flex-shrink:0;}
 .seal-div-light{width:1px;height:36px;background:rgba(26,23,20,0.2);flex-shrink:0;}
@@ -234,37 +233,37 @@ body{
   align-items:center;gap:1rem;position:relative;overflow:hidden;
 }
 .seal-text-l{display:flex;flex-direction:column;gap:2px;}
-.seal-title-l{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--green);}
-.seal-sub-l{font-family:'Playfair Display',serif;font-size:12px;font-style:italic;color:var(--warm-gray);}
-.seal-id-l{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.08em;color:rgba(26,23,20,0.25);margin-top:2px;}
+.seal-title-l{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:#5A6B53;}
+.seal-sub-l{font-family:'Playfair Display',serif;font-size:12px;font-style:italic;color:#8A8278;}
+.seal-id-l{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.08em;color:#8A8278;margin-top:2px;}
 
 /* ── WIDGET + CODE ────────────────────────── */
 .widget-wrap{max-width:800px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1rem;}
 .widget-card{
-  background:var(--cream);
+  background:#F5F0E8;
   border:1px solid rgba(26,23,20,0.08);
   border-radius:4px;overflow:hidden;
 }
 .wc-header{
-  background:var(--ink);padding:0.6rem 1rem;
+  background:#1A1714;padding:0.6rem 1rem;
   display:flex;align-items:center;justify-content:space-between;
 }
 .wc-hl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,240,232,0.6);}
-.wc-live{display:flex;align-items:center;gap:0.35rem;font-family:'DM Mono',monospace;font-size:9px;color:var(--green-lt);}
-.wc-dot{width:5px;height:5px;border-radius:50%;background:var(--green-lt);}
+.wc-live{display:flex;align-items:center;gap:0.35rem;font-family:'DM Mono',monospace;font-size:9px;color:#97B886;}
+.wc-dot{width:5px;height:5px;border-radius:50%;background:#97B886;}
 .wc-body{padding:1rem;display:flex;align-items:center;gap:0.75rem;}
 .wc-icon{
   width:44px;height:44px;border-radius:50%;
-  border:1.5px solid var(--green);
-  background:rgba(90,107,83,0.08);
+  border:1.5px solid #5A6B53;
+  background:#E8EEE5;
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;overflow:hidden;
 }
-.wc-icon-img{width:28px;height:28px;object-fit:contain;filter:brightness(0) saturate(100%) invert(38%) sepia(15%) saturate(600%) hue-rotate(83deg) brightness(85%);}
+.wc-icon-img{width:28px;height:28px;object-fit:contain;}
 .wc-info{flex:1;}
-.wc-verified{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:2px;}
-.wc-name{font-family:'Playfair Display',serif;font-size:0.9rem;font-weight:700;color:var(--ink);margin-bottom:1px;}
-.wc-work{font-size:0.75rem;color:var(--warm-gray);font-style:italic;}
+.wc-verified{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:#5A6B53;margin-bottom:2px;}
+.wc-name{font-family:'Playfair Display',serif;font-size:0.9rem;font-weight:700;color:#1A1714;margin-bottom:1px;}
+.wc-work{font-size:0.75rem;color:#8A8278;font-style:italic;}
 .wc-btn{
   font-family:'DM Mono',monospace;font-size:8px;
   letter-spacing:0.1em;text-transform:uppercase;
@@ -371,7 +370,7 @@ body{
     </div>
   </div>
   <div class="seal-light" id="seal-light">
-    <img src="W_Mono_OHM_Logo_.png" class="seal-mono-green" alt="OHM monogram"/>
+    <img src="Green_Mono_OHM_Logo_.png" class="seal-mono-green" alt="OHM monogram"/>
     <div class="seal-div-light"></div>
     <div class="seal-text-l">
       <span class="seal-title-l">OHM Certified</span>
@@ -394,7 +393,7 @@ body{
     </div>
     <div class="wc-body">
       <div class="wc-icon">
-        <img src="W_Mono_OHM_Logo_.png" class="wc-icon-img" alt="OHM"/>
+        <img src="Green_Mono_OHM_Logo_.png" class="wc-icon-img" alt="OHM"/>
       </div>
       <div class="wc-info">
         <p class="wc-verified">✓ OHM Certified · Human-made</p>
