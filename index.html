@@ -4,813 +4,440 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Join the Waitlist — OnlyHumanMade</title>
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="icon" type="image/png" sizes="256x256" href="favicon-256.png">
-  <link rel="apple-touch-icon" href="favicon-256.png">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="256x256" href="favicon-256.png">
+<link rel="apple-touch-icon" href="favicon-256.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ink:        #1A1714;
-    --ink-soft:   #2E2925;
-    --cream:      #F5F0E8;
-    --cream-deep: #EDE6D8;
-    --green:      #5A6B53;
-    --green-lt:   #97B886;
-    --green-pale: #C8DCC0;
-    --green-dark: #3D4D37;
-    --gold:       #C4973A;
-    --warm-gray:  #8A8278;
-    --border:     rgba(26,23,20,0.10);
-    --border-med: rgba(26,23,20,0.20);
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--ink);
-    color: var(--cream);
-    font-family: 'Lora', Georgia, serif;
-    font-size: 17px;
-    line-height: 1.7;
-    overflow-x: hidden;
-    min-height: 100vh;
-  }
-
-  /* Film grain */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-    opacity: 0.03;
-    pointer-events: none;
-    z-index: 1000;
-  }
-
-  /* ── LAYOUT ─────────────────────────────────────── */
-  .page {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  /* ── LEFT — BRAND SIDE ──────────────────────────── */
-  .left {
-    background: var(--ink);
-    padding: 4rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-    overflow: hidden;
-    min-height: 100vh;
-  }
-
-  /* Large ghost "O" watermark */
-  .left::after {
-    content: 'O';
-    position: absolute;
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 75vw;
-    font-weight: 900;
-    font-style: italic;
-    color: rgba(151,184,134,0.04);
-    bottom: -20vw;
-    left: -15vw;
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .left-top {
-    position: relative;
-    z-index: 2;
-  }
-
-  .wordmark {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1.1rem;
-    font-weight: 900;
-    letter-spacing: -0.01em;
-    color: var(--cream);
-    text-decoration: none;
-    display: inline-block;
-    margin-bottom: 3.5rem;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards 0.1s;
-  }
-  .wordmark em { font-style: italic; color: var(--green-lt); }
-
-  .left-content {
-    position: relative;
-    z-index: 2;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 2rem 0;
-  }
-
-  .eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--green-lt);
-    margin-bottom: 1.75rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards 0.2s;
-  }
-
-  .eyebrow::before {
-    content: '';
-    display: block;
-    width: 28px;
-    height: 1px;
-    background: var(--green-lt);
-    flex-shrink: 0;
-  }
-
-  .headline {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(2.8rem, 4.5vw, 4.2rem);
-    font-weight: 900;
-    line-height: 1.0;
-    letter-spacing: -0.02em;
-    margin-bottom: 2rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.32s;
-  }
-
-  .headline em {
-    font-style: italic;
-    color: var(--green-lt);
-  }
-
-  .description {
-    font-size: 1rem;
-    color: rgba(245,240,232,0.65);
-    line-height: 1.85;
-    max-width: 460px;
-    margin-bottom: 3rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.44s;
-  }
-
-  .description strong {
-    color: var(--cream);
-    font-weight: 600;
-  }
-
-  /* Three pillars */
-  .pillars {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    border-top: 1px solid rgba(245,240,232,0.08);
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.56s;
-  }
-
-  .pillar {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid rgba(245,240,232,0.08);
-  }
-
-  .pillar-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--green-lt);
-    margin-top: 8px;
-    flex-shrink: 0;
-  }
-
-  .pillar-title {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--green-lt);
-    margin-bottom: 0.2rem;
-  }
-
-  .pillar-body {
-    font-size: 0.875rem;
-    color: rgba(245,240,232,0.55);
-    line-height: 1.6;
-  }
-
-  /* Logo bottom */
-  .left-bottom {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    padding-top: 2.5rem;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards 0.7s;
-    border-top: 1px solid rgba(245,240,232,0.08);
-  }
-
-  .logo-mark-wrap {
-    width: 80px;
-    height: 80px;
-    flex-shrink: 0;
-  }
-
-  .logo-mark {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    mix-blend-mode: screen;
-  }
-
-  .logo-tagline {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(245,240,232,0.3);
-    line-height: 1.9;
-    flex: 1;
-  }
-
-  .logo-contact {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    text-align: right;
-  }
-
-  .logo-contact-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(245,240,232,0.3);
-  }
-
-  .logo-contact-email {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.08em;
-    color: var(--green-lt);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .logo-contact-email:hover { color: var(--cream); }
-
-  /* ── RIGHT — FORM SIDE ──────────────────────────── */
-  .right {
-    background: var(--cream);
-    padding: 4rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-    min-height: 100vh;
-  }
-
-  .form-wrap {
-    max-width: 420px;
-    width: 100%;
-    margin: 0 auto;
-  }
-
-  .form-label-top {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--green);
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards 0.4s;
-  }
-
-  .form-label-top::before {
-    content: '';
-    width: 24px;
-    height: 2px;
-    background: var(--green);
-  }
-
-  .form-headline {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(1.8rem, 3vw, 2.8rem);
-    font-weight: 700;
-    line-height: 1.15;
-    color: var(--ink);
-    margin-bottom: 0.75rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.5s;
-  }
-
-  .form-headline em {
-    font-style: italic;
-    color: var(--green);
-  }
-
-  .form-sub {
-    font-size: 0.9rem;
-    color: var(--warm-gray);
-    line-height: 1.8;
-    margin-bottom: 2.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.6s;
-  }
-
-  /* Form fields */
-  .form-group {
-    margin-bottom: 1.25rem;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards 0.68s;
-  }
-
-  .form-group + .form-group { animation-delay: 0.74s; }
-  .form-group + .form-group + .form-group { animation-delay: 0.8s; }
-
-  label {
-    display: block;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--warm-gray);
-    margin-bottom: 0.5rem;
-  }
-
-  input[type="text"],
-  input[type="email"],
-  select {
-    width: 100%;
-    padding: 0.875rem 1rem;
-    background: white;
-    border: 1px solid var(--border-med);
-    border-radius: 2px;
-    font-family: 'Lora', Georgia, serif;
-    font-size: 0.95rem;
-    color: var(--ink);
-    transition: border-color 0.2s, box-shadow 0.2s;
-    appearance: none;
-    -webkit-appearance: none;
-    outline: none;
-  }
-
-  input[type="text"]:focus,
-  input[type="email"]:focus,
-  select:focus {
-    border-color: var(--green);
-    box-shadow: 0 0 0 3px rgba(90,107,83,0.12);
-  }
-
-  select {
-    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238A8278' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    padding-right: 2.5rem;
-    cursor: pointer;
-  }
-
-  /* Role toggle pills */
-  .role-group {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards 0.86s;
-  }
-
-  .role-pill input[type="checkbox"] {
-    display: none;
-  }
-
-  .role-pill label {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.45rem 1rem;
-    border: 1px solid var(--border-med);
-    border-radius: 99px;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--warm-gray);
-    cursor: pointer;
-    transition: all 0.15s;
-    user-select: none;
-    margin-bottom: 0;
-  }
-
-  .role-pill input[type="checkbox"]:checked + label {
-    background: var(--green);
-    border-color: var(--green);
-    color: white;
-  }
-
-  .role-pill label:hover {
-    border-color: var(--green);
-    color: var(--green);
-  }
-
-  /* Submit button */
-  .submit-btn {
-    width: 100%;
-    padding: 1rem;
-    background: var(--ink);
-    color: var(--cream);
-    border: none;
-    border-radius: 2px;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
-    margin-top: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards 0.95s;
-  }
-
-  .submit-btn:hover { background: var(--green); transform: translateY(-1px); }
-  .submit-btn:active { transform: translateY(0); }
-
-  /* Success state */
-  .success-state {
-    display: none;
-    text-align: center;
-    padding: 3rem 2rem;
-  }
-
-  .success-logo {
-    width: 110px;
-    height: 110px;
-    object-fit: contain;
-    margin: 0 auto 1.5rem;
-    display: block;
-  }
-
-  .success-headline {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 0.75rem;
-    line-height: 1.2;
-  }
-
-  .success-headline em { font-style: italic; color: var(--green); }
-
-  .success-body {
-    font-size: 0.9rem;
-    color: var(--warm-gray);
-    line-height: 1.8;
-    margin-bottom: 1.5rem;
-  }
-
-  .success-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--green);
-  }
-
-  /* Privacy note */
-  .privacy-note {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    color: var(--warm-gray);
-    text-align: center;
-    margin-top: 1rem;
-    line-height: 1.7;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards 1.05s;
-  }
-
-  /* Count badge */
-  .count-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(90,107,83,0.08);
-    border: 1px solid rgba(90,107,83,0.2);
-    border-radius: 99px;
-    padding: 0.4rem 1rem;
-    margin-bottom: 2rem;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards 0.72s;
-  }
-
-  .count-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--green);
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.6; transform: scale(0.85); }
-  }
-
-  .count-text {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--green);
-  }
-
-  /* Divider line */
-  .form-divider {
-    height: 1px;
-    background: var(--border);
-    margin: 1.5rem 0;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards 0.83s;
-  }
-
-  /* Field label for role section */
-  .section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--warm-gray);
-    margin-bottom: 0.75rem;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards 0.83s;
-  }
-
-  /* Footer bar */
-  .right-footer {
-    position: absolute;
-    bottom: 2rem;
-    left: 4rem;
-    right: 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .footer-link {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--warm-gray);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .footer-link:hover { color: var(--green); }
-
-  /* ── ANIMATIONS ─────────────────────────────────── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .continue-btn {
-    display: inline-block;
-    padding: 1rem 2rem;
-    background: var(--ink);
-    color: var(--cream);
-    border-radius: 2px;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: background 0.2s, transform 0.15s;
-    margin-top: 0.5rem;
-  }
-
-  .continue-btn:hover {
-    background: var(--green);
-    transform: translateY(-1px);
-  }
-
-  /* ── MOBILE ─────────────────────────────────────── */
-  @media (max-width: 768px) {
-
-    body { font-size: 16px; }
-
-    .page {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto;
-    }
-
-    /* Left panel — compact on mobile, shows brand essentials only */
-    .left {
-      min-height: auto;
-      padding: 2.25rem 1.5rem 2rem;
-    }
-
-    .left::after {
-      font-size: 160vw;
-      bottom: -40vw;
-      left: -30vw;
-    }
-
-    .wordmark {
-      font-size: 1rem;
-      margin-bottom: 0;
-    }
-
-    /* Left top: logo + wordmark side by side on mobile */
-    .left-top {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      margin-bottom: 2rem;
-    }
-
-    .left-top-logo {
-      width: 44px;
-      height: 44px;
-      object-fit: contain;
-      flex-shrink: 0;
-    }
-
-    .left-content {
-      padding: 0;
-    }
-
-    .eyebrow {
-      font-size: 9px;
-      margin-bottom: 1rem;
-    }
-
-    .headline {
-      font-size: clamp(2rem, 10vw, 2.8rem);
-      margin-bottom: 1rem;
-      line-height: 1.05;
-    }
-
-    .description {
-      font-size: 0.875rem;
-      margin-bottom: 0;
-      line-height: 1.75;
-    }
-
-    /* Hide pillars and bottom logo on mobile — keep left panel lean */
-    .pillars { display: none; }
-    .left-bottom { display: none; }
-
-    /* Right panel — full width, comfortable padding */
-    .right {
-      min-height: auto;
-      padding: 2.25rem 1.5rem 4.5rem;
-      justify-content: flex-start;
-    }
-
-    .form-wrap {
-      max-width: 100%;
-    }
-
-    .form-label-top {
-      font-size: 9px;
-      margin-bottom: 0.85rem;
-    }
-
-    .form-headline {
-      font-size: clamp(1.6rem, 8vw, 2.2rem);
-      margin-bottom: 0.5rem;
-    }
-
-    .form-sub {
-      font-size: 0.85rem;
-      margin-bottom: 1.25rem;
-      line-height: 1.7;
-    }
-
-    .count-badge {
-      margin-bottom: 1.5rem;
-      padding: 0.35rem 0.85rem;
-    }
-
-    .count-text { font-size: 9px; }
-
-    .form-group { margin-bottom: 0.9rem; }
-
-    /* 16px prevents iOS auto-zoom on input focus */
-    input[type="text"],
-    input[type="email"],
-    select {
-      font-size: 16px;
-      padding: 0.85rem 1rem;
-    }
-
-    label { font-size: 9px; }
-
-    .submit-btn {
-      margin-top: 1.25rem;
-      padding: 1rem;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-    }
-
-    .privacy-note {
-      font-size: 8.5px;
-      margin-top: 0.85rem;
-    }
-
-    /* Success state */
-    .success-state {
-      padding: 1.5rem 0.5rem;
-    }
-
-    .success-logo {
-      width: 72px;
-      height: 72px;
-      margin-bottom: 1.25rem;
-    }
-
-    .success-headline { font-size: 1.75rem; }
-    .success-body { font-size: 0.875rem; }
-
-    .continue-btn {
-      display: block;
-      text-align: center;
-      padding: 1rem;
-      font-size: 11px;
-    }
-
-    /* Footer anchored to bottom */
-    .right-footer {
-      left: 1.5rem;
-      right: 1.5rem;
-      bottom: 1.25rem;
-      flex-direction: column;
-      gap: 0.4rem;
-      align-items: flex-start;
-    }
-
-    .footer-link { font-size: 8.5px; }
-
-  }
-
-  /* Small phones */
-  @media (max-width: 390px) {
-    .left { padding: 2rem 1.25rem 1.75rem; }
-    .right { padding: 2rem 1.25rem 4rem; }
-    .headline { font-size: 1.9rem; }
-    .form-headline { font-size: 1.5rem; }
-  }
-
-  /* Tablets — slightly adjusted */
-  @media (min-width: 769px) and (max-width: 1024px) {
-
-    .left { padding: 3rem 2.5rem; }
-    .right { padding: 3rem 2.5rem; }
-
-    .headline { font-size: clamp(2.2rem, 4vw, 3rem); }
-
-    .pillar-body { font-size: 0.825rem; }
-
-    .form-headline { font-size: clamp(1.6rem, 2.8vw, 2.2rem); }
-
-  }
-
+:root {
+  --ink:#1A1714; --ink-soft:#2E2925; --cream:#F5F0E8; --cream-deep:#EDE6D8;
+  --green:#5A6B53; --green-lt:#97B886; --green-pale:#C8DCC0; --green-dark:#3D4D37;
+  --gold:#C4973A; --warm-gray:#8A8278;
+  --border:rgba(26,23,20,0.10); --border-med:rgba(26,23,20,0.20);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--ink);
+  color:var(--cream);
+  font-family:'Lora',Georgia,serif;
+  font-size:17px;
+  line-height:1.7;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity:0.03;pointer-events:none;z-index:1000;
+}
+
+/* ── LAYOUT ──────────────────────────────────────── */
+.page{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;}
+
+/* ── LEFT ────────────────────────────────────────── */
+.left{
+  background:var(--ink);
+  padding:4rem;
+  display:flex;flex-direction:column;
+  justify-content:space-between;
+  position:relative;overflow:hidden;
+  min-height:100vh;
+}
+.left::after{
+  content:'OHM';
+  position:absolute;
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:28vw;font-weight:900;font-style:italic;
+  color:rgba(151,184,134,0.03);
+  bottom:-4vw;right:-4vw;
+  line-height:1;pointer-events:none;user-select:none;
+}
+
+/* Wordmark */
+.wordmark{
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:1.1rem;font-weight:900;letter-spacing:-0.01em;
+  color:var(--cream);text-decoration:none;
+  position:relative;z-index:2;
+}
+.wordmark em{font-style:italic;color:var(--green-lt);}
+
+/* Left content */
+.left-content{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding:2rem 0;}
+
+.eyebrow{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--green-lt);margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:0.75rem;
+}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--green-lt);}
+
+.headline{
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:clamp(2.4rem,3.5vw,4rem);
+  font-weight:900;line-height:1.03;
+  letter-spacing:-0.02em;
+  color:var(--cream);margin-bottom:1.5rem;
+}
+.headline em{font-style:italic;color:var(--green-lt);}
+
+.description{
+  font-size:0.95rem;color:rgba(245,240,232,0.6);
+  line-height:1.85;max-width:420px;margin-bottom:2.5rem;
+}
+.description strong{color:var(--cream);}
+
+/* Stat strip */
+.stat-strip{
+  display:flex;gap:0;margin-bottom:2.5rem;
+  padding:1.25rem 0;
+  border-top:1px solid rgba(245,240,232,0.08);
+  border-bottom:1px solid rgba(245,240,232,0.08);
+}
+.stat-item{display:flex;flex-direction:column;gap:3px;flex:1;}
+.stat-num{
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:1.4rem;font-weight:900;font-style:italic;
+  color:var(--green-lt);
+}
+.stat-label{
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:rgba(245,240,232,0.3);
+}
+
+/* Pillars */
+.pillars{display:flex;flex-direction:column;gap:0;flex:1;}
+.pillar{
+  display:flex;gap:1rem;align-items:flex-start;
+  padding:1rem 0;
+  border-bottom:1px solid rgba(245,240,232,0.06);
+  flex:1;
+}
+.pillar:last-child{border-bottom:none;}
+.pillar-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--green-lt);flex-shrink:0;margin-top:0.55rem;
+}
+.pillar-title{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--green-lt);margin-bottom:0.25rem;
+}
+.pillar-body{font-size:0.85rem;color:rgba(245,240,232,0.45);line-height:1.7;}
+
+/* Video frame */
+.video-frame{
+  position:relative;
+  border-radius:4px;
+  overflow:hidden;
+  margin-bottom:2.5rem;
+  aspect-ratio:16/9;
+  background:var(--ink-soft);
+  border:1px solid rgba(245,240,232,0.06);
+}
+.video-frame video{
+  width:100%;height:100%;
+  object-fit:cover;display:block;
+}
+.video-frame::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom, transparent 60%, rgba(26,23,20,0.4));
+  pointer-events:none;
+}
+.video-badge{
+  position:absolute;bottom:0.75rem;left:0.75rem;
+  font-family:'DM Mono',monospace;font-size:8px;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:rgba(245,240,232,0.5);
+  display:flex;align-items:center;gap:0.4rem;
+  z-index:2;
+}
+.video-badge-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--green-lt);
+}position:relative;z-index:2;}
+.left-bottom{position:relative;z-index:2;padding-top:1.5rem;}
+.left-bottom-logo{
+  width:44px;height:auto;object-fit:contain;
+  display:block;margin-bottom:1.25rem;
+  mix-blend-mode:screen;
+}
+.left-founder{
+  font-size:0.73rem;color:rgba(245,240,232,0.3);
+  font-style:italic;line-height:1.75;
+  border-left:2px solid var(--green);
+  padding-left:0.85rem;margin-bottom:1rem;
+}
+.left-meta{
+  font-family:'DM Mono',monospace;font-size:8px;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(245,240,232,0.18);line-height:2;
+}
+.left-meta a{color:var(--green-lt);text-decoration:none;}
+.left-meta a:hover{color:var(--cream);}
+
+/* ── RIGHT ───────────────────────────────────────── */
+.right{
+  background:var(--cream);
+  padding:4rem;
+  display:flex;flex-direction:column;
+  justify-content:center;
+  min-height:100vh;
+  position:relative;
+}
+
+.form-wrap{max-width:420px;width:100%;margin:0 auto;}
+
+/* Form eyebrow */
+.form-label-top{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--green);margin-bottom:0.75rem;
+  display:flex;align-items:center;gap:0.75rem;
+  opacity:0;animation:fadeUp 0.7s ease forwards 0.2s;
+}
+.form-label-top::before{content:'';width:20px;height:2px;background:var(--green);}
+
+.form-headline{
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;
+  color:var(--ink);line-height:1.1;
+  margin-bottom:0.5rem;
+  opacity:0;animation:fadeUp 0.8s ease forwards 0.3s;
+}
+.form-headline em{font-style:italic;color:var(--green);}
+
+.form-sub{
+  font-size:0.875rem;color:var(--warm-gray);
+  line-height:1.85;margin-bottom:1.5rem;
+  opacity:0;animation:fadeUp 0.8s ease forwards 0.4s;
+}
+
+/* Count badge */
+.count-badge{
+  display:inline-flex;align-items:center;gap:0.6rem;
+  background:rgba(90,107,83,0.08);
+  border:1px solid rgba(90,107,83,0.2);
+  border-radius:99px;padding:0.4rem 1rem;
+  margin-bottom:1.75rem;
+  opacity:0;animation:fadeUp 0.7s ease forwards 0.48s;
+}
+.count-dot{width:6px;height:6px;border-radius:50%;background:var(--green-lt);}
+.count-text{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.1em;color:var(--green);
+}
+
+/* Form fields */
+.form-group{
+  margin-bottom:1.1rem;
+  opacity:0;animation:fadeUp 0.6s ease forwards;
+}
+.form-group:nth-child(1){animation-delay:0.52s;}
+.form-group:nth-child(2){animation-delay:0.58s;}
+.form-group:nth-child(3){animation-delay:0.64s;}
+
+label{
+  display:block;font-family:'DM Mono',monospace;
+  font-size:10px;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--warm-gray);margin-bottom:0.45rem;
+}
+input[type="text"],
+input[type="email"],
+select{
+  width:100%;padding:0.9rem 1rem;
+  background:white;border:1px solid var(--border-med);
+  border-radius:2px;
+  font-family:'Lora',Georgia,serif;font-size:0.95rem;
+  color:var(--ink);outline:none;
+  transition:border-color 0.2s,box-shadow 0.2s;
+  appearance:none;
+}
+input:focus,select:focus{
+  border-color:var(--green);
+  box-shadow:0 0 0 3px rgba(90,107,83,0.1);
+}
+input.err{border-color:#A32D2D;box-shadow:0 0 0 3px rgba(163,45,45,0.08);}
+select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A8278' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 1rem center;
+  padding-right:2.5rem;cursor:pointer;
+}
+
+.submit-btn{
+  width:100%;padding:1rem;margin-top:0.5rem;
+  background:var(--ink);color:var(--cream);
+  border:none;border-radius:2px;cursor:pointer;
+  font-family:'DM Mono',monospace;font-size:12px;
+  letter-spacing:0.15em;text-transform:uppercase;
+  transition:background 0.2s,transform 0.15s;
+  opacity:0;animation:fadeUp 0.6s ease forwards 0.72s;
+}
+.submit-btn:hover{background:var(--green);transform:translateY(-1px);}
+.submit-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+
+.privacy-note{
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:0.08em;color:rgba(26,23,20,0.35);
+  text-align:center;line-height:1.8;margin-top:1rem;
+  opacity:0;animation:fadeUp 0.6s ease forwards 0.8s;
+}
+
+/* Success state */
+.success-state{
+  display:none;text-align:center;
+  padding:2rem 0;max-width:420px;
+  width:100%;margin:0 auto;
+}
+.success-logo{
+  width:110px;height:110px;object-fit:contain;
+  display:block;margin:0 auto 1.75rem;
+}
+.success-headline{
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:clamp(1.8rem,3vw,2.5rem);font-weight:700;
+  color:var(--ink);line-height:1.15;margin-bottom:0.75rem;
+}
+.success-headline em{font-style:italic;color:var(--green);}
+.success-body{
+  font-size:0.9rem;color:var(--warm-gray);
+  line-height:1.85;margin-bottom:2rem;max-width:360px;
+  margin-left:auto;margin-right:auto;
+}
+.continue-btn{
+  display:inline-block;padding:1rem 2.5rem;
+  background:var(--ink);color:var(--cream);
+  border-radius:2px;text-decoration:none;
+  font-family:'DM Mono',monospace;font-size:11px;
+  letter-spacing:0.15em;text-transform:uppercase;
+  transition:background 0.2s,transform 0.15s;
+}
+.continue-btn:hover{background:var(--green);transform:translateY(-1px);}
+.success-num{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--warm-gray);margin-top:1.25rem;
+}
+
+/* Right footer */
+.right-footer{
+  position:absolute;bottom:2rem;left:4rem;right:4rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.footer-link{
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(26,23,20,0.3);text-decoration:none;
+  transition:color 0.2s;
+}
+.footer-link:hover{color:var(--green);}
+
+/* ── MARQUEE STRIP ───────────────────────────────── */
+.marquee-strip{
+  position:fixed;bottom:0;left:0;right:0;
+  border-top:1px solid rgba(245,240,232,0.08);
+  background:var(--ink);
+  padding:0.75rem 0;
+  overflow:hidden;
+  z-index:50;
+}
+.marquee-track{
+  display:flex;gap:0;
+  white-space:nowrap;
+  animation:marquee 30s linear infinite;
+}
+@keyframes marquee{
+  from{transform:translateX(0);}
+  to{transform:translateX(-50%);}
+}
+.marquee-item{
+  display:inline-flex;align-items:center;gap:2rem;
+  padding:0 2rem;
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:rgba(245,240,232,0.45);
+}
+.marquee-dot{
+  width:4px;height:4px;border-radius:50%;
+  background:var(--green-lt);flex-shrink:0;
+}
+/* Add padding to page so marquee doesn't cover content */
+.page{padding-bottom:42px;}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(16px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* ── MOBILE ──────────────────────────────────────── */
+@media(max-width:768px){
+  body{font-size:16px;}
+  .page{grid-template-columns:1fr;grid-template-rows:auto auto;}
+  .left{min-height:auto;padding:2.5rem 1.5rem;}
+  .left-content{padding:2rem 0;}
+  .stat-strip{gap:1.25rem;}
+  .stat-num{font-size:1.1rem;}
+  .video-frame{display:none;}
+  .headline{font-size:clamp(2rem,10vw,2.8rem);}
+  .description{font-size:0.875rem;}
+  .left-bottom{display:none;}
+  .right{min-height:auto;padding:2.5rem 1.5rem 5rem;}
+  .right-footer{left:1.5rem;right:1.5rem;}
+  .form-wrap{max-width:100%;}
+}
+@media(max-width:390px){
+  .left{padding:2rem 1.25rem;}
+  .right{padding:2rem 1.25rem 4.5rem;}
+  .headline{font-size:1.9rem;}
+  .form-headline{font-size:1.5rem;}
+}
+@media(min-width:769px) and (max-width:1024px){
+  .left{padding:3rem 2.5rem;}
+  .right{padding:3rem 2.5rem 5rem;}
+}
 </style>
 </head>
 <body>
 
 <div class="page">
 
-  <!-- ── LEFT SIDE ──────────────────────────────── -->
+  <!-- ── LEFT ─────────────────────────────────────── -->
   <div class="left">
-    <div class="left-top">
+    <div>
       <a href="https://www.onlyhumanmade.org" class="wordmark">Only<em>Human</em>Made</a>
     </div>
 
     <div class="left-content">
       <p class="eyebrow">Certification for human creators</p>
-
       <h1 class="headline">Your work is<br><em>irreplaceable.</em><br>Prove it.</h1>
-
       <p class="description">
         In a world flooded with AI-generated content, the most valuable thing you can say about your work is also the most human: <strong>I made this.</strong><br><br>
         OnlyHumanMade is the independent certification body that verifies, seals, and permanently registers human-made creative work — so the people who care can find it, trust it, and pay for it.
       </p>
+
+      <div class="stat-strip">
+        <div class="stat-item">
+          <span class="stat-num">500</span>
+          <span class="stat-label">Founding spots</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">3</span>
+          <span class="stat-label">Cert tiers</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">48hr</span>
+          <span class="stat-label">Avg review</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">2026</span>
+          <span class="stat-label">Nonprofit</span>
+        </div>
+      </div>
 
       <div class="pillars">
         <div class="pillar">
@@ -831,72 +458,77 @@
           <div class="pillar-dot"></div>
           <div>
             <p class="pillar-title">Worth more</p>
-            <p class="pillar-body">Certified human-made work commands a 3.4× premium over uncertified equivalents. The seal is a business argument, not just a badge.</p>
+            <p class="pillar-body">Certified human-made work commands a premium over uncertified equivalents. The seal is a business argument, not just a badge.</p>
           </div>
         </div>
       </div>
     </div>
 
     <div class="left-bottom">
-      <div class="logo-mark-wrap">
-        <img src="W_Mono_OHM_Logo_.png" alt="OHM monogram" class="logo-mark"/>
-      </div>
-      <div class="logo-tagline">
-        OnlyHumanMade.org<br>
-        Est. 2026 · A nonprofit<br>
-        Certification · Registry · Community
-      </div>
-      <div class="logo-contact">
-        <span class="logo-contact-label">Questions?</span>
-        <a href="mailto:hello@onlyhumanmade.org" class="logo-contact-email">hello@onlyhumanmade.org</a>
-      </div>
+      <img src="W_Mono_OHM_Logo_.png" alt="OHM" class="left-bottom-logo"/>
+      <p class="left-founder">"I built OHM after a client asked me if my film photographs were AI-generated. That question changed everything."<br>— Rikardo, Founder</p>
+      <p class="left-meta">
+        OnlyHumanMade.org · EIN: 42-2512817<br>
+        Est. 2026 · Nonprofit · Austin, TX<br>
+        <a href="mailto:hello@onlyhumanmade.org">hello@onlyhumanmade.org</a>
+      </p>
     </div>
   </div>
 
-  <!-- ── RIGHT SIDE — FORM ──────────────────────── -->
+  <!-- ── RIGHT ─────────────────────────────────────── -->
   <div class="right">
     <div class="form-wrap" id="form-wrap">
 
-      <p class="form-label-top">Join the waitlist</p>
-
-      <h2 class="form-headline">Be among the<br>first <em>certified.</em></h2>
-
-      <p class="form-sub">We're opening certification to our first 500 founding creators. Join the waitlist and get founding member pricing — 50% off, for life.</p>
+      <p class="form-label-top">Founding member waitlist</p>
+      <h2 class="form-headline">Be among the<br>first <em>500.</em></h2>
+      <p class="form-sub">Reserve your founding spot now and get 50% off certification pricing for life — locked in before we open to the public.</p>
 
       <div class="count-badge">
         <div class="count-dot"></div>
-        <span class="count-text"><strong>12</strong> members joined · <strong>488</strong> spots remaining</span>
+        <span class="count-text" id="count-display">Loading...</span>
       </div>
 
       <form id="waitlist-form" onsubmit="handleSubmit(event)" novalidate>
 
         <div class="form-group">
           <label for="name">Your name</label>
-          <input type="text" id="name" name="name" placeholder="First and last name" autocomplete="name" required />
+          <input type="text" id="name" name="name" placeholder="First and last name" autocomplete="name" required/>
         </div>
 
         <div class="form-group">
           <label for="email">Email address</label>
-          <input type="email" id="email" name="email" placeholder="you@yourdomain.com" autocomplete="email" required />
+          <input type="email" id="email" name="email" placeholder="you@yourdomain.com" autocomplete="email" required/>
         </div>
 
-        <button type="submit" class="submit-btn">Reserve my spot →</button>
+        <div class="form-group">
+          <label for="discipline">Your creative discipline</label>
+          <select id="discipline" name="discipline">
+            <option value="" disabled selected>What do you make?</option>
+            <option value="photography">Photography</option>
+            <option value="illustration">Illustration</option>
+            <option value="writing">Writing / Journalism</option>
+            <option value="music">Music / Audio</option>
+            <option value="design">Graphic Design</option>
+            <option value="video">Film / Video</option>
+            <option value="fine-art">Fine Art / Painting</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submit-btn">Reserve my founding spot →</button>
 
       </form>
 
-      <p class="privacy-note">
-        No spam. No selling your data. Ever.<br>
-        We'll email you when your spot is ready — nothing else until then.
-      </p>
+      <p class="privacy-note">No spam. No selling your data. Ever.<br>We'll email you when your spot is ready — nothing else until then.</p>
     </div>
 
-    <!-- Success state (shown after submit) -->
+    <!-- Success state -->
     <div class="success-state" id="success-state">
-      <img src="Green_Mono_OHM_Logo_.png" alt="OHM seal" class="success-logo"/>
+      <img src="IconIG_OHM_Logo_.png" alt="OHM seal" class="success-logo"/>
       <h2 class="success-headline">You're on the list.<br><em>Welcome.</em></h2>
       <p class="success-body">One more step — we just need a few more details to complete your registration. Takes 30 seconds.</p>
-      <a id="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSdlwQzYtNnQBjR1dv0BhbqOGxhPYSdSLUtVh7encEgxzQJloQ/viewform" target="_blank" class="continue-btn">Complete my registration →</a>
-      <p class="success-num" id="position-num" style="margin-top:1.5rem;">You are #13 on the waitlist.</p>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdlwQzYtNnQBjR1dv0BhbqOGxhPYSdSLUtVh7encEgxzQJloQ/viewform" target="_blank" class="continue-btn">Complete my registration →</a>
+      <p class="success-num" id="position-num">You are #13 on the waitlist.</p>
     </div>
 
     <div class="right-footer">
@@ -908,84 +540,109 @@
 </div>
 
 <script>
-  // ── LIVE WAITLIST COUNT FROM GOOGLE SHEETS ───────────────
-  const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRUPX5cvPNmHvYxG2IE8y6LA_IwS_c2Cxh5y_OywL-DjpkjxDMq_mt7iKFPJz-oDkVyrMXf6kFxpXAR/pub?output=csv';
-  const TOTAL_SPOTS = 500;
+// ── LIVE WAITLIST COUNT ───────────────────────────────────
+const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRUPX5cvPNmHvYxG2IE8y6LA_IwS_c2Cxh5y_OywL-DjpkjxDMq_mt7iKFPJz-oDkVyrMXf6kFxpXAR/pub?output=csv';
+const TOTAL_SPOTS = 500;
+let count = 12;
 
-  let count = 12; // fallback if fetch fails
+async function loadCount() {
+  try {
+    const res  = await fetch(SHEET_CSV);
+    const text = await res.text();
+    const rows = text.trim().split('\n').filter(r => r.trim().length > 0);
+    const real = Math.max(0, rows.length - 1);
+    if (real > 0) count = real;
+  } catch(e) {}
+  updateBadge();
+}
 
-  async function loadCount() {
-    try {
-      const res  = await fetch(SHEET_CSV);
-      const text = await res.text();
-      // Count rows minus the header row
-      const rows = text.trim().split('\n').filter(r => r.trim().length > 0);
-      const real = Math.max(0, rows.length - 1); // subtract header
-      if (real > 0) count = real;
-    } catch (e) {
-      console.log('Using fallback count:', count);
-    }
-    updateBadge();
-  }
+function updateBadge() {
+  const remaining = TOTAL_SPOTS - count;
+  const badge = document.getElementById('count-display');
+  if (badge) badge.innerHTML = '<strong>' + count + '</strong> members joined · <strong>' + remaining + '</strong> spots remaining';
+}
 
-  function updateBadge() {
-    const remaining = TOTAL_SPOTS - count;
-    const badge = document.querySelector('.count-text');
-    if (badge) {
-      badge.innerHTML = `<strong>${count}</strong> members joined · <strong>${remaining}</strong> spots remaining`;
-    }
-  }
+loadCount();
 
-  // Load on page open
-  loadCount();
+// ── FORM SUBMIT ───────────────────────────────────────────
+function handleSubmit(e) {
+  e.preventDefault();
+  const name  = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const btn   = document.getElementById('submit-btn');
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  // Clear errors
+  document.getElementById('name').classList.remove('err');
+  document.getElementById('email').classList.remove('err');
 
-    const name  = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
+  if (!name) { document.getElementById('name').classList.add('err'); return; }
+  if (!email || !email.includes('@')) { document.getElementById('email').classList.add('err'); return; }
 
-    if (!name) {
-      const input = document.getElementById('name');
-      input.style.borderColor = '#A32D2D';
-      input.focus();
-      setTimeout(() => input.style.borderColor = '', 2000);
-      return;
-    }
+  btn.disabled = true;
+  btn.textContent = 'Reserving your spot…';
 
-    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email || !emailRe.test(email)) {
-      const input = document.getElementById('email');
-      input.style.borderColor = '#A32D2D';
-      input.focus();
-      setTimeout(() => input.style.borderColor = '', 2000);
-      return;
-    }
+  // Submit to Google Form
+  const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdlwQzYtNnQBjR1dv0BhbqOGxhPYSdSLUtVh7encEgxzQJloQ/formResponse';
+  const formData = new FormData();
+  formData.append('entry.name', name);
+  formData.append('entry.email', email);
 
-    count++;
-    document.getElementById('position-num').textContent = `You are #${count} on the waitlist.`;
-    updateBadge();
+  fetch(formUrl, { method:'POST', body:formData, mode:'no-cors' })
+    .catch(() => {})
+    .finally(() => {
+      count++;
+      updateBadge();
+      document.getElementById('position-num').textContent = 'You are #' + count + ' on the waitlist.';
 
-    const formWrap = document.getElementById('form-wrap');
-    const successState = document.getElementById('success-state');
-
-    formWrap.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
-    formWrap.style.opacity = '0';
-    formWrap.style.transform = 'translateY(12px)';
-
-    setTimeout(() => {
-      formWrap.style.display = 'none';
-      successState.style.display = 'block';
-      successState.style.opacity = '0';
-      successState.style.transform = 'translateY(12px)';
-      successState.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-      requestAnimationFrame(() => {
-        successState.style.opacity = '1';
-        successState.style.transform = 'translateY(0)';
-      });
-    }, 350);
-  }
+      const formWrap = document.getElementById('form-wrap');
+      const successState = document.getElementById('success-state');
+      formWrap.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+      formWrap.style.opacity = '0';
+      formWrap.style.transform = 'translateY(12px)';
+      setTimeout(() => {
+        formWrap.style.display = 'none';
+        successState.style.display = 'block';
+        successState.style.opacity = '0';
+        successState.style.transform = 'translateY(16px)';
+        successState.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        setTimeout(() => {
+          successState.style.opacity = '1';
+          successState.style.transform = 'translateY(0)';
+        }, 30);
+      }, 380);
+    });
+}
 </script>
+<!-- ── MARQUEE STRIP ──────────────────────────────── -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="marquee-dot"></span>Illustration</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Literary fiction</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Original music</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Journalism</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Photography</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Handmade goods</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Film & video</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Architecture</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Graphic design</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Poetry</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Ceramic art</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Custom software</span>
+    <!-- Duplicate for seamless loop -->
+    <span class="marquee-item"><span class="marquee-dot"></span>Illustration</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Literary fiction</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Original music</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Journalism</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Photography</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Handmade goods</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Film & video</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Architecture</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Graphic design</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Poetry</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Ceramic art</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Custom software</span>
+  </div>
+</div>
 
 </body>
 </html>
