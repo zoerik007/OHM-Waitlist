@@ -1534,8 +1534,8 @@
 <div class="stats">
   <div class="stats-inner">
     <div class="stat reveal">
-      <div class="stat-num">500</div>
-      <div class="stat-label">Founding spots<br>available</div>
+      <div class="stat-num" id="spots-remaining-2">—</div>
+      <div class="stat-label">Founding spots<br>remaining</div>
     </div>
     <div class="stat reveal">
       <div class="stat-num">48hr</div>
@@ -1761,7 +1761,10 @@
       if (real > 0) joined = real;
     } catch(e) {}
     const el = document.getElementById('spots-remaining');
-    if (el) el.textContent = (TOTAL - joined).toString();
+    const el2 = document.getElementById('spots-remaining-2');
+    const remaining = (TOTAL - joined).toString();
+    if (el) el.textContent = remaining;
+    if (el2) el2.textContent = remaining;
   })();
 
   // ── HERO MEDIA ROTATION ──────────────────────────────────
