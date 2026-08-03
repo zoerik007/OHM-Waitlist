@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How It Works — OnlyHumanMade</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="256x256" href="favicon-256.png">
+  <link rel="apple-touch-icon" href="favicon-256.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:        #1A1714;
+  --ink-soft:   #2E2925;
+  --cream:      #F5F0E8;
+  --cream-deep: #EDE6D8;
+  --green:      #5A6B53;
+  --green-lt:   #97B886;
+  --green-pale: #C8DCC0;
+  --green-dark: #3D4D37;
+  --gold:       #C4973A;
+  --warm-gray:  #8A8278;
+  --border:     rgba(26,23,20,0.10);
+  --border-med: rgba(26,23,20,0.18);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 16px; line-height: 1.7;
+  overflow-x: hidden;
+}
+body::after {
+  content: ''; position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.022; pointer-events: none; z-index: 999;
+}
+
+/* ── NAV ───────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 3rem;
+  background: rgba(245,240,232,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid var(--border);
+}
+.nav-logo { font-family: 'Playfair Display', Georgia, serif; font-size: 1.1rem; font-weight: 900; letter-spacing: -0.01em; color: var(--ink); text-decoration: none; }
+.nav-logo em { font-style: italic; color: var(--green); }
+.nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+.nav-links a { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-gray); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--ink); }
+.nav-cta { color: var(--cream) !important; background: var(--ink); padding: 0.5rem 1.25rem; border-radius: 2px; text-decoration: none; transition: background 0.2s !important; }
+.nav-cta:hover { background: var(--green) !important; }
+
+/* ── HERO ──────────────────────────────────────────────── */
+.hero {
+  background: var(--ink);
+  padding: 10rem 3rem 6rem;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '6';
+  position: absolute; right: -5vw; top: 50%; transform: translateY(-50%);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 60vw; font-weight: 900; font-style: italic;
+  color: rgba(245,240,232,0.025); line-height: 1;
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--green-lt); margin-bottom: 1.5rem;
+  display: flex; align-items: center; justify-content: center; gap: 1rem;
+  opacity: 0; animation: fadeUp 0.7s ease forwards 0.2s;
+}
+.hero-eyebrow::before, .hero-eyebrow::after { content: ''; width: 36px; height: 1px; background: var(--green-lt); }
+.hero-headline {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  font-weight: 900; color: var(--cream);
+  letter-spacing: -0.02em; line-height: 1.05;
+  margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp 0.8s ease forwards 0.3s;
+}
+.hero-headline em { font-style: italic; color: var(--green-lt); }
+.hero-sub {
+  font-size: 1.1rem; color: rgba(245,240,232,0.55);
+  max-width: 580px; margin: 0 auto 3rem;
+  line-height: 1.85;
+  opacity: 0; animation: fadeUp 0.8s ease forwards 0.42s;
+}
+.hero-meta {
+  display: inline-flex; align-items: center; gap: 2rem;
+  opacity: 0; animation: fadeUp 0.7s ease forwards 0.54s;
+}
+.hero-meta-item {
+  display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+}
+.hero-meta-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2rem; font-weight: 900; font-style: italic;
+  color: var(--green-lt); line-height: 1;
+}
+.hero-meta-lbl {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(245,240,232,0.35);
+}
+.hero-meta-div { width: 1px; height: 40px; background: rgba(245,240,232,0.1); }
+
+/* ── PROCESS STEPS ─────────────────────────────────────── */
+.process { max-width: 1100px; margin: 0 auto; padding: 6rem 3rem; }
+
+.process-step {
+  display: grid; grid-template-columns: 80px 1fr;
+  gap: 0 3rem; margin-bottom: 0;
+  position: relative;
+}
+
+/* vertical line connecting steps */
+.process-step:not(:last-child) .step-line {
+  position: absolute;
+  left: 39px; top: 80px; bottom: -40px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--green), transparent);
+}
+
+.step-left { display: flex; flex-direction: column; align-items: center; padding-top: 0; }
+
+.step-circle {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: var(--ink); border: 2px solid var(--green);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; position: relative; z-index: 2;
+}
+.step-circle-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.6rem; font-weight: 900; font-style: italic;
+  color: var(--green-lt);
+}
+
+.step-right { padding: 0.75rem 0 5rem; }
+
+.step-category {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 0.5rem;
+}
+
+.step-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+  font-weight: 700; color: var(--ink);
+  line-height: 1.15; margin-bottom: 1rem;
+}
+
+.step-body {
+  font-size: 1rem; color: var(--warm-gray);
+  line-height: 1.85; max-width: 620px;
+  margin-bottom: 1.5rem;
+}
+
+.step-details {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem; max-width: 620px;
+}
+
+.detail-card {
+  background: white; border: 1px solid var(--border);
+  border-left: 3px solid var(--green);
+  padding: 1rem 1.25rem;
+}
+.detail-label {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 0.4rem;
+}
+.detail-text { font-size: 0.85rem; color: var(--warm-gray); line-height: 1.6; }
+
+/* Alternating dark step */
+.step-dark .step-right {
+  background: var(--ink); padding: 2rem 2.5rem 5rem;
+  margin-left: -0.5rem; position: relative;
+}
+.step-dark .step-title { color: var(--cream); }
+.step-dark .step-body { color: rgba(245,240,232,0.55); }
+.step-dark .detail-card { background: rgba(245,240,232,0.04); border-color: rgba(245,240,232,0.08); border-left-color: var(--green-lt); }
+.step-dark .detail-label { color: var(--green-lt); }
+.step-dark .detail-text { color: rgba(245,240,232,0.5); }
+
+/* ── PROOF SECTION ─────────────────────────────────────── */
+.proof-section {
+  background: var(--cream-deep);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 6rem 3rem;
+}
+.proof-inner { max-width: 1100px; margin: 0 auto; }
+.proof-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; align-items: center;
+}
+.proof-label {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 1.5rem;
+}
+.proof-headline {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  font-weight: 700; color: var(--ink); line-height: 1.15;
+  margin-bottom: 1.25rem;
+}
+.proof-headline em { font-style: italic; color: var(--green); }
+.proof-body { font-size: 0.95rem; color: var(--warm-gray); line-height: 1.85; }
+
+.proof-card {
+  background: var(--ink); padding: 2.5rem;
+  border-radius: 2px; position: relative;
+}
+.proof-card-label {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--green-lt); margin-bottom: 1rem;
+}
+.proof-row {
+  display: flex; justify-content: space-between;
+  padding: 0.75rem 0; border-bottom: 1px solid rgba(245,240,232,0.06);
+  font-size: 0.85rem;
+}
+.proof-row:last-child { border-bottom: none; }
+.proof-key { color: rgba(245,240,232,0.4); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; }
+.proof-val { color: var(--cream); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.05em; }
+.proof-val.green { color: var(--green-lt); }
+
+/* ── CATEGORIES ────────────────────────────────────────── */
+.categories { max-width: 1100px; margin: 0 auto; padding: 6rem 3rem; }
+.cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 3rem; }
+.cat-card {
+  background: white; border: 1px solid var(--border);
+  border-top: 3px solid var(--green); padding: 1.75rem 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.cat-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(26,23,20,0.08); }
+.cat-icon { font-size: 1.5rem; margin-bottom: 1rem; }
+.cat-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem;
+}
+.cat-desc { font-size: 0.825rem; color: var(--warm-gray); line-height: 1.65; }
+
+/* ── CTA ───────────────────────────────────────────────── */
+.bottom-cta {
+  background: var(--ink); padding: 6rem 3rem;
+  text-align: center;
+}
+.cta-headline {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 900; color: var(--cream);
+  letter-spacing: -0.02em; margin-bottom: 1rem;
+}
+.cta-headline em { font-style: italic; color: var(--green-lt); }
+.cta-sub { font-size: 1rem; color: rgba(245,240,232,0.5); margin-bottom: 2.5rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+.cta-btns { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+.btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--green); color: var(--cream); padding: 1rem 2rem; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: background 0.2s, transform 0.15s; }
+.btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+.btn-ghost { display: inline-flex; align-items: center; gap: 0.5rem; background: transparent; color: rgba(245,240,232,0.6); padding: 0.95rem 1.75rem; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; border: 1.5px solid rgba(245,240,232,0.15); border-radius: 2px; transition: all 0.2s; }
+.btn-ghost:hover { border-color: var(--cream); color: var(--cream); }
+
+footer { padding: 2.5rem 3rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.footer-logo { font-family: 'Playfair Display', Georgia, serif; font-size: 1rem; font-weight: 900; color: var(--ink); }
+.footer-logo em { font-style: italic; color: var(--green); }
+.footer-copy { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: rgba(26,23,20,0.3); }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+.reveal { opacity:0; transform:translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+@media (max-width: 768px) {
+  nav { padding: 1.25rem 1.5rem; }
+  .nav-links { display: none; }
+  .hero, .process, .proof-section, .categories, .bottom-cta { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .process-step { grid-template-columns: 60px 1fr; gap: 0 1.5rem; }
+  .step-circle { width: 60px; height: 60px; }
+  .step-circle-num { font-size: 1.2rem; }
+  .process-step:not(:last-child) .step-line { left: 29px; }
+  .proof-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .cat-grid { grid-template-columns: repeat(2,1fr); }
+}
+
+  /* ── COMING SOON MODAL ───────────────────────────── */
+  .cs-overlay{display:none;position:fixed;inset:0;background:rgba(26,23,20,0.75);z-index:500;align-items:center;justify-content:center;padding:2rem;backdrop-filter:blur(4px);}
+  .cs-overlay.visible{display:flex;}
+  .cs-box{background:#F5F0E8;max-width:420px;width:100%;padding:2.5rem;border-radius:2px;position:relative;border-top:3px solid #5A6B53;}
+  .cs-close{position:absolute;top:1rem;right:1rem;background:none;border:none;cursor:pointer;font-size:18px;color:#8A8278;}
+  .cs-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#5A6B53;margin-bottom:0.75rem;display:flex;align-items:center;gap:0.5rem;}
+  .cs-eyebrow::before{content:'';width:16px;height:2px;background:#5A6B53;}
+  .cs-headline{font-family:'Playfair Display',Georgia,serif;font-size:1.6rem;font-weight:700;color:#1A1714;line-height:1.15;margin-bottom:0.5rem;}
+  .cs-headline em{font-style:italic;color:#5A6B53;}
+  .cs-body{font-size:0.875rem;color:#8A8278;line-height:1.85;margin-bottom:1.75rem;}
+  .cs-btn{display:block;width:100%;padding:1rem;background:#1A1714;color:#F5F0E8;border:none;border-radius:2px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;text-align:center;text-decoration:none;cursor:pointer;transition:background 0.2s;}
+  .cs-btn:hover{background:#5A6B53;}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="onlyhumanmade.html" class="nav-logo">Only<em>Human</em>Made</a>
+  <ul class="nav-links">
+    <li><a href="ohm-how-it-works.html" class="active">How it works</a></li>
+    <li><a href="ohm-pricing.html">Pricing</a></li>
+    <li><a href="ohm-registry.html">Registry</a></li>
+    <li><a href="onlyhumanmade.html#about">About</a></li>
+    <li><a href="#" onclick="openModal(event)" class="nav-cta">Get certified</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">The certification process</p>
+  <h1 class="hero-headline">Six steps to a seal<br><em>that means something.</em></h1>
+  <p class="hero-sub">Every OHM certification goes through the same rigorous process — because the seal is only worth anything if the process behind it is unimpeachable.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="hero-meta-num">6</span>
+      <span class="hero-meta-lbl">Steps</span>
+    </div>
+    <div class="hero-meta-div"></div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-num">48hr</span>
+      <span class="hero-meta-lbl">Studio turnaround</span>
+    </div>
+    <div class="hero-meta-div"></div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-num">∞</span>
+      <span class="hero-meta-lbl">Permanent record</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS STEPS -->
+<section class="process">
+
+  <!-- Step 1 -->
+  <div class="process-step reveal">
+    <div class="step-line"></div>
+    <div class="step-left">
+      <div class="step-circle"><span class="step-circle-num">1</span></div>
+    </div>
+    <div class="step-right">
+      <p class="step-category">Submission</p>
+      <h2 class="step-title">You submit your work and process documentation</h2>
+      <p class="step-body">You complete the submission form with your work file, your creative category, a written description of your process, and your process documentation — the evidence of how the work was made. This is not a bureaucratic formality. The documentation is the foundation of your certification's credibility.</p>
+      <div class="step-details">
+        <div class="detail-card">
+          <p class="detail-label">What counts as documentation</p>
+          <p class="detail-text">Procreate timelapses · Photoshop history · Ableton session files · Word revision history · Git commits · WIP photos · Raw files with EXIF · Handwritten notes · Darkroom contact sheets</p>
+        </div>
+        <div class="detail-card">
+          <p class="detail-label">What you also declare</p>
+          <p class="detail-text">Your AI disclosure — whether any AI tools were used, and if so, in what capacity. Honest disclosure is required. Our policy covers every grey zone in detail.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="process-step reveal">
+    <div class="step-line"></div>
+    <div class="step-left">
+      <div class="step-circle"><span class="step-circle-num">2</span></div>
+    </div>
+    <div class="step-right">
+      <p class="step-category">Forensics</p>
+      <h2 class="step-title">Metadata and file forensics</h2>
+      <p class="step-body">Before a human auditor ever sees your submission, our system runs a technical analysis of your files — checking metadata, file creation timestamps, edit histories, EXIF data, and file signatures for consistency with your declared process. This isn't an AI detector. It's a consistency check.</p>
+      <div class="step-details">
+        <div class="detail-card">
+          <p class="detail-label">What we check</p>
+          <p class="detail-text">File creation and modification timestamps · Camera EXIF data · Edit history consistency · File format signatures · Metadata field completeness</p>
+        </div>
+        <div class="detail-card">
+          <p class="detail-label">What we don't do</p>
+          <p class="detail-text">We do not use AI content detectors. They are unreliable and getting less reliable every month. Forensics flags inconsistencies — the human auditor makes the judgment.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3 - dark -->
+  <div class="process-step step-dark reveal">
+    <div class="step-line"></div>
+    <div class="step-left">
+      <div class="step-circle" style="border-color:var(--green-lt)"><span class="step-circle-num">3</span></div>
+    </div>
+    <div class="step-right">
+      <p class="step-category" style="color:var(--green-lt)">Human review</p>
+      <h2 class="step-title">A domain expert reviews your work</h2>
+      <p class="step-body">This is what makes OHM different from every other certification or registry. A human auditor — someone who actually works in your creative field — reviews your submission. A writer reviews writing. An illustrator reviews illustration. A musician reviews music. They read your process description, examine your documentation, and make a judgment: does this work meet the human-made standard?</p>
+      <div class="step-details">
+        <div class="detail-card">
+          <p class="detail-label">Our auditors are</p>
+          <p class="detail-text">Working professionals in their creative field · Trained in the OHM certification policy · Paid fairly for their expert time · Bound by a non-disclosure agreement</p>
+        </div>
+        <div class="detail-card">
+          <p class="detail-label">The auditor looks for</p>
+          <p class="detail-text">Evidence of genuine human creative decision-making · Consistency between the work and the process · Authenticity of the documentation · Honest AI disclosure</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="process-step reveal">
+    <div class="step-line"></div>
+    <div class="step-left">
+      <div class="step-circle"><span class="step-circle-num">4</span></div>
+    </div>
+    <div class="step-right">
+      <p class="step-category">Legal foundation</p>
+      <h2 class="step-title">You sign the Maker's Oath</h2>
+      <p class="step-body">Before your certification is issued, you sign the Maker's Oath — a legally binding declaration of human authorship. This is not a terms and conditions checkbox. It creates genuine legal liability for false certification, which is what makes it credible. The Oath is the mechanism by which the OHM seal derives its legal weight and its trustworthiness.</p>
+      <div class="step-details">
+        <div class="detail-card">
+          <p class="detail-label">The Oath covers</p>
+          <p class="detail-text">Declaration of primary human authorship · Confirmation of AI disclosure · Consent to spot audits · Acknowledgment of legal consequences for false certification</p>
+        </div>
+        <div class="detail-card">
+          <p class="detail-label">Consequences of false oath</p>
+          <p class="detail-text">Immediate decertification of all works · Permanent ban from OHM · Public notice of violation · Civil legal action</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 5 - dark -->
+  <div class="process-step step-dark reveal">
+    <div class="step-line"></div>
+    <div class="step-left">
+      <div class="step-circle" style="border-color:var(--green-lt)"><span class="step-circle-num">5</span></div>
+    </div>
+    <div class="step-right">
+      <p class="step-category" style="color:var(--green-lt)">Permanent record</p>
+      <h2 class="step-title">Your work is written to the blockchain</h2>
+      <p class="step-body">On certification approval, a cryptographic record of your work is written permanently to the Polygon blockchain. A SHA-256 hash of your certified file — a unique 64-character fingerprint — is timestamped and stored in an immutable public ledger. This record cannot be altered, deleted, or forged. It will outlast OHM, outlast any platform, and outlast any algorithm.</p>
+      <div class="step-details">
+        <div class="detail-card">
+          <p class="detail-label">What goes on chain</p>
+          <p class="detail-text">SHA-256 hash of the certified file · Hashed creator identity · Timestamp · Certification tier · OHM registry URI</p>
+        </div>
+        <div class="detail-card">
+          <p class="detail-label">What stays off chain</p>
+          <p class="detail-text">Your name, personal details, and the file itself. Privacy-preserving by design. Only the fingerprint is public — not the file it belongs to.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 6 -->
+  <div class="process-step reveal">
+    <div class="step-left">
+      <div class="step-circle"><span class="step-circle-num">6</span></div>
+    </div>
+    <div class="step-right">
+      <p class="step-category">The seal</p>
+      <h2 class="step-title">Your OHM seal is issued. The work is yours to prove.</h2>
+      <p class="step-body">Your certification is live. You receive your OHM seal — a digital badge you can place on your portfolio, your social profiles, your invoices, your prints. Anyone who sees it can verify it instantly at onlyhumanmade.org/verify. And because it's on the blockchain, it will still be verifiable in twenty years.</p>
+      <div class="step-details">
+        <div class="detail-card">
+          <p class="detail-label">What you receive</p>
+          <p class="detail-text">OHM seal (digital + print) · Registry entry URL · Blockchain transaction hash · Embeddable verification widget · Public creator profile listing</p>
+        </div>
+        <div class="detail-card">
+          <p class="detail-label">Ongoing obligations</p>
+          <p class="detail-text">You may be selected for a random spot audit at any time. Cooperating with spot audits is required to maintain certification. The process is the same as the original review.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- PROOF SECTION -->
+<section class="proof-section">
+  <div class="proof-inner">
+    <div class="proof-grid reveal">
+      <div>
+        <p class="proof-label">The registry entry</p>
+        <h2 class="proof-headline">What a certified work looks like <em>on the blockchain</em></h2>
+        <p class="proof-body">Every certified work generates a public registry entry that anyone can verify. The hash is the fingerprint — unique to that exact file. Change a single pixel and the hash changes completely. That's what makes it unforgeable.</p>
+      </div>
+      <div class="proof-card">
+        <p class="proof-card-label">Registry entry · OHM-00441</p>
+        <div class="proof-row">
+          <span class="proof-key">Status</span>
+          <span class="proof-val green">✓ Verified · Active</span>
+        </div>
+        <div class="proof-row">
+          <span class="proof-key">Creator</span>
+          <span class="proof-val">Mara Okonkwo</span>
+        </div>
+        <div class="proof-row">
+          <span class="proof-key">Certified</span>
+          <span class="proof-val">13 Apr 2026 · 14:32 UTC</span>
+        </div>
+        <div class="proof-row">
+          <span class="proof-key">Category</span>
+          <span class="proof-val">Illustration</span>
+        </div>
+        <div class="proof-row">
+          <span class="proof-key">Tier</span>
+          <span class="proof-val">Studio</span>
+        </div>
+        <div class="proof-row">
+          <span class="proof-key">Work hash</span>
+          <span class="proof-val" style="font-size:9px">a3f9c2b1d8e47f6c...</span>
+        </div>
+        <div class="proof-row">
+          <span class="proof-key">Block</span>
+          <span class="proof-val">48,291,004</span>
+        </div>
+        <div class="proof-row">
+          <span class="proof-key">Chain</span>
+          <span class="proof-val green">Polygon mainnet</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories reveal">
+  <p style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:var(--green); margin-bottom:1rem;">We certify</p>
+  <h2 style="font-family:'Playfair Display',Georgia,serif; font-size:clamp(1.8rem,3vw,2.8rem); font-weight:700; margin-bottom:0.5rem;">Every creative discipline.</h2>
+  <p style="font-size:0.95rem; color:var(--warm-gray); max-width:540px;">A writer reviews writing. An illustrator reviews illustration. Domain expertise is non-negotiable.</p>
+  <div class="cat-grid">
+    <div class="cat-card"><div class="cat-icon">✏️</div><p class="cat-name">Writing</p><p class="cat-desc">Fiction, nonfiction, essays, journalism, poetry, screenwriting, copywriting.</p></div>
+    <div class="cat-card"><div class="cat-icon">🖼</div><p class="cat-name">Illustration</p><p class="cat-desc">Editorial, book cover, character design, sequential art, surface design.</p></div>
+    <div class="cat-card"><div class="cat-icon">🎵</div><p class="cat-name">Music</p><p class="cat-desc">Composition, songwriting, production, sound design, mixing and mastering.</p></div>
+    <div class="cat-card"><div class="cat-icon">📷</div><p class="cat-name">Photography</p><p class="cat-desc">Film, digital, documentary, commercial, fine art, architectural.</p></div>
+    <div class="cat-card"><div class="cat-icon">🎨</div><p class="cat-name">Design</p><p class="cat-desc">Graphic design, brand identity, typography, motion, UI/UX.</p></div>
+    <div class="cat-card"><div class="cat-icon">🏺</div><p class="cat-name">Craft</p><p class="cat-desc">Ceramics, woodworking, textiles, bookbinding, glasswork, printmaking.</p></div>
+    <div class="cat-card"><div class="cat-icon">🎬</div><p class="cat-name">Film & Video</p><p class="cat-desc">Short film, documentary, animation, experimental, commercial.</p></div>
+    <div class="cat-card"><div class="cat-icon">💻</div><p class="cat-name">Code</p><p class="cat-desc">Open source libraries, creative tools, generative art, human-authored software.</p></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="bottom-cta">
+  <h2 class="cta-headline">Ready to earn<br><em>your seal?</em></h2>
+  <p class="cta-sub">500 founding creator spots — 50% off certification for life. Closing when they're gone.</p>
+  <div class="cta-btns">
+    <a href="ohm-pricing.html" class="btn-primary">See pricing →</a>
+    <a href="ohm-registry.html" class="btn-ghost">View the registry</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Only<em>Human</em>Made</div>
+  <p class="footer-copy">© 2026 OnlyHumanMade.org · A nonprofit</p>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+<!-- COMING SOON MODAL -->
+<div class="cs-overlay" id="cs-modal" onclick="if(event.target===this)closeModal()">
+  <div class="cs-box">
+    <button class="cs-close" onclick="closeModal()">✕</button>
+    <p class="cs-eyebrow">Almost there</p>
+    <h3 class="cs-headline">Certification<br>opens <em>soon.</em></h3>
+    <p class="cs-body">We're putting the final pieces in place before opening certification to the public. Join the waitlist and we'll notify you the moment your spot is ready — with founding member pricing locked in.</p>
+    <a href="ohm-waitlist.html" class="cs-btn">Join the waitlist →</a>
+  </div>
+</div>
+<script>
+function openModal(e){if(e)e.preventDefault();document.getElementById('cs-modal').classList.add('visible');}
+function closeModal(){document.getElementById('cs-modal').classList.remove('visible');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+</script>
+</body>
+</html>

@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing — OnlyHumanMade</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="256x256" href="favicon-256.png">
+  <link rel="apple-touch-icon" href="favicon-256.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:        #1A1714;
+  --ink-soft:   #2E2925;
+  --cream:      #F5F0E8;
+  --cream-deep: #EDE6D8;
+  --green:      #5A6B53;
+  --green-lt:   #97B886;
+  --green-pale: #C8DCC0;
+  --green-dark: #3D4D37;
+  --gold:       #C4973A;
+  --warm-gray:  #8A8278;
+  --border:     rgba(26,23,20,0.10);
+  --border-med: rgba(26,23,20,0.18);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 16px; line-height: 1.7;
+  overflow-x: hidden;
+}
+
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.022; pointer-events: none; z-index: 999;
+}
+
+/* ── NAV ───────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 3rem;
+  background: rgba(245,240,232,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid var(--border);
+}
+.nav-logo { font-family: 'Playfair Display', Georgia, serif; font-size: 1.1rem; font-weight: 900; letter-spacing: -0.01em; color: var(--ink); text-decoration: none; }
+.nav-logo em { font-style: italic; color: var(--green); }
+.nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+.nav-links a { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-gray); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-cta { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream) !important; background: var(--ink); padding: 0.5rem 1.25rem; border-radius: 2px; text-decoration: none; transition: background 0.2s !important; }
+.nav-cta:hover { background: var(--green) !important; }
+
+/* ── PAGE HERO ─────────────────────────────────────────── */
+.page-hero {
+  padding: 9rem 3rem 5rem;
+  max-width: 1200px; margin: 0 auto;
+  text-align: center;
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 1.5rem;
+  display: flex; align-items: center; justify-content: center; gap: 1rem;
+  opacity: 0; animation: fadeUp 0.7s ease forwards 0.2s;
+}
+.hero-eyebrow::before, .hero-eyebrow::after { content: ''; display: block; width: 40px; height: 1px; background: var(--green); }
+
+.hero-headline {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 900; line-height: 1.05;
+  letter-spacing: -0.02em; margin-bottom: 1.25rem;
+  opacity: 0; animation: fadeUp 0.8s ease forwards 0.3s;
+}
+.hero-headline em { font-style: italic; color: var(--green); }
+
+.hero-sub {
+  font-size: 1rem; color: var(--warm-gray);
+  max-width: 520px; margin: 0 auto 1.5rem;
+  line-height: 1.85;
+  opacity: 0; animation: fadeUp 0.8s ease forwards 0.42s;
+}
+
+/* Toggle annual/monthly */
+.billing-toggle {
+  display: inline-flex; align-items: center; gap: 1rem;
+  background: var(--cream-deep); border: 1px solid var(--border-med);
+  border-radius: 99px; padding: 0.35rem 0.5rem;
+  margin-bottom: 4rem;
+  opacity: 0; animation: fadeUp 0.7s ease forwards 0.54s;
+}
+.toggle-opt {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.45rem 1.1rem; border-radius: 99px; cursor: pointer;
+  transition: all 0.2s; color: var(--warm-gray);
+}
+.toggle-opt.active { background: var(--ink); color: var(--cream); }
+.toggle-save {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.1em; color: var(--green);
+  background: rgba(90,107,83,0.1); border: 1px solid rgba(90,107,83,0.2);
+  padding: 0.3rem 0.75rem; border-radius: 99px;
+}
+
+/* ── PRICING CARDS ─────────────────────────────────────── */
+.pricing-grid {
+  max-width: 1200px; margin: 0 auto;
+  padding: 0 3rem 6rem;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  align-items: start;
+}
+
+.price-card {
+  background: white; border: 1px solid var(--border);
+  border-radius: 2px; padding: 2.5rem;
+  position: relative; transition: transform 0.2s, box-shadow 0.2s;
+  opacity: 0; animation: fadeUp 0.7s ease forwards;
+}
+.price-card:nth-child(1) { animation-delay: 0.5s; }
+.price-card:nth-child(2) { animation-delay: 0.62s; }
+.price-card:nth-child(3) { animation-delay: 0.74s; }
+.price-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(26,23,20,0.08); }
+
+.price-card.featured {
+  background: var(--ink); color: var(--cream);
+  border-color: var(--ink);
+  transform: translateY(-8px);
+}
+.price-card.featured:hover { transform: translateY(-12px); }
+
+.featured-badge {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  background: var(--green); color: var(--cream);
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 5px 16px; border-radius: 99px; white-space: nowrap;
+}
+
+.card-tier {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--warm-gray); margin-bottom: 0.75rem;
+}
+.price-card.featured .card-tier { color: rgba(245,240,232,0.45); }
+
+.card-price {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 3.5rem; font-weight: 900; line-height: 1;
+  margin-bottom: 0.25rem; color: var(--ink);
+}
+.price-card.featured .card-price { color: var(--cream); }
+.card-price .price-per {
+  font-family: 'DM Mono', monospace; font-size: 13px;
+  font-weight: 400; color: var(--warm-gray);
+}
+.price-card.featured .price-per { color: rgba(245,240,232,0.4); }
+
+.card-price-annual {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.08em; color: var(--green);
+  margin-bottom: 1.5rem;
+}
+.price-card.featured .card-price-annual { color: var(--green-lt); }
+
+.card-desc {
+  font-size: 0.875rem; color: var(--warm-gray);
+  line-height: 1.7; margin-bottom: 2rem;
+  padding-bottom: 2rem; border-bottom: 1px solid var(--border);
+}
+.price-card.featured .card-desc {
+  color: rgba(245,240,232,0.55);
+  border-bottom-color: rgba(245,240,232,0.1);
+}
+
+.card-features { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 2.5rem; }
+
+.feature-row {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  font-size: 0.875rem; color: var(--ink);
+}
+.price-card.featured .feature-row { color: rgba(245,240,232,0.75); }
+
+.feat-check {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: rgba(90,107,83,0.12);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+  font-size: 10px; color: var(--green);
+}
+.price-card.featured .feat-check {
+  background: rgba(151,184,134,0.15); color: var(--green-lt);
+}
+
+.feat-dash {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: rgba(26,23,20,0.05);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+  font-size: 14px; color: var(--warm-gray); line-height: 1;
+}
+
+.card-cta {
+  display: block; text-align: center;
+  padding: 0.9rem; border-radius: 2px;
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  text-decoration: none; transition: all 0.2s;
+}
+.card-cta-outline {
+  border: 1.5px solid var(--border-med); color: var(--ink);
+  background: transparent;
+}
+.card-cta-outline:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+
+.card-cta-filled {
+  background: var(--green); color: var(--cream); border: 1.5px solid var(--green);
+}
+.card-cta-filled:hover { background: var(--green-dark); border-color: var(--green-dark); }
+
+.card-cta-dark {
+  background: rgba(245,240,232,0.1); color: var(--cream);
+  border: 1.5px solid rgba(245,240,232,0.15);
+}
+.card-cta-dark:hover { background: rgba(245,240,232,0.18); }
+
+/* ── COMPARISON TABLE ──────────────────────────────────── */
+.comparison {
+  padding: 6rem 3rem;
+  max-width: 1200px; margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 3rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); max-width: 60px; }
+
+.comp-table { width: 100%; border-collapse: collapse; }
+
+.comp-table th {
+  text-align: center; padding: 1rem;
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--warm-gray); border-bottom: 1px solid var(--border-med);
+}
+.comp-table th:first-child { text-align: left; }
+.comp-table th.featured-col {
+  background: var(--ink); color: var(--green-lt);
+  border-radius: 2px 2px 0 0;
+}
+
+.comp-table td {
+  padding: 1rem; border-bottom: 1px solid var(--border);
+  font-size: 0.875rem; vertical-align: middle;
+  text-align: center;
+}
+.comp-table td:first-child { text-align: left; font-weight: 500; color: var(--ink); }
+.comp-table tr:last-child td { border-bottom: none; }
+.comp-table tr:nth-child(even) td { background: rgba(26,23,20,0.02); }
+.comp-table td.featured-col { background: rgba(26,23,20,0.03); }
+
+.check-yes { color: var(--green); font-size: 16px; }
+.check-no  { color: rgba(26,23,20,0.2); font-size: 18px; }
+.check-val { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink); letter-spacing: 0.05em; }
+
+/* ── FAQ ───────────────────────────────────────────────── */
+.faq {
+  padding: 6rem 3rem;
+  background: var(--cream-deep);
+  border-top: 1px solid var(--border);
+}
+.faq-inner { max-width: 800px; margin: 0 auto; }
+
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 0;
+}
+.faq-q {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem; font-weight: 700;
+  cursor: pointer; display: flex; justify-content: space-between;
+  align-items: flex-start; gap: 1rem;
+  transition: color 0.2s;
+}
+.faq-q:hover { color: var(--green); }
+.faq-icon { font-size: 1.2rem; flex-shrink: 0; transition: transform 0.3s; color: var(--green); }
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-a {
+  font-size: 0.9rem; color: var(--warm-gray); line-height: 1.85;
+  max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s ease;
+}
+.faq-item.open .faq-a { max-height: 300px; padding-top: 1rem; }
+
+/* ── FOUNDING STRIP ────────────────────────────────────── */
+.founding-strip {
+  background: var(--ink); padding: 4rem 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 2rem;
+}
+.founding-text {}
+.founding-headline {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.75rem; font-weight: 700; color: var(--cream); margin-bottom: 0.4rem;
+}
+.founding-headline em { font-style: italic; color: var(--green-lt); }
+.founding-sub { font-size: 0.9rem; color: rgba(245,240,232,0.5); }
+.founding-cta {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  background: var(--green); color: var(--cream);
+  padding: 1rem 2rem; font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  text-decoration: none; border-radius: 2px; white-space: nowrap;
+  transition: background 0.2s, transform 0.15s;
+}
+.founding-cta:hover { background: var(--green-dark); transform: translateY(-1px); }
+
+/* ── FOOTER ────────────────────────────────────────────── */
+footer {
+  padding: 2.5rem 3rem; border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--cream);
+}
+.footer-logo { font-family: 'Playfair Display', Georgia, serif; font-size: 1rem; font-weight: 900; color: var(--ink); }
+.footer-logo em { font-style: italic; color: var(--green); }
+.footer-copy { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: rgba(26,23,20,0.3); }
+
+/* ── ANIMATIONS ────────────────────────────────────────── */
+@keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+.reveal { opacity:0; transform:translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+@media (max-width: 900px) {
+  .pricing-grid { grid-template-columns: 1fr; padding: 0 1.5rem 4rem; }
+  .price-card.featured { transform: none; }
+  nav { padding: 1.25rem 1.5rem; }
+  .nav-links { display: none; }
+  .comparison, .faq { padding: 4rem 1.5rem; }
+  .founding-strip { flex-direction: column; align-items: flex-start; padding: 3rem 1.5rem; }
+  .page-hero { padding: 8rem 1.5rem 3rem; }
+  .comp-table { font-size: 0.8rem; }
+}
+
+  /* ── COMING SOON MODAL ───────────────────────────── */
+  .cs-overlay{display:none;position:fixed;inset:0;background:rgba(26,23,20,0.75);z-index:500;align-items:center;justify-content:center;padding:2rem;backdrop-filter:blur(4px);}
+  .cs-overlay.visible{display:flex;}
+  .cs-box{background:#F5F0E8;max-width:420px;width:100%;padding:2.5rem;border-radius:2px;position:relative;border-top:3px solid #5A6B53;}
+  .cs-close{position:absolute;top:1rem;right:1rem;background:none;border:none;cursor:pointer;font-size:18px;color:#8A8278;}
+  .cs-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#5A6B53;margin-bottom:0.75rem;display:flex;align-items:center;gap:0.5rem;}
+  .cs-eyebrow::before{content:'';width:16px;height:2px;background:#5A6B53;}
+  .cs-headline{font-family:'Playfair Display',Georgia,serif;font-size:1.6rem;font-weight:700;color:#1A1714;line-height:1.15;margin-bottom:0.5rem;}
+  .cs-headline em{font-style:italic;color:#5A6B53;}
+  .cs-body{font-size:0.875rem;color:#8A8278;line-height:1.85;margin-bottom:1.75rem;}
+  .cs-btn{display:block;width:100%;padding:1rem;background:#1A1714;color:#F5F0E8;border:none;border-radius:2px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;text-align:center;text-decoration:none;cursor:pointer;transition:background 0.2s;}
+  .cs-btn:hover{background:#5A6B53;}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="onlyhumanmade.html" class="nav-logo">Only<em>Human</em>Made</a>
+  <ul class="nav-links">
+    <li><a href="ohm-how-it-works.html">How it works</a></li>
+    <li><a href="ohm-pricing.html" class="active">Pricing</a></li>
+    <li><a href="ohm-registry.html">Registry</a></li>
+    <li><a href="onlyhumanmade.html#about">About</a></li>
+    <li><a href="#" onclick="openModal(event)" class="nav-cta">Get certified</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <p class="hero-eyebrow">Simple, transparent pricing</p>
+  <h1 class="hero-headline">Earned, not bought.<br><em>Priced to match.</em></h1>
+  <p class="hero-sub">The OHM seal isn't a subscription to a logo. It's a certified standard. Choose the tier that fits how you work.</p>
+
+  <div class="billing-toggle">
+    <div class="toggle-opt active" id="toggle-monthly" onclick="setBilling('monthly')">Monthly</div>
+    <div class="toggle-opt" id="toggle-annual" onclick="setBilling('annual')">Annual</div>
+    <span class="toggle-save" id="save-badge">Save 20%</span>
+  </div>
+</section>
+
+<!-- PRICING CARDS -->
+<div class="pricing-grid">
+
+  <div class="price-card">
+    <p class="card-tier">Maker</p>
+    <p class="card-price" id="maker-price">$12<span class="price-per">/mo</span></p>
+    <p class="card-price-annual" id="maker-annual">Billed monthly</p>
+    <p class="card-desc">For independent creators certifying individual works. Perfect for illustrators, writers, and photographers starting their certified portfolio.</p>
+    <div class="card-features">
+      <div class="feature-row"><div class="feat-check">✓</div><span>Up to 10 certifications per month</span></div>
+      <div class="feature-row"><div class="feat-check">✓</div><span>Public registry listing + creator profile</span></div>
+      <div class="feature-row"><div class="feat-check">✓</div><span>OHM seal for your portfolio & social</span></div>
+      <div class="feature-row"><div class="feat-check">✓</div><span>Blockchain registry entry per work</span></div>
+      <div class="feature-row"><div class="feat-check">✓</div><span>Community forum access</span></div>
+      <div class="feature-row"><div class="feat-dash">—</div><span style="color:var(--warm-gray)">API access</span></div>
+      <div class="feature-row"><div class="feat-dash">—</div><span style="color:var(--warm-gray)">Embeddable site widget</span></div>
+      <div class="feature-row"><div class="feat-dash">—</div><span style="color:var(--warm-gray)">Priority review (48hr)</span></div>
+    </div>
+    <a href="#" onclick="openModal(event)" id="maker-btn" class="card-cta card-cta-outline">Start as Maker →</a>
+  </div>
+
+  <div class="price-card featured">
+    <div class="featured-badge">Most popular</div>
+    <p class="card-tier">Studio</p>
+    <p class="card-price" id="studio-price">$79<span class="price-per">/mo</span></p>
+    <p class="card-price-annual" id="studio-annual">Billed monthly</p>
+    <p class="card-desc">For serious creators, studios, and professionals who certify regularly. The complete toolkit for making your human-made status undeniable.</p>
+    <div class="card-features">
+      <div class="feature-row"><div class="feat-check">✓</div><span>Unlimited certifications</span></div>
+      <div class="feature-row"><div class="feat-check">✓</div><span>Public registry listing + creator profile</span></div>
+      <div class="feature-row"><div class="feat-check">✓</div><span>OHM seal for portfolio, social & print</span></div>
+      <div class="feature-row"><div class="feat-check">✓</div><span>Blockchain registry entry per work</span></div>
+      <div class="feature-row"><div class="feat-check">✓</div><span>Community forum access</span></div>
+      <div class="feature-row"><div class="feat-check">✓</div><span>Verification API access</span></div>
+      <div class="feature-row"><div class="feat-check">✓</div><span>Embeddable seal widget for your site</span></div>
+      <div class="feature-row"><div class="feat-check">✓</div><span>Priority human auditor review (48hr)</span></div>
+      <div class="feature-row"><div class="feat-check">✓</div><span>Annual Human-Made Awards eligibility</span></div>
+    </div>
+    <a href="#" onclick="openModal(event)" id="studio-btn" class="card-cta card-cta-filled">Join as Studio →</a>
+  </div>
+
+  <div class="price-card">
+    <p class="card-tier">Enterprise</p>
+    <p class="card-price" id="enterprise-price">$499<span class="price-per">/mo</span></p>
+    <p class="card-price-annual" id="enterprise-annual">Billed monthly</p>
+    <p class="card-desc">For publishers, agencies, and brands that need the OHM seal for marketing, bulk verification, or institutional certification at scale.</p>
+    <div class="card-features">
+      <div class="feature-row"><div class="feat-check">✓</div><span>Everything in Studio</span></div>
+      <div class="feature-row"><div class="feat-check">✓</div><span>OHM seal license for marketing use</span></div>
+      <div class="feature-row"><div class="feat-check">✓</div><span>Bulk verification API (10,000+ calls/mo)</span></div>
+      <div class="feature-row"><div class="feat-check">✓</div><span>White-glove onboarding & audit support</span></div>
+      <div class="feature-row"><div class="feat-check">✓</div><span>Co-marketing & press opportunities</span></div>
+      <div class="feature-row"><div class="feat-check">✓</div><span>Dedicated account manager</span></div>
+      <div class="feature-row"><div class="feat-check">✓</div><span>Custom SLA & invoicing</span></div>
+      <div class="feature-row"><div class="feat-check">✓</div><span>Policy input & advisory access</span></div>
+    </div>
+    <a href="#" onclick="openModal(event)" id="enterprise-btn" class="card-cta card-cta-outline">Talk to us →</a>
+  </div>
+
+</div>
+
+<!-- COMPARISON TABLE -->
+<section class="comparison reveal">
+  <p class="section-label">Full comparison</p>
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th style="width:35%">Feature</th>
+        <th>Maker</th>
+        <th class="featured-col">Studio</th>
+        <th>Enterprise</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Monthly certifications</td><td><span class="check-val">10</span></td><td class="featured-col"><span class="check-val">Unlimited</span></td><td><span class="check-val">Unlimited</span></td></tr>
+      <tr><td>Human auditor review</td><td><span class="check-yes">✓</span></td><td class="featured-col"><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>Priority review (48hr)</td><td><span class="check-no">—</span></td><td class="featured-col"><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>Blockchain registry entry</td><td><span class="check-yes">✓</span></td><td class="featured-col"><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>Creator profile page</td><td><span class="check-yes">✓</span></td><td class="featured-col"><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>OHM seal (digital)</td><td><span class="check-yes">✓</span></td><td class="featured-col"><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>OHM seal (print license)</td><td><span class="check-no">—</span></td><td class="featured-col"><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>Embeddable site widget</td><td><span class="check-no">—</span></td><td class="featured-col"><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>Verification API</td><td><span class="check-no">—</span></td><td class="featured-col"><span class="check-val">1,000 calls/mo</span></td><td><span class="check-val">10,000+ calls/mo</span></td></tr>
+      <tr><td>Community access</td><td><span class="check-yes">✓</span></td><td class="featured-col"><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>Awards eligibility</td><td><span class="check-no">—</span></td><td class="featured-col"><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>Marketing seal license</td><td><span class="check-no">—</span></td><td class="featured-col"><span class="check-no">—</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>Dedicated account manager</td><td><span class="check-no">—</span></td><td class="featured-col"><span class="check-no">—</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>Custom SLA & invoicing</td><td><span class="check-no">—</span></td><td class="featured-col"><span class="check-no">—</span></td><td><span class="check-yes">✓</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="faq-inner reveal">
+    <p class="section-label">Frequently asked</p>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        What exactly does OHM certify — the creator or the work?
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">OHM certifies the work — not just the creator. Each certification covers one specific piece of work submitted with its process documentation. The creator's identity is verified and hashed, but what goes on the blockchain is the fingerprint of that specific work. This means each work has its own provenance record, independent of others.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        How long does the review process take?
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">Maker tier: typically 5–7 business days. Studio tier: priority review within 48 hours. Enterprise: dedicated auditor with SLA. During our founding period (first 500 creators) we're targeting faster turnaround while we build out the auditor network. You'll receive email updates at every step.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        What if I use tools like Grammarly or Lightroom? Does that disqualify me?
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">No. Productivity tools, spell checkers, grammar tools, photo editing software, DAWs, and IDEs are all permitted. The line is between tools that assist a human creator and AI systems that generate the primary content. Our full policy document covers this in detail with specific examples for every creative category. If you're unsure about something specific, email policy@onlyhumanmade.org before submitting.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Can I cancel at any time?
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">Yes — no contracts, no cancellation fees. Cancel any time from your account settings. Your existing certified works remain in the public registry permanently, even after cancellation. The blockchain record is immutable. What you lose on cancellation is the ability to submit new works for certification and access to the member portal and community.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        What is the founding member discount?
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">The first 500 creators to join OHM receive 50% off their chosen tier for the lifetime of their membership. This is not a promotional rate that expires — it's a permanent thank-you for being part of the foundation. Founding member pricing is applied automatically at checkout; no code needed. Once the 500 spots are filled, standard pricing applies to all new members.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        What happens if my certification is rejected?
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">If an auditor determines your submission doesn't meet the human-made standard, you'll receive detailed written feedback explaining why. You can revise and resubmit — one free resubmission is included per certification attempt. If you believe the decision was made in error, our appeals process allows you to request a second auditor review within 30 days.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDING STRIP -->
+<div class="founding-strip">
+  <div class="founding-text">
+    <h3 class="founding-headline">Join the first <em>500.</em></h3>
+    <p class="founding-sub">Founding member pricing — 50% off for life. Closing when spots are gone.</p>
+  </div>
+  <a href="#" onclick="openModal(event)" class="founding-cta">Join the waitlist →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Only<em>Human</em>Made</div>
+  <p class="footer-copy">© 2026 OnlyHumanMade.org · A nonprofit</p>
+</footer>
+
+<script>
+// Pricing toggle — keeps prices visible but buttons open modal
+const prices = {
+  monthly:  { maker: '$12', studio: '$79', enterprise: '$499', sub: 'Billed monthly' },
+  annual:   { maker: '$10', studio: '$63', enterprise: '$399', sub: 'Billed annually — save 20%' }
+};
+
+function setBilling(type) {
+  document.getElementById('toggle-monthly').classList.toggle('active', type === 'monthly');
+  document.getElementById('toggle-annual').classList.toggle('active', type === 'annual');
+  document.getElementById('save-badge').style.opacity = type === 'annual' ? '0' : '1';
+
+  const p = prices[type];
+  ['maker','studio','enterprise'].forEach(tier => {
+    document.getElementById(`${tier}-price`).childNodes[0].textContent = p[tier];
+    document.getElementById(`${tier}-annual`).textContent = p.sub;
+    // Keep buttons pointing to modal
+    const btn = document.getElementById(`${tier}-btn`);
+    if (btn) { btn.href = '#'; btn.onclick = openModal; }
+  });
+}
+
+// FAQ accordion
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+<!-- COMING SOON MODAL -->
+<div class="cs-overlay" id="cs-modal" onclick="if(event.target===this)closeModal()">
+  <div class="cs-box">
+    <button class="cs-close" onclick="closeModal()">✕</button>
+    <p class="cs-eyebrow">Almost there</p>
+    <h3 class="cs-headline">Certification<br>opens <em>soon.</em></h3>
+    <p class="cs-body">We're putting the final pieces in place before opening certification to the public. Join the waitlist and we'll notify you the moment your spot is ready — with founding member pricing locked in.</p>
+    <a href="ohm-waitlist.html" class="cs-btn">Join the waitlist →</a>
+  </div>
+</div>
+<script>
+function openModal(e){if(e)e.preventDefault();document.getElementById('cs-modal').classList.add('visible');}
+function closeModal(){document.getElementById('cs-modal').classList.remove('visible');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+</script>
+</body>
+</html>

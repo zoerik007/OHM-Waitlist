@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registry — OnlyHumanMade</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="256x256" href="favicon-256.png">
+  <link rel="apple-touch-icon" href="favicon-256.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1A1714;--ink-soft:#2E2925;--cream:#F5F0E8;--cream-deep:#EDE6D8;
+  --green:#5A6B53;--green-lt:#97B886;--green-pale:#C8DCC0;--green-dark:#3D4D37;
+  --gold:#C4973A;--warm-gray:#8A8278;
+  --border:rgba(26,23,20,0.10);--border-med:rgba(26,23,20,0.18);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--ink);font-family:'Lora',Georgia,serif;font-size:16px;line-height:1.7;overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.022;pointer-events:none;z-index:999;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 3rem;background:rgba(245,240,232,0.92);backdrop-filter:blur(12px);border-bottom:0.5px solid var(--border);}
+.nav-logo{font-family:'Playfair Display',Georgia,serif;font-size:1.1rem;font-weight:900;letter-spacing:-0.01em;color:var(--ink);text-decoration:none;}
+.nav-logo em{font-style:italic;color:var(--green);}
+.nav-links{display:flex;align-items:center;gap:2.5rem;list-style:none;}
+.nav-links a{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--warm-gray);text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--ink);}
+.nav-cta{color:var(--cream) !important;background:var(--ink);padding:0.5rem 1.25rem;border-radius:2px;transition:background 0.2s !important;}
+.nav-cta:hover{background:var(--green) !important;}
+
+/* ── HERO ──────────────────────────────────────────────── */
+.hero{
+  background:var(--ink);
+  padding:8rem 3rem 5rem;
+}
+.hero-inner{max-width:1200px;margin:0 auto;}
+.hero-top{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:3rem;flex-wrap:wrap;}
+
+.hero-left{}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--green-lt);margin-bottom:1rem;opacity:0;animation:fadeUp 0.7s ease forwards 0.2s;}
+.hero-headline{font-family:'Playfair Display',Georgia,serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:900;color:var(--cream);letter-spacing:-0.02em;line-height:1.1;opacity:0;animation:fadeUp 0.8s ease forwards 0.3s;}
+.hero-headline em{font-style:italic;color:var(--green-lt);}
+.hero-sub{font-size:0.9rem;color:rgba(245,240,232,0.5);line-height:1.85;margin-top:1rem;max-width:480px;opacity:0;animation:fadeUp 0.8s ease forwards 0.42s;}
+
+/* Live counter */
+.live-counter{
+  background:rgba(245,240,232,0.04);
+  border:1px solid rgba(245,240,232,0.1);
+  border-top:2px solid var(--green);
+  padding:1.5rem 2rem;text-align:center;
+  flex-shrink:0;
+  opacity:0;animation:fadeUp 0.7s ease forwards 0.5s;
+}
+.counter-num{font-family:'Playfair Display',Georgia,serif;font-size:3.5rem;font-weight:900;font-style:italic;color:var(--green-lt);line-height:1;}
+.counter-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(245,240,232,0.35);margin-top:0.3rem;}
+.counter-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green-lt);margin-right:5px;animation:pulse 2s ease-in-out infinite;}
+
+/* ── VERIFY TOOL ───────────────────────────────────────── */
+.verify-tool{
+  background:rgba(245,240,232,0.04);
+  border:1px solid rgba(245,240,232,0.1);
+  padding:2rem;margin-top:2rem;
+  opacity:0;animation:fadeUp 0.7s ease forwards 0.6s;
+}
+.verify-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(245,240,232,0.35);margin-bottom:1rem;}
+.verify-row{display:flex;gap:0.75rem;}
+.verify-input{
+  flex:1;padding:0.85rem 1rem;
+  background:rgba(245,240,232,0.06);
+  border:1px solid rgba(245,240,232,0.15);
+  color:var(--cream);font-family:'DM Mono',monospace;
+  font-size:12px;letter-spacing:0.05em;border-radius:2px;
+  outline:none;transition:border-color 0.2s;
+}
+.verify-input::placeholder{color:rgba(245,240,232,0.3);}
+.verify-input:focus{border-color:var(--green);}
+.verify-btn{
+  padding:0.85rem 1.5rem;
+  background:var(--green);color:var(--cream);
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.15em;text-transform:uppercase;
+  border:none;border-radius:2px;cursor:pointer;
+  transition:background 0.2s;white-space:nowrap;
+}
+.verify-btn:hover{background:var(--green-dark);}
+
+.verify-result{
+  margin-top:1.25rem;display:none;
+  padding:1.25rem;
+  border-radius:2px;
+  font-family:'DM Mono',monospace;font-size:11px;
+  letter-spacing:0.06em;
+}
+.verify-result.found{background:rgba(90,107,83,0.15);border:1px solid rgba(90,107,83,0.3);}
+.verify-result.not-found{background:rgba(163,45,45,0.12);border:1px solid rgba(163,45,45,0.25);}
+.verify-result-row{display:flex;justify-content:space-between;padding:0.35rem 0;border-bottom:1px solid rgba(245,240,232,0.06);}
+.verify-result-row:last-child{border-bottom:none;}
+.vr-key{color:rgba(245,240,232,0.35);}
+.vr-val{color:var(--cream);}
+.vr-val.green{color:var(--green-lt);}
+.vr-val.red{color:#E88080;}
+
+/* ── FILTERS ───────────────────────────────────────────── */
+.filters{
+  background:var(--cream-deep);
+  border-bottom:1px solid var(--border);
+  padding:1.5rem 3rem;position:sticky;top:72px;z-index:50;
+}
+.filters-inner{max-width:1200px;margin:0 auto;display:flex;gap:1rem;align-items:center;flex-wrap:wrap;}
+.filter-select{
+  padding:0.5rem 1rem;
+  background:white;border:1px solid var(--border-med);
+  border-radius:2px;font-family:'DM Mono',monospace;
+  font-size:10px;letter-spacing:0.1em;
+  color:var(--warm-gray);outline:none;cursor:pointer;
+  appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg width='8' height='5' viewBox='0 0 8 5' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l3 3 3-3' stroke='%238A8278' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 0.75rem center;
+  padding-right:2rem;
+  transition:border-color 0.2s;
+}
+.filter-select:focus{border-color:var(--green);}
+.filter-search{
+  flex:1;padding:0.5rem 1rem;
+  background:white;border:1px solid var(--border-med);
+  border-radius:2px;font-family:'Lora',Georgia,serif;
+  font-size:0.9rem;color:var(--ink);outline:none;
+  transition:border-color 0.2s;min-width:200px;
+}
+.filter-search::placeholder{color:rgba(138,130,120,0.6);}
+.filter-search:focus{border-color:var(--green);}
+.filter-count{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--warm-gray);margin-left:auto;white-space:nowrap;
+}
+
+/* ── REGISTRY TABLE ────────────────────────────────────── */
+.registry{max-width:1200px;margin:0 auto;padding:3rem;}
+
+.reg-table{width:100%;border-collapse:collapse;}
+.reg-table th{
+  text-align:left;padding:0.75rem 1rem;
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--warm-gray);
+  border-bottom:2px solid var(--border-med);
+  cursor:pointer;transition:color 0.2s;
+  white-space:nowrap;
+}
+.reg-table th:hover{color:var(--green);}
+.reg-table th.sort-asc::after{content:' ↑';}
+.reg-table th.sort-desc::after{content:' ↓';}
+
+.reg-table td{
+  padding:1rem;border-bottom:1px solid var(--border);
+  vertical-align:middle;
+  transition:background 0.15s;
+}
+.reg-table tr:hover td{background:rgba(90,107,83,0.04);}
+.reg-table tr:last-child td{border-bottom:none;}
+
+.cell-id{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--green);white-space:nowrap;}
+.cell-name{font-family:'Playfair Display',Georgia,serif;font-size:0.95rem;font-weight:700;margin-bottom:0.15rem;}
+.cell-creator{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.08em;color:var(--warm-gray);}
+.cell-cat{
+  display:inline-block;font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:0.1em;text-transform:uppercase;
+  background:rgba(90,107,83,0.08);
+  border:1px solid rgba(90,107,83,0.15);
+  color:var(--green);padding:0.25rem 0.6rem;border-radius:99px;
+}
+.cell-date{font-family:'DM Mono',monospace;font-size:10px;color:var(--warm-gray);white-space:nowrap;}
+.cell-tier{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--warm-gray);}
+.cell-status{display:flex;align-items:center;gap:0.5rem;font-family:'DM Mono',monospace;font-size:10px;color:var(--green);}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);}
+.cell-action a{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--warm-gray);text-decoration:none;transition:color 0.2s;}
+.cell-action a:hover{color:var(--green);}
+
+/* Empty state */
+.empty-state{padding:5rem;text-align:center;color:var(--warm-gray);}
+.empty-state p{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;}
+
+/* Pagination */
+.pagination{display:flex;align-items:center;justify-content:space-between;padding:2rem 0;border-top:1px solid var(--border);margin-top:1rem;}
+.pagination-info{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--warm-gray);}
+.pagination-btns{display:flex;gap:0.5rem;}
+.page-btn{width:36px;height:36px;border:1px solid var(--border-med);background:white;border-radius:2px;font-family:'DM Mono',monospace;font-size:11px;color:var(--warm-gray);cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;}
+.page-btn:hover,.page-btn.active{background:var(--ink);color:var(--cream);border-color:var(--ink);}
+.page-btn:disabled{opacity:0.3;cursor:default;}
+
+/* Chain status bar */
+.chain-bar{
+  background:var(--green-dark);padding:0.75rem 3rem;
+  display:flex;align-items:center;justify-content:center;gap:0.75rem;
+}
+.chain-bar-dot{width:7px;height:7px;border-radius:50%;background:var(--green-lt);animation:pulse 2s ease-in-out infinite;}
+.chain-bar-text{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,240,232,0.6);}
+.chain-bar-val{font-family:'DM Mono',monospace;font-size:10px;color:var(--green-lt);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.6;transform:scale(0.85);}}
+
+footer{padding:2.5rem 3rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.footer-logo{font-family:'Playfair Display',Georgia,serif;font-size:1rem;font-weight:900;color:var(--ink);}
+.footer-logo em{font-style:italic;color:var(--green);}
+.footer-copy{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.08em;color:rgba(26,23,20,0.3);}
+
+@media(max-width:900px){
+  nav{padding:1.25rem 1.5rem;}
+  .nav-links{display:none;}
+  .hero{padding:6rem 1.5rem 3rem;}
+  .hero-top{flex-direction:column;}
+  .live-counter{width:100%;}
+  .filters{padding:1.25rem 1.5rem;top:72px;}
+  .registry{padding:1.5rem;}
+  .reg-table{font-size:0.85rem;}
+  .chain-bar{padding:0.75rem 1.5rem;}
+}
+
+  /* ── COMING SOON MODAL ───────────────────────────── */
+  .cs-overlay{display:none;position:fixed;inset:0;background:rgba(26,23,20,0.75);z-index:500;align-items:center;justify-content:center;padding:2rem;backdrop-filter:blur(4px);}
+  .cs-overlay.visible{display:flex;}
+  .cs-box{background:#F5F0E8;max-width:420px;width:100%;padding:2.5rem;border-radius:2px;position:relative;border-top:3px solid #5A6B53;}
+  .cs-close{position:absolute;top:1rem;right:1rem;background:none;border:none;cursor:pointer;font-size:18px;color:#8A8278;}
+  .cs-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#5A6B53;margin-bottom:0.75rem;display:flex;align-items:center;gap:0.5rem;}
+  .cs-eyebrow::before{content:'';width:16px;height:2px;background:#5A6B53;}
+  .cs-headline{font-family:'Playfair Display',Georgia,serif;font-size:1.6rem;font-weight:700;color:#1A1714;line-height:1.15;margin-bottom:0.5rem;}
+  .cs-headline em{font-style:italic;color:#5A6B53;}
+  .cs-body{font-size:0.875rem;color:#8A8278;line-height:1.85;margin-bottom:1.75rem;}
+  .cs-btn{display:block;width:100%;padding:1rem;background:#1A1714;color:#F5F0E8;border:none;border-radius:2px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;text-align:center;text-decoration:none;cursor:pointer;transition:background 0.2s;}
+  .cs-btn:hover{background:#5A6B53;}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="onlyhumanmade.html" class="nav-logo">Only<em>Human</em>Made</a>
+  <ul class="nav-links">
+    <li><a href="ohm-how-it-works.html">How it works</a></li>
+    <li><a href="ohm-pricing.html">Pricing</a></li>
+    <li><a href="ohm-registry.html" class="active">Registry</a></li>
+    <li><a href="onlyhumanmade.html#about">About</a></li>
+    <li><a href="#" onclick="openModal(event)" class="nav-cta">Get certified</a></li>
+  </ul>
+</nav>
+
+<!-- CHAIN STATUS -->
+<div class="chain-bar">
+  <div class="chain-bar-dot"></div>
+  <span class="chain-bar-text">Polygon Amoy Testnet · Live ·</span>
+  <span class="chain-bar-val">0x0A44b7B5d25E076073Fe711A447D1047203534eb</span>
+  <span class="chain-bar-text">· All records verified</span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div class="hero-left">
+        <p class="hero-eyebrow">The permanent ledger</p>
+        <h1 class="hero-headline">Every certified work.<br><em>Public. Permanent. Verifiable.</em></h1>
+        <p class="hero-sub">Every OHM certification is written to the Polygon blockchain — timestamped, unforgeable, and permanently accessible. This is the public record.</p>
+      </div>
+      <div class="live-counter">
+        <div class="counter-num" id="cert-count">2</div>
+        <p class="counter-label"><span class="counter-dot"></span>Works certified</p>
+      </div>
+    </div>
+
+    <div class="verify-tool">
+      <p class="verify-label">Instant verification — enter a Registry ID (e.g. OHM-00001)</p>
+      <div class="verify-row">
+        <input type="text" class="verify-input" id="verify-input" placeholder="OHM-00001" />
+        <button class="verify-btn" onclick="runVerify()">Verify →</button>
+      </div>
+      <div class="verify-result" id="verify-result"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FILTERS -->
+<div class="filters">
+  <div class="filters-inner">
+    <input type="text" class="filter-search" id="search-input" placeholder="Search by creator, title, or registry ID..." oninput="filterTable()"/>
+    <select class="filter-select" id="filter-cat" onchange="filterTable()">
+      <option value="">All categories</option>
+      <option value="illustration">Illustration</option>
+      <option value="writing">Writing</option>
+      <option value="music">Music</option>
+      <option value="photography">Photography</option>
+      <option value="design">Design</option>
+      <option value="ceramics">Ceramics</option>
+      <option value="film">Film</option>
+      <option value="code">Code</option>
+    </select>
+    <select class="filter-select" id="filter-tier" onchange="filterTable()">
+      <option value="">All tiers</option>
+      <option value="maker">Maker</option>
+      <option value="studio">Studio</option>
+      <option value="enterprise">Enterprise</option>
+    </select>
+    <select class="filter-select" id="filter-sort" onchange="filterTable()">
+      <option value="newest">Newest first</option>
+      <option value="oldest">Oldest first</option>
+      <option value="name">Creator name</option>
+    </select>
+    <span class="filter-count" id="filter-count">Showing 2 of 2</span>
+  </div>
+</div>
+
+<!-- REGISTRY TABLE -->
+<div class="registry">
+  <table class="reg-table" id="reg-table">
+    <thead>
+      <tr>
+        <th>Registry ID</th>
+        <th>Work</th>
+        <th>Category</th>
+        <th>Certified</th>
+        <th>Tier</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="reg-body">
+      <!-- Populated by JS -->
+    </tbody>
+  </table>
+  <div class="empty-state" id="empty-state" style="display:none;">
+    <p>No results found — try adjusting your filters</p>
+  </div>
+  <div class="pagination">
+    <span class="pagination-info" id="page-info">Page 1 of 41</span>
+    <div class="pagination-btns">
+      <button class="page-btn" id="prev-btn" onclick="changePage(-1)" disabled>←</button>
+      <button class="page-btn active" id="page-1-btn" onclick="setPage(1)">1</button>
+      <button class="page-btn" id="page-2-btn" onclick="setPage(2)">2</button>
+      <button class="page-btn" id="page-3-btn" onclick="setPage(3)">3</button>
+      <button class="page-btn" onclick="changePage(1)">→</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Only<em>Human</em>Made</div>
+  <p class="footer-copy">© 2026 OnlyHumanMade.org · Nonprofit · EIN: 42-2512817 · All records on Polygon Amoy Testnet</p>
+</footer>
+
+<script>
+// Real on-chain certifications — Polygon Amoy Testnet
+const REGISTRY = [
+  {
+    id:        'OHM-00002',
+    title:     'Test Illustration Series',
+    creator:   'Rick Bennett',
+    cat:       'illustration',
+    date:      '5 Jun 2026',
+    tier:      'studio',
+    status:    'active',
+    workHash:  '0xfc72efef5b6ecd441c630e19ce33fe3ceecbaeed77491ce5687507978b31bbf7',
+    txHash:    '0x48f9d1a77e9c043ee255181d449c1e40d946efb3aff1c9d1c03421ab69160e1e',
+    polygonscan: 'https://amoy.polygonscan.com/tx/0x48f9d1a77e9c043ee255181d449c1e40d946efb3aff1c9d1c03421ab69160e1e'
+  },
+  {
+    id:        'OHM-00001',
+    title:     'Film Photograph — Austin, Texas',
+    creator:   'Rikardo B.',
+    cat:       'photography',
+    date:      '4 Jun 2026',
+    tier:      'studio',
+    status:    'active',
+    workHash:  '0xa627f5f7171c96bd807f764f83d3dddde3513ba1404c3f93291d724a537bb503',
+    txHash:    '0xd970f88cdb64abf27faf32c3366fd3215dcb95c76d6507dd2d61abbac3b22d73',
+    polygonscan: 'https://amoy.polygonscan.com/tx/0xd970f88cdb64abf27faf32c3366fd3215dcb95c76d6507dd2d61abbac3b22d73'
+  },
+];
+
+let filteredData = [...REGISTRY];
+let currentPage = 1;
+const perPage = 12;
+
+function renderTable(data) {
+  const body = document.getElementById('reg-body');
+  const empty = document.getElementById('empty-state');
+  document.getElementById('filter-count').textContent = `Showing ${Math.min(data.length, perPage)} of ${data.length}`;
+
+  if (data.length === 0) {
+    body.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  const start = (currentPage - 1) * perPage;
+  const slice = data.slice(start, start + perPage);
+
+  body.innerHTML = slice.map(row => `
+    <tr>
+      <td class="cell-id">${row.id}</td>
+      <td>
+        <p class="cell-name">${row.title}</p>
+        <p class="cell-creator">${row.creator}</p>
+      </td>
+      <td><span class="cell-cat">${row.cat}</span></td>
+      <td class="cell-date">${row.date}</td>
+      <td class="cell-tier">${row.tier}</td>
+      <td><div class="cell-status"><div class="status-dot"></div>Verified</div></td>
+      <td class="cell-action"><a href="${row.polygonscan}" target="_blank">Verify ↗</a></td>
+    </tr>
+  `).join('');
+}
+
+function filterTable() {
+  const search = document.getElementById('search-input').value.toLowerCase();
+  const cat    = document.getElementById('filter-cat').value;
+  const tier   = document.getElementById('filter-tier').value;
+  const sort   = document.getElementById('filter-sort').value;
+
+  filteredData = REGISTRY.filter(r => {
+    const matchSearch = !search || r.title.toLowerCase().includes(search) || r.creator.toLowerCase().includes(search) || r.id.toLowerCase().includes(search);
+    const matchCat    = !cat  || r.cat === cat;
+    const matchTier   = !tier || r.tier === tier;
+    return matchSearch && matchCat && matchTier;
+  });
+
+  if (sort === 'oldest') filteredData.reverse();
+  else if (sort === 'name') filteredData.sort((a,b) => a.creator.localeCompare(b.creator));
+
+  currentPage = 1;
+  renderTable(filteredData);
+}
+
+function changePage(dir) {
+  const maxPage = Math.ceil(filteredData.length / perPage);
+  currentPage = Math.max(1, Math.min(maxPage, currentPage + dir));
+  renderTable(filteredData);
+  document.getElementById('page-info').textContent = `Page ${currentPage} of ${Math.ceil(filteredData.length / perPage)}`;
+  document.getElementById('prev-btn').disabled = currentPage === 1;
+  window.scrollTo({ top: document.querySelector('.filters').offsetTop - 80, behavior: 'smooth' });
+}
+
+function setPage(n) { currentPage = n; renderTable(filteredData); }
+
+function runVerify() {
+  const input = document.getElementById('verify-input').value.trim();
+  const result = document.getElementById('verify-result');
+  result.style.display = 'block';
+
+  // Match by Registry ID or work hash or tx hash
+  const known = REGISTRY.find(r =>
+    r.id.toLowerCase() === input.toLowerCase() ||
+    r.workHash.toLowerCase() === input.toLowerCase() ||
+    r.txHash.toLowerCase() === input.toLowerCase()
+  );
+
+  if (!known) {
+    result.className = 'verify-result not-found';
+    result.innerHTML = `
+      <div class="verify-result-row"><span class="vr-key">Status</span><span class="vr-val red">✗ Not found — not certified by OHM</span></div>
+      <div class="verify-result-row"><span class="vr-key">Input</span><span class="vr-val">${input}</span></div>
+      <div class="verify-result-row"><span class="vr-key">Note</span><span class="vr-val">Enter a valid Registry ID (e.g. OHM-00001)</span></div>
+    `;
+    return;
+  }
+
+  result.className = 'verify-result found';
+  result.innerHTML = `
+    <div class="verify-result-row"><span class="vr-key">Status</span><span class="vr-val green">✓ Verified — human-made</span></div>
+    <div class="verify-result-row"><span class="vr-key">Registry ID</span><span class="vr-val">${known.id}</span></div>
+    <div class="verify-result-row"><span class="vr-key">Work</span><span class="vr-val">${known.title}</span></div>
+    <div class="verify-result-row"><span class="vr-key">Creator</span><span class="vr-val">${known.creator}</span></div>
+    <div class="verify-result-row"><span class="vr-key">Category</span><span class="vr-val">${known.cat}</span></div>
+    <div class="verify-result-row"><span class="vr-key">Certified</span><span class="vr-val">${known.date}</span></div>
+    <div class="verify-result-row"><span class="vr-key">Tier</span><span class="vr-val">${known.tier}</span></div>
+    <div class="verify-result-row"><span class="vr-key">Chain</span><span class="vr-val green">Polygon Amoy Testnet · Verified</span></div>
+    <div class="verify-result-row"><span class="vr-key">Tx Hash</span><span class="vr-val"><a href="${known.polygonscan}" target="_blank" style="color:var(--green)">${known.txHash.slice(0,20)}... ↗</a></span></div>
+  `;
+}
+
+// Enter key on verify
+document.getElementById('verify-input').addEventListener('keydown', e => { if (e.key === 'Enter') runVerify(); });
+
+// Init
+renderTable(filteredData);
+</script>
+
+<!-- COMING SOON MODAL -->
+<div class="cs-overlay" id="cs-modal" onclick="if(event.target===this)closeModal()">
+  <div class="cs-box">
+    <button class="cs-close" onclick="closeModal()">✕</button>
+    <p class="cs-eyebrow">Almost there</p>
+    <h3 class="cs-headline">Certification<br>opens <em>soon.</em></h3>
+    <p class="cs-body">We're putting the final pieces in place before opening certification to the public. Join the waitlist and we'll notify you the moment your spot is ready — with founding member pricing locked in.</p>
+    <a href="ohm-waitlist.html" class="cs-btn">Join the waitlist →</a>
+  </div>
+</div>
+<script>
+function openModal(e){if(e)e.preventDefault();document.getElementById('cs-modal').classList.add('visible');}
+function closeModal(){document.getElementById('cs-modal').classList.remove('visible');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+</script>
+</body>
+</html>
