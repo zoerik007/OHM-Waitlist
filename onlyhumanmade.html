@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OnlyHumanMade — The certification for work that's 100% human</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="256x256" href="favicon-256.png">
+  <link rel="apple-touch-icon" href="favicon-256.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --ink: #1A1714;
+    --warm-gray: #8A8278;
+    --rust: #5A6B53;
+    --rust-light: #97B886;
+    --gold: #C4973A;
+    --sage: #5A6B52;
+    --border: rgba(26,23,20,0.12);
+    --border-strong: rgba(26,23,20,0.25);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.028;
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(245,240,232,0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--ink); }
+
+  .nav-cta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream) !important;
+    background: var(--ink);
+    padding: 0.5rem 1.25rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--rust) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    padding: 7rem 3rem 5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--rust);
+  }
+
+  .hero-headline {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  /* Each word wrapped by JS */
+  .hero-headline .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+
+  .hero-headline .word.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Line breaks need to stay */
+  .hero-headline br { display: block; content: ''; }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--warm-gray);
+    max-width: 440px;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.5s;
+    line-height: 1.8;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.65s;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--rust);
+    color: var(--cream);
+    padding: 1rem 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    border: 1.5px solid var(--rust);
+    transition: background 0.2s, transform 0.15s, border-color 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--ink); border-color: var(--ink); transform: translateY(-1px); }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1.5px solid var(--border-strong);
+    padding: 0.95rem 1.75rem;
+    border-radius: 2px;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--cream); background: var(--ink); border-color: var(--ink); }
+
+  .hero-right {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--ink);
+  }
+
+  .hero-right::before { display: none; }
+
+  /* Photo fills the right panel */
+  .hero-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    opacity: 0.75;
+  }
+
+  /* Dark gradient over photo — bottom fade */
+  .hero-right::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(26,23,20,0.15) 0%,
+      rgba(26,23,20,0.05) 40%,
+      rgba(26,23,20,0.5) 100%
+    );
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Floating badge callouts — Design 2 style */
+  .hero-badge {
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 1rem;
+    border-radius: 99px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(26,23,20,0.25);
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.1s;
+  }
+
+  .hero-badge-1 {
+    top: 2.5rem;
+    right: 2rem;
+    background: rgba(245,240,232,0.92);
+    color: var(--ink);
+    border: 1px solid rgba(26,23,20,0.1);
+  }
+
+  .hero-badge-2 {
+    bottom: 5rem;
+    left: 2rem;
+    background: rgba(90,107,83,0.92);
+    color: var(--cream);
+    border: 1px solid rgba(151,184,134,0.3);
+    animation-delay: 1.3s;
+  }
+
+  .hero-badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .hero-badge-1 .hero-badge-dot { background: var(--rust); }
+  .hero-badge-2 .hero-badge-dot { background: var(--rust-light); }
+
+  /* OHM logo watermark on photo */
+  .hero-logo-watermark {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 3;
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    opacity: 0;
+    mix-blend-mode: screen;
+    animation: fadeUp 0.8s ease forwards 1.5s;
+  }
+
+  /* Seal container removed — we now use photo layout */
+  .seal-container { display: none; }
+  .hero-right-label { display: none; }
+
+  /* Large decorative seal */
+  .seal-container {
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    animation: sealReveal 1.2s ease forwards 0.7s;
+    will-change: transform;
+    transition: transform 0.1s linear;
+  }
+
+  @keyframes sealReveal {
+    from { opacity: 0; transform: scale(0.9) rotate(-8deg); }
+    to { opacity: 1; transform: scale(1) rotate(-3deg); }
+  }
+
+  /* Slow continuous rotation after reveal */
+  .seal-container.loaded {
+    animation: sealReveal 1.2s ease forwards 0s, sealFloat 8s ease-in-out infinite 1.9s;
+  }
+
+  @keyframes sealFloat {
+    0%,100% { transform: scale(1) rotate(-3deg) translateY(0px); }
+    50%      { transform: scale(1) rotate(-3deg) translateY(-12px); }
+  }
+
+  .seal-svg {
+    width: 480px;
+    height: 480px;
+    filter: drop-shadow(0 24px 48px rgba(26,23,20,0.2));
+  }
+
+  .hero-right-label {
+    position: absolute;
+    bottom: 3rem;
+    right: 3rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(26,23,20,0.4);
+    text-align: right;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 1s;
+  }
+
+  /* ── STAT STRIP ─────────────────────────────────────── */
+  .stat-strip {
+    background: var(--ink);
+    border-top: 1px solid rgba(245,240,232,0.06);
+    border-bottom: 1px solid rgba(245,240,232,0.06);
+    padding: 2rem 3rem;
+  }
+
+  .stat-strip-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+    align-items: center;
+    gap: 0;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0 1.5rem;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    font-style: italic;
+    color: var(--rust-light);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.4);
+    line-height: 1.5;
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 48px;
+    background: rgba(245,240,232,0.1);
+    flex-shrink: 0;
+  }
+
+  /* ── MARQUEE STRIP ───────────────────────────────────── */
+  .marquee-strip {
+    border-top: 1px solid rgba(90,107,83,0.4);
+    border-bottom: 1px solid rgba(90,107,83,0.4);
+    background: #5A6B53;
+    padding: 0.85rem 0;
+    overflow: hidden;
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 0;
+    white-space: nowrap;
+    animation: marquee 28s linear infinite;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.9);
+  }
+
+  .marquee-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(245,240,232,0.6);
+    flex-shrink: 0;
+  }
+
+  /* ANALOGY SECTION */
+  .analogy {
+    padding: 8rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    max-width: 80px;
+  }
+
+  .analogy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .analogy-col {
+    padding: 3.5rem;
+  }
+
+  .analogy-col:first-child {
+    border-right: 1px solid var(--border-strong);
+    background: rgba(26,23,20,0.02);
+  }
+
+  .analogy-col:last-child {
+    background: rgba(26,23,20,0.05);
+  }
+
+  .analogy-col-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    margin-bottom: 1.5rem;
+  }
+
+  .analogy-headline {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  .analogy-headline em { font-style: italic; color: var(--rust); }
+
+  .analogy-body {
+    font-size: 0.95rem;
+    color: var(--warm-gray);
+    line-height: 1.85;
+  }
+
+  .analogy-body strong { color: var(--ink); font-weight: 600; }
+
+  .analogy-photo {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 3px;
+    display: block;
+    margin-bottom: 1.75rem;
+  }
+
+  .analogy-photo-placeholder {
+    width: 100%;
+    height: 260px;
+    background: #2A2420;
+    border-radius: 3px;
+    margin-bottom: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .analogy-photo-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border: 1px dashed rgba(245,240,232,0.15);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  .analogy-photo-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.35);
+  }
+
+  .analogy-col-divider {
+    width: 32px;
+    height: 2px;
+    background: var(--rust);
+    margin-bottom: 1rem;
+  }
+
+  /* PROCESS SECTION */
+  .process {
+    padding: 8rem 3rem;
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .process-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .process .section-label { color: var(--rust-light); }
+  .process .section-label::after { background: rgba(245,240,232,0.15); }
+
+  .process-headline {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 4rem;
+    max-width: 600px;
+  }
+
+  .process-headline em { font-style: italic; color: var(--rust-light); }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(245,240,232,0.12);
+  }
+
+  .step {
+    padding: 2.5rem 2rem 2.5rem 0;
+    border-right: 1px solid rgba(245,240,232,0.12);
+    position: relative;
+  }
+
+  .step:last-child { border-right: none; padding-right: 0; }
+  .step:not(:first-child) { padding-left: 2rem; }
+
+  .step-num {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 4rem;
+    font-weight: 900;
+    color: rgba(245,240,232,0.08);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .step-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust-light);
+    margin-bottom: 0.75rem;
+  }
+
+  .step-body {
+    font-size: 0.9rem;
+    color: rgba(245,240,232,0.6);
+    line-height: 1.8;
+  }
+
+  /* TIERS */
+  .tiers {
+    padding: 8rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .tiers-headline {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+
+  .tiers-sub {
+    color: var(--warm-gray);
+    font-size: 0.95rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .tier-card {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2.5rem;
+    position: relative;
+    transition: border-color 0.2s, transform 0.2s;
+    background: white;
+  }
+
+  .tier-card:hover { border-color: var(--border-strong); transform: translateY(-3px); }
+
+  .tier-card.featured {
+    border-color: var(--rust);
+    border-width: 1.5px;
+  }
+
+  .tier-badge-wrap {
+    position: absolute;
+    top: -12px;
+    left: 2rem;
+  }
+
+  .tier-badge {
+    display: inline-block;
+    background: var(--rust);
+    color: var(--cream);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 2px;
+  }
+
+  .tier-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    margin-bottom: 1rem;
+  }
+
+  .tier-price {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.75rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .tier-price-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--warm-gray);
+    margin-bottom: 2rem;
+  }
+
+  .tier-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 1.5rem;
+  }
+
+  .tier-feat {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    font-size: 0.875rem;
+    color: var(--warm-gray);
+    line-height: 1.5;
+    margin-bottom: 0.65rem;
+  }
+
+  .tier-feat-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--sage);
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  .tier-cta {
+    display: block;
+    text-align: center;
+    margin-top: 2rem;
+    padding: 0.8rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 2px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .tier-cta:hover { background: var(--ink); color: var(--cream); }
+
+  .tier-card.featured .tier-cta {
+    background: var(--rust);
+    color: var(--cream);
+    border-color: var(--rust);
+  }
+
+  .tier-card.featured .tier-cta:hover { background: var(--ink); border-color: var(--ink); }
+
+  /* MANIFESTO */
+  .manifesto {
+    padding: 8rem 3rem;
+    background: #EDE6D8;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .manifesto-inner {
+    max-width: 780px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .manifesto-quote {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--ink);
+    margin-bottom: 2rem;
+  }
+
+  .manifesto-attr {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+  }
+
+  .manifesto-attr::before {
+    content: '— ';
+  }
+
+  /* SOCIAL PROOF */
+  .proof {
+    padding: 8rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .proof-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .proof-card {
+    padding: 2rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: white;
+  }
+
+  .proof-stars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 1rem;
+  }
+
+  .proof-star {
+    width: 12px;
+    height: 12px;
+    background: var(--gold);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  }
+
+  .proof-body {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--warm-gray);
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+  }
+
+  .proof-author {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .proof-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--warm-gray);
+    margin-top: 2px;
+  }
+
+  /* STATS */
+  .stats {
+    padding: 5rem 3rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stats-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .stat {
+    text-align: center;
+    padding: 2rem;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    color: var(--rust);
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    line-height: 1.5;
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    padding: 9rem 3rem;
+    text-align: center;
+    background: var(--ink);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: 'HUMAN';
+    position: absolute;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 18vw;
+    font-weight: 900;
+    color: rgba(245,240,232,0.03);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .cta-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rust-light);
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-headline {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .cta-headline em { font-style: italic; color: var(--rust-light); }
+
+  .cta-sub {
+    color: rgba(245,240,232,0.55);
+    font-size: 0.95rem;
+    max-width: 480px;
+    margin: 0 auto 3rem;
+  }
+
+  .cta-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .btn-primary-inv {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--cream);
+    color: var(--ink);
+    padding: 1rem 2.25rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary-inv:hover { background: var(--rust-light); color: var(--cream); transform: translateY(-1px); }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem;
+    border-top: 1px solid var(--border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--cream);
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--ink); }
+
+  .footer-copy {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: rgba(26,23,20,0.35);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ABOUT SECTION */
+  .about-section {
+    padding: 8rem 3rem;
+    background: var(--cream);
+    border-top: 1px solid var(--border);
+  }
+
+  .about-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Photo placeholder */
+  .about-photo-wrap {
+    margin-bottom: 5rem;
+  }
+
+  .about-photo-placeholder {
+    position: relative;
+  }
+
+  .about-photo-placeholder .photo-inner {
+    position: relative;
+    width: 100%;
+    height: 480px;
+    border-radius: 3px;
+    overflow: hidden;
+    display: block;
+  }
+
+  .photo-frame-lines {
+    position: absolute;
+    inset: 16px;
+    border: 1px dashed rgba(245,240,232,0.15);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  .photo-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .photo-icon {
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+
+  .photo-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.5);
+    margin-bottom: 0.4rem;
+  }
+
+  .photo-sublabel {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    color: rgba(245,240,232,0.25);
+  }
+
+  /* Film sprocket holes */
+  .sprocket {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 12px 0;
+    background: #1A1714;
+  }
+
+  .sprocket-left { left: 0; }
+  .sprocket-right { right: 0; }
+
+  .sprocket-hole {
+    width: 12px;
+    height: 10px;
+    border-radius: 2px;
+    background: #2A2420;
+    border: 0.5px solid rgba(245,240,232,0.1);
+  }
+
+  .photo-caption {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--warm-gray);
+    margin-top: 0.75rem;
+    text-align: center;
+    min-height: 1.2em;
+  }
+
+  /* To swap in your film photo, replace .about-photo-placeholder with: */
+  /* <img src="your-photo.jpg" alt="..." style="width:100%;height:480px;object-fit:cover;border-radius:3px;"> */
+
+  /* Mission */
+  .about-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  .about-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .about-eyebrow::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--green);
+  }
+
+  .about-headline {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 3.5vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.15;
+    max-width: 700px;
+  }
+
+  .about-headline em { font-style: italic; color: #5A6B53 !important; }
+
+  .about-text-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .about-col { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  .about-para {
+    font-size: 1rem;
+    color: var(--warm-gray);
+    line-height: 1.85;
+  }
+
+  .about-para em {
+    font-style: italic;
+    color: var(--green);
+    font-weight: 500;
+  }
+
+  .about-para strong { color: var(--ink); }
+
+  /* Values */
+  .about-values {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .about-value {
+    padding: 2.5rem 2.5rem 2.5rem 0;
+    border-right: 1px solid var(--border);
+  }
+
+  .about-value:last-child { border-right: none; padding-right: 0; }
+  .about-value:not(:first-child) { padding-left: 2.5rem; }
+
+  .value-marker {
+    width: 28px;
+    height: 3px;
+    background: var(--green);
+    margin-bottom: 1.25rem;
+    border-radius: 2px;
+  }
+
+  .value-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .value-body {
+    font-size: 0.875rem;
+    color: var(--warm-gray);
+    line-height: 1.8;
+  }
+
+
+  /* ── COMING SOON MODAL ───────────────────────────── */
+  .cs-overlay{display:none;position:fixed;inset:0;background:rgba(26,23,20,0.75);z-index:500;align-items:center;justify-content:center;padding:2rem;backdrop-filter:blur(4px);}
+  .cs-overlay.visible{display:flex;}
+  .cs-box{background:var(--cream);max-width:420px;width:100%;padding:2.5rem;border-radius:2px;position:relative;border-top:3px solid #5A6B53;}
+  .cs-close{position:absolute;top:1rem;right:1rem;background:none;border:none;cursor:pointer;font-size:18px;color:var(--warm-gray);}
+  .cs-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#5A6B53;margin-bottom:0.75rem;display:flex;align-items:center;gap:0.5rem;}
+  .cs-eyebrow::before{content:'';width:16px;height:2px;background:#5A6B53;}
+  .cs-headline{font-family:'Playfair Display',Georgia,serif;font-size:1.6rem;font-weight:700;color:var(--ink);line-height:1.15;margin-bottom:0.5rem;}
+  .cs-headline em{font-style:italic;color:#5A6B53;}
+  .cs-body{font-size:0.875rem;color:var(--warm-gray);line-height:1.85;margin-bottom:1.75rem;}
+  .cs-btn{display:block;width:100%;padding:1rem;background:var(--ink);color:var(--cream);border:none;border-radius:2px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;text-align:center;text-decoration:none;cursor:pointer;transition:background 0.2s;}
+  .cs-btn:hover{background:#5A6B53;}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Only<em style="font-style:italic; color:var(--rust);">Human</em>Made</a>
+  <ul class="nav-links">
+    <li><a href="ohm-how-it-works.html">How it works</a></li>
+    <li><a href="ohm-pricing.html">Pricing</a></li>
+    <li><a href="ohm-registry.html">Registry</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#" onclick="openModal(event)" class="nav-cta">Get certified</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Est. 2026 · Human certification</p>
+    <h1 class="hero-headline" id="hero-headline">Your work is<br><em>irreplaceable.</em><br>Prove it.</h1>
+    <p class="hero-sub">In a world flooded with AI-generated content, the most valuable thing you can say about your work is also the most human: <em>I made this.</em> We verify it. We certify it. We help you sell it.</p>
+    <div class="hero-actions">
+      <a href="#" onclick="openModal(event)" class="btn-primary">Get certified →</a>
+      <a href="ohm-how-it-works.html" class="btn-ghost">How it works →</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <!-- Rotating media — video or photo picked randomly on each page load -->
+    <video id="hero-video" class="hero-photo" autoplay muted loop playsinline style="display:none;object-fit:cover;width:100%;height:100%;"></video>
+    <img id="hero-img" src="Truck_photo1.jpg" alt="Film photograph — OHM certified work" class="hero-photo" style="display:none;"/>
+
+    <!-- Floating badge callouts -->
+    <div class="hero-badge hero-badge-1">
+      <span class="hero-badge-dot"></span>
+      OHM Certified ✓
+    </div>
+    <div class="hero-badge hero-badge-2">
+      <span class="hero-badge-dot"></span>
+      Human Verified · Est. 2026
+    </div>
+
+    <!-- OHM logo watermark bottom right -->
+    <img src="ohm-logo.png" alt="OHM seal" class="hero-logo-watermark"/>
+  </div>
+</section>
+
+<!-- STAT STRIP -->
+<div class="stat-strip">
+  <div class="stat-strip-inner">
+    <div class="stat-item">
+      <span class="stat-num">500</span>
+      <span class="stat-label">Founding spots available</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="stat-num">3</span>
+      <span class="stat-label">Certification tiers</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="stat-num">48hr</span>
+      <span class="stat-label">Average review turnaround</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="stat-num">2026</span>
+      <span class="stat-label">Nonprofit · Austin, TX</span>
+    </div>
+  </div>
+</div>
+
+<!-- MARQUEE STRIP -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="marquee-dot"></span>Illustration</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Literary fiction</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Original music</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Journalism</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Photography</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Handmade goods</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Film & video</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Architecture</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Graphic design</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Poetry</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Ceramic art</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Custom software</span>
+    <!-- Duplicate for seamless loop -->
+    <span class="marquee-item"><span class="marquee-dot"></span>Illustration</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Literary fiction</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Original music</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Journalism</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Photography</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Handmade goods</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Film & video</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Architecture</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Graphic design</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Poetry</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Ceramic art</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Custom software</span>
+  </div>
+</div>
+
+<!-- ANALOGY SECTION -->
+<section class="analogy" id="how">
+  <div class="section-label reveal">The analogy that explains everything</div>
+  <div class="analogy-grid reveal">
+
+    <div class="analogy-col">
+      <!-- Film truck photo — left/film side -->
+      <img src="Truck_photo1.jpg" alt="Film photograph of a vintage truck at night — shot on 35mm" class="analogy-photo"/>
+      <div class="analogy-col-divider"></div>
+      <p class="analogy-col-label">Then — 2003</p>
+      <h2 class="analogy-headline">When Digital Became Infinite,<br><em>Film Became</em><br>Valuable.</h2>
+      <p class="analogy-body">When infinite, free digital photos became possible, something unexpected happened: film photography <strong>surged</strong>. Lomography, large format, darkroom printing — not in spite of digital, but because of it.<br><br>The constraint became the value. The grain, the patience, the 36-frame roll — these weren't inefficiencies to be eliminated. They were <strong>proof of investment</strong>. They were what made the image matter.</p>
+    </div>
+
+    <div class="analogy-col">
+      <!-- AI robot photo — right/AI side -->
+      <img src="Ai_Photo1.jpg" alt="AI generated robot with glowing red eyes — machine generated imagery" class="analogy-photo"/>
+      <div class="analogy-col-divider"></div>
+      <p class="analogy-col-label">Now — 2026</p>
+      <h2 class="analogy-headline">When AI Made<br>Everything,<br><em>Human Work</em><br>Became Rare.</h2>
+      <p class="analogy-body">We are at that same inflection point — but for all creative work. AI can generate infinite writing, music, illustration, and code. Instantly. For free.<br><br>Which means human-made work is now what film photography became: <strong>scarce, deliberate, traceable, warm</strong>. The question isn't whether human creativity has value. It's whether buyers can find it — and trust it.<br><br>That's what the OHM seal is for.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS SECTION -->
+<section class="process" id="process">
+  <div class="process-inner">
+    <div class="section-label reveal">How certification works</div>
+    <h2 class="process-headline reveal">Six steps to the <em>seal.</em></h2>
+    <div class="process-steps reveal">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-title">Submit your process</div>
+        <p class="step-body">Draft files, edit histories, session logs, sketches. Show us the work behind the work — timestamped and layered.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-title">Metadata forensics</div>
+        <p class="step-body">Our tools analyze file signatures, creation curves, and tool fingerprints. AI-generated files leave patterns humans don't.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-title">Human auditor review</div>
+        <p class="step-body">A domain expert — always a human — reviews your submission. A writer reads writing. A musician listens to music.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-title">Maker's oath</div>
+        <p class="step-body">You sign a legally binding declaration of human authorship. The threat of consequence is what makes the seal trustworthy.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div class="step-title">Registry entry</div>
+        <p class="step-body">A cryptographic hash of your certified work is written to a public ledger. Permanent, unforgeable provenance.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">06</div>
+        <div class="step-title">Ongoing audits</div>
+        <p class="step-body">Spot re-verification keeps the seal current. Your certification is alive, not just historical.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat reveal">
+      <div class="stat-num">500</div>
+      <div class="stat-label">Founding spots<br>available</div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num">48hr</div>
+      <div class="stat-label">Average auditor<br>review turnaround</div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Certification<br>tiers</div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Blockchain record<br>permanence</div>
+    </div>
+  </div>
+</div>
+
+<!-- TIERS -->
+<section class="tiers" id="pricing">
+  <div class="section-label reveal">Certification tiers</div>
+  <h2 class="tiers-headline reveal">Get your seal.</h2>
+  <p class="tiers-sub reveal">Three tiers, one commitment: everything here was made by a human being.</p>
+  <div class="tiers-grid reveal">
+    <div class="tier-card">
+      <p class="tier-name">Maker</p>
+      <div class="tier-price">$12</div>
+      <div class="tier-price-sub">per month · indie creator</div>
+      <div class="tier-divider"></div>
+      <div class="tier-feat"><div class="tier-feat-dot"></div><span>OHM seal for up to 10 works/month</span></div>
+      <div class="tier-feat"><div class="tier-feat-dot"></div><span>Public registry listing & creator profile</span></div>
+      <div class="tier-feat"><div class="tier-feat-dot"></div><span>Blockchain registry entry per work</span></div>
+      <div class="tier-feat"><div class="tier-feat-dot"></div><span>Community forum access</span></div>
+      <div class="tier-feat"><div class="tier-feat-dot"></div><span>Digital badge for your portfolio</span></div>
+      <a href="ohm-pricing.html" class="tier-cta">Start as a Maker</a>
+    </div>
+    <div class="tier-card featured">
+      <div class="tier-badge-wrap"><span class="tier-badge">Most popular</span></div>
+      <p class="tier-name">Studio</p>
+      <div class="tier-price">$79</div>
+      <div class="tier-price-sub">per month · serious creators</div>
+      <div class="tier-divider"></div>
+      <div class="tier-feat"><div class="tier-feat-dot"></div><span>Unlimited seal certifications</span></div>
+      <div class="tier-feat"><div class="tier-feat-dot"></div><span>Priority human auditor review (48hr)</span></div>
+      <div class="tier-feat"><div class="tier-feat-dot"></div><span>Embeddable seal widget for your site</span></div>
+      <div class="tier-feat"><div class="tier-feat-dot"></div><span>API access for verification checks</span></div>
+      <div class="tier-feat"><div class="tier-feat-dot"></div><span>Annual human-made awards eligibility</span></div>
+      <a href="ohm-pricing.html" class="tier-cta">Join as a Studio</a>
+    </div>
+    <div class="tier-card">
+      <p class="tier-name">Enterprise</p>
+      <div class="tier-price">$499</div>
+      <div class="tier-price-sub">per month · brands & publishers</div>
+      <div class="tier-divider"></div>
+      <div class="tier-feat"><div class="tier-feat-dot"></div><span>License the OHM seal for marketing use</span></div>
+      <div class="tier-feat"><div class="tier-feat-dot"></div><span>Bulk verification API (10,000+ calls/mo)</span></div>
+      <div class="tier-feat"><div class="tier-feat-dot"></div><span>White-glove onboarding & audit support</span></div>
+      <div class="tier-feat"><div class="tier-feat-dot"></div><span>Co-marketing & press opportunities</span></div>
+      <div class="tier-feat"><div class="tier-feat-dot"></div><span>Dedicated account manager</span></div>
+      <a href="ohm-pricing.html" class="tier-cta">Talk to us</a>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO PULL QUOTE -->
+<section class="manifesto">
+  <div class="manifesto-inner reveal">
+    <p class="manifesto-quote">"When creation became effortless, authenticity became rare — and rarity is what people have always paid for. In a world flooded with instant output, the value shifts to proof: proof of time, intention, and a human behind the work."</p>
+    <p class="manifesto-attr">OnlyHumanMade founding manifesto, 2026</p>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="proof">
+  <div class="section-label reveal">What certified creators say</div>
+  <div class="proof-grid">
+    <div class="proof-card reveal">
+      <div class="proof-stars"><div class="proof-star"></div><div class="proof-star"></div><div class="proof-star"></div><div class="proof-star"></div><div class="proof-star"></div></div>
+      <p class="proof-body">"I'm glad places like OHM now exist. For many years the question of 'Who made this' was clear. A photographer made photos, a painter made art, and a musician made music. Now in 2026 it's getting harder and harder to tell the difference from machine made and human made. I had my Big Bend photo certified by OHM and couldn't be happier to PROVE this was made by me."</p>
+      <p class="proof-author">Rikardo B.</p>
+      <p class="proof-role">Film Photographer</p>
+    </div>
+    <div class="proof-card reveal">
+      <div class="proof-stars"><div class="proof-star"></div><div class="proof-star"></div><div class="proof-star"></div><div class="proof-star"></div><div class="proof-star"></div></div>
+      <p class="proof-body">"I had my first set of Illustrations verified by OHM and I'm so happy I did. Now no one will be able to tell me this is 'Fake' — I have PROOF."</p>
+      <p class="proof-author">Rick Bennett</p>
+      <p class="proof-role">Illustrator and Motion Graphics</p>
+    </div>
+    <div class="proof-card reveal">
+      <div class="proof-stars"><div class="proof-star"></div><div class="proof-star"></div><div class="proof-star"></div><div class="proof-star"></div><div class="proof-star"></div></div>
+      <p class="proof-body">"Getting my photos certified by OHM for free is always nice. Now I have proof I made these images and it's forever on the blockchain."</p>
+      <p class="proof-author">Sebastian V.</p>
+      <p class="proof-role">Photographer</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <p class="cta-eyebrow reveal">Join the movement</p>
+  <h2 class="cta-headline reveal">Your work is <em>irreplaceable.</em><br>Prove it.</h2>
+  <p class="cta-sub reveal">Get certified in as little as 48 hours. Start with one work. Build a body of certified human output that outlasts any algorithm.</p>
+  <div class="cta-actions reveal">
+    <a href="#" onclick="openModal(event)" class="btn-primary-inv">Get certified →</a>
+    <a href="ohm-registry.html" class="btn-ghost" style="color:rgba(245,240,232,0.5); border-color:rgba(245,240,232,0.2);">View the registry →</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-inner">
+
+    <div class="section-label reveal">About OnlyHumanMade</div>
+
+    <!-- Photo placeholder -->
+    <div class="about-photo-wrap reveal">
+      <div class="about-photo-placeholder">
+        <div class="photo-inner" style="background:#1A1714;">
+          <!-- Real film photograph -->
+          <img
+            src="about-photo.jpg"
+            alt="Two hikers standing on a desert ridge overlooking a vast mountain landscape — shot on 35mm film"
+            style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 40%; display:block;"
+          />
+          <!-- Subtle vignette overlay to deepen the film feel -->
+          <div style="position:absolute; inset:0; background:radial-gradient(ellipse at center, transparent 50%, rgba(26,23,20,0.45) 100%); pointer-events:none;"></div>
+          <!-- Film strip sprocket holes -->
+          <div class="sprocket sprocket-left">
+            <div class="sprocket-hole"></div>
+            <div class="sprocket-hole"></div>
+            <div class="sprocket-hole"></div>
+            <div class="sprocket-hole"></div>
+            <div class="sprocket-hole"></div>
+          </div>
+          <div class="sprocket sprocket-right">
+            <div class="sprocket-hole"></div>
+            <div class="sprocket-hole"></div>
+            <div class="sprocket-hole"></div>
+            <div class="sprocket-hole"></div>
+            <div class="sprocket-hole"></div>
+          </div>
+        </div>
+        <p class="photo-caption">Founder &nbsp;·&nbsp; Photo credit: @michaelxgabe</p>
+      </div>
+    </div>
+
+    <!-- Mission statement -->
+    <div class="about-body">
+      <div class="about-mission reveal">
+        <p class="about-eyebrow">Our mission</p>
+        <h2 class="about-headline">To make human authorship<br><em>verifiable, valuable,</em><br>and permanent.</h2>
+      </div>
+
+      <div class="about-text-cols reveal">
+        <div class="about-col">
+          <p class="about-para">Ricardo is a Creative Director and film photographer based in Austin, Texas — a decade-plus of professional work spent sharpening an eye for what makes an image feel real. That eye is exactly what made one moment stop everything: a client looked at a photo shot on 35mm film and asked if it was AI-generated.</p>
+          <p class="about-para">That question became the seed for OnlyHumanMade — an independent certification body built to give creators a verifiable way to prove their work is genuinely human-made.</p>
+        </div>
+        <div class="about-col">
+          <p class="about-para">We exist because the internet has always rewarded the loudest signal, not the most truthful one, and by 2025 the gap between human-made and machine-made had vanished entirely. The OHM seal isn't anti-technology — it's pro-human, asking creators not to reject their tools, but to claim authorship: to stand behind their work with their name, their process, and their oath. That act of claiming is what we certify.</p>
+        </div>
+      </div>
+
+      <!-- Values -->
+      <div class="about-values reveal">
+        <div class="about-value">
+          <div class="value-marker"></div>
+          <p class="value-title">Rigor over convenience</p>
+          <p class="value-body">Certification takes effort by design. If it were easy, it would mean nothing. Every step of our process exists because trust has to be earned — not assumed.</p>
+        </div>
+        <div class="about-value">
+          <div class="value-marker"></div>
+          <p class="value-title">Creators first, always</p>
+          <p class="value-body">We are a nonprofit. We have no advertisers. Every dollar of revenue goes back into the verification infrastructure, auditor compensation, and creator grants. We exist to serve the people who make things — not to extract value from them.</p>
+        </div>
+        <div class="about-value">
+          <div class="value-marker"></div>
+          <p class="value-title">Permanence as principle</p>
+          <p class="value-body">Human creative work deserves a permanent record. Our public registry is immutable. A certified work remains certified — a timestamped marker in the historical record of what humans made, when, and who made it.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Only<em style="font-style:italic; color:var(--green);">Human</em>Made</div>
+  <ul class="footer-links">
+    <li><a href="onlyhumanmade.html#about">About</a></li>
+    <li><a href="ohm-how-it-works.html">How it works</a></li>
+    <li><a href="ohm-pricing.html">Pricing</a></li>
+    <li><a href="ohm-registry.html">Registry</a></li>
+    <li><a href="OHM-Certification-Policy.docx">Policy</a></li>
+    <li><a href="mailto:hello@onlyhumanmade.org">Press</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 OnlyHumanMade.org · Nonprofit · EIN: 42-2512817 · Austin, TX</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── HERO MEDIA ROTATION ──────────────────────────────────
+  // Randomly pick one of 4 media items on each page load
+  (function() {
+    const mediaItems = [
+      { type: 'video', src: 'Mainvideo1.mp4' },
+      { type: 'video', src: 'mainvideo2.mp4' },
+      { type: 'video', src: 'mainvideo3.mp4' },
+      { type: 'image', src: 'Truck_photo1.jpg' },
+    ];
+
+    const pick = mediaItems[Math.floor(Math.random() * mediaItems.length)];
+    const video = document.getElementById('hero-video');
+    const img   = document.getElementById('hero-img');
+
+    if (pick.type === 'video') {
+      video.src = pick.src;
+      video.style.display = 'block';
+      img.style.display   = 'none';
+      video.load();
+      video.play().catch(() => {}); // autoplay may be blocked on some browsers
+    } else {
+      img.src             = pick.src;
+      img.style.display   = 'block';
+      video.style.display = 'none';
+    }
+  })();
+  (function() {
+    const headline = document.getElementById('hero-headline');
+    if (!headline) return;
+
+    // Walk child nodes and wrap each word in a .word span
+    function wrapWords(node) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const words = node.textContent.split(/(\s+)/);
+        const frag = document.createDocumentFragment();
+        words.forEach(part => {
+          if (part.trim().length === 0) {
+            frag.appendChild(document.createTextNode(part));
+          } else {
+            const span = document.createElement('span');
+            span.className = 'word';
+            span.textContent = part;
+            frag.appendChild(span);
+          }
+        });
+        node.parentNode.replaceChild(frag, node);
+      } else if (node.nodeType === Node.ELEMENT_NODE && node.nodeName !== 'BR') {
+        Array.from(node.childNodes).forEach(wrapWords);
+      }
+    }
+
+    wrapWords(headline);
+
+    // Stagger each word with increasing delay
+    const words = headline.querySelectorAll('.word');
+    words.forEach((word, i) => {
+      setTimeout(() => word.classList.add('visible'), 300 + i * 110);
+    });
+  })();
+</script>
+
+<!-- COMING SOON MODAL -->
+<div class="cs-overlay" id="cs-modal" onclick="if(event.target===this)closeModal()">
+  <div class="cs-box">
+    <button class="cs-close" onclick="closeModal()">✕</button>
+    <p class="cs-eyebrow">Almost there</p>
+    <h3 class="cs-headline">Certification<br>opens <em>soon.</em></h3>
+    <p class="cs-body">We're putting the final pieces in place before opening certification to the public. Join the waitlist and we'll notify you the moment your spot is ready — with founding member pricing locked in.</p>
+    <a href="ohm-waitlist.html" class="cs-btn">Join the waitlist →</a>
+  </div>
+</div>
+
+<script>
+function openModal(e){if(e)e.preventDefault();document.getElementById('cs-modal').classList.add('visible');}
+function closeModal(){document.getElementById('cs-modal').classList.remove('visible');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+</script>
+
+</body>
+</html>
