@@ -974,18 +974,40 @@
     overflow: hidden;
   }
 
-  .cta-section::before {
-    content: 'HUMAN';
+  .cta-human-bg {
     position: absolute;
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 18vw;
-    font-weight: 900;
-    color: rgba(245,240,232,0.03);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    white-space: nowrap;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     pointer-events: none;
+    z-index: 0;
+    gap: -0.5rem;
+  }
+
+  .cta-human-row {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 900;
+    font-style: italic;
+    color: rgba(245,240,232,0.055);
+    white-space: nowrap;
+    line-height: 0.9;
+    will-change: transform;
+    user-select: none;
+  }
+
+  .cta-human-row.row-outer {
+    font-size: clamp(9vw, 11vw, 180px);
+  }
+
+  .cta-human-row.row-middle {
+    font-size: clamp(13vw, 17vw, 280px);
+  }
+
+  /* Foreground content stays on top */
+  .cta-content {
+    position: relative;
+    z-index: 2;
   }
 
   .cta-eyebrow {
@@ -1772,14 +1794,26 @@
 </section>
 
 <!-- CTA -->
-<section class="cta-section">
-  <p class="cta-eyebrow reveal">Join the movement</p>
-  <h2 class="cta-headline reveal">Your work is <em>irreplaceable.</em><br>Prove it.</h2>
-  <p class="cta-sub reveal">Get certified in as little as 48 hours. Start with one work. Build a body of certified human output that outlasts any algorithm.</p>
-  <div class="cta-actions reveal">
-    <a href="#" onclick="openModal(event)" class="btn-primary-inv">Get certified →</a>
-    <a href="ohm-registry.html" class="btn-ghost" style="color:rgba(245,240,232,0.5); border-color:rgba(245,240,232,0.2);">View the registry →</a>
+<section class="cta-section" id="cta-section">
+
+  <!-- Scroll-animated HUMAN background -->
+  <div class="cta-human-bg" aria-hidden="true">
+    <div class="cta-human-row row-outer" id="human-row-1">HUMAN &nbsp; HUMAN &nbsp; HUMAN &nbsp; HUMAN &nbsp; HUMAN &nbsp; HUMAN</div>
+    <div class="cta-human-row row-middle" id="human-row-2">HUMAN &nbsp; HUMAN &nbsp; HUMAN &nbsp; HUMAN &nbsp; HUMAN &nbsp; HUMAN</div>
+    <div class="cta-human-row row-outer" id="human-row-3">HUMAN &nbsp; HUMAN &nbsp; HUMAN &nbsp; HUMAN &nbsp; HUMAN &nbsp; HUMAN</div>
   </div>
+
+  <!-- Foreground content — untouched -->
+  <div class="cta-content">
+    <p class="cta-eyebrow reveal">Join the movement</p>
+    <h2 class="cta-headline reveal">Your work is <em>irreplaceable.</em><br>Prove it.</h2>
+    <p class="cta-sub reveal">Get certified in as little as 48 hours. Start with one work. Build a body of certified human output that outlasts any algorithm.</p>
+    <div class="cta-actions reveal">
+      <a href="#" onclick="openModal(event)" class="btn-primary-inv">Get certified →</a>
+      <a href="ohm-registry.html" class="btn-ghost" style="color:rgba(245,240,232,0.5); border-color:rgba(245,240,232,0.2);">View the registry →</a>
+    </div>
+  </div>
+
 </section>
 
 <!-- ABOUT -->
@@ -2000,6 +2034,33 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 </script>
 
 <script>
+// ── HUMAN SCROLL PARALLAX ────────────────────────────────
+(function(){
+  const section = document.getElementById('cta-section');
+  const row1    = document.getElementById('human-row-1');
+  const row2    = document.getElementById('human-row-2');
+  const row3    = document.getElementById('human-row-3');
+  if(!section || !row1) return;
+
+  const speed = 0.35;
+
+  function update(){
+    const rect  = section.getBoundingClientRect();
+    const viewH = window.innerHeight;
+    if(rect.bottom < 0 || rect.top > viewH) return;
+
+    const progress = 1 - (rect.bottom / (viewH + rect.height));
+    const offset   = progress * rect.height * speed;
+
+    row1.style.transform = `translateX(${-offset}px)`;
+    row2.style.transform = `translateX(${offset}px)`;
+    row3.style.transform = `translateX(${-offset}px)`;
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+
 // ── VERIFICATION ANIMATION ─────────────────────────────────
 const VA_WORKS = [
   {
