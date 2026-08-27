@@ -4,20 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OnlyHumanMade — The certification for work that's 100% human</title>
-
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://onlyhumanmade.org">
-<meta property="og:title" content="OnlyHumanMade — Your work is irreplaceable. Prove it.">
-<meta property="og:description" content="A place for the modern creator.">
-<meta property="og:image" content="https://onlyhumanmade.org/og-image.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="OnlyHumanMade — Your work is irreplaceable. Prove it.">
-<meta name="twitter:description" content="A place for the modern creator.">
-<meta name="twitter:image" content="https://onlyhumanmade.org/og-image.jpg">
-
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="icon" type="image/png" sizes="256x256" href="favicon-256.png">
   <link rel="apple-touch-icon" href="favicon-256.png">
@@ -1291,6 +1277,170 @@
   }
 
 
+  /* ── VERIFICATION ANIMATION ──────────────────────────────── */
+  .verify-anim-section {
+    background: var(--ink);
+    padding: 7rem 3rem;
+  }
+  .va-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .va-headline {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+  .va-headline em { font-style: italic; color: var(--green-lt); }
+  .va-sub {
+    font-size: 0.95rem;
+    color: rgba(245,240,232,0.45);
+    line-height: 1.85;
+    max-width: 520px;
+    margin-bottom: 3rem;
+  }
+
+  /* Terminal */
+  .va-terminal {
+    background: #0D1117;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+  }
+  .va-term-header {
+    background: #161B22;
+    padding: 0.85rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .va-term-dots { display: flex; gap: 0.4rem; }
+  .va-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .va-dot.red { background: #FF5F57; }
+  .va-dot.yellow { background: #FEBC2E; }
+  .va-dot.green { background: #28C840; }
+  .va-term-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.3);
+    flex: 1;
+    text-align: center;
+  }
+  .va-term-status {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #28C840;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .va-pulse {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #28C840;
+    animation: pulse-dot 1.4s ease infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  /* Terminal body */
+  .va-term-body {
+    padding: 1.75rem 1.5rem;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .va-line {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+    min-height: 1.6em;
+  }
+  .va-line .key { color: #79C0FF; }
+  .va-line .val { color: #A5D6FF; }
+  .va-line .hash { color: #56D364; font-size: 11px; }
+  .va-line .dim { color: rgba(255,255,255,0.25); }
+  .va-line .warn { color: #F0883E; }
+  .va-line .success { color: #56D364; }
+  .va-line .cursor {
+    display: inline-block;
+    width: 8px; height: 14px;
+    background: rgba(255,255,255,0.6);
+    margin-left: 2px;
+    vertical-align: middle;
+    animation: blink 0.9s step-end infinite;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  /* Result seal */
+  .va-result { margin-top: 1rem; }
+  .va-seal {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.25rem 1.5rem;
+    background: rgba(86,211,100,0.08);
+    border: 1px solid rgba(86,211,100,0.25);
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+  .va-seal-ring {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    border: 2px solid #56D364;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    animation: seal-pop 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  }
+  @keyframes seal-pop {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .va-seal-check { font-size: 22px; color: #56D364; }
+  .va-seal-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #56D364;
+    margin-bottom: 3px;
+  }
+  .va-seal-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.4);
+  }
+  .va-chain-info {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.25);
+    line-height: 2;
+    padding: 0 0.25rem;
+  }
+
+  @media (max-width: 768px) {
+    .verify-anim-section { padding: 4rem 1.25rem; }
+    .va-term-body { padding: 1.25rem 1rem; }
+    .va-line { font-size: 11px; }
+  }
+
   /* ── MOBILE RESPONSIVE ──────────────────────────────────── */
   @media (max-width: 900px) {
     .process-steps { grid-template-columns: 1fr 1fr; }
@@ -1442,7 +1592,7 @@
     <div class="stat-divider"></div>
     <div class="stat-item">
       <span class="stat-num">2026</span>
-      <span class="stat-label">Est. · Austin, TX</span>
+      <span class="stat-label">Nonprofit · Austin, TX</span>
     </div>
   </div>
 </div>
@@ -1478,29 +1628,45 @@
   </div>
 </div>
 
-<!-- ANALOGY SECTION -->
-<section class="analogy" id="how">
-  <div class="section-label reveal">The analogy that explains everything</div>
-  <div class="analogy-grid reveal">
-
-    <div class="analogy-col">
-      <!-- Film truck photo — left/film side -->
-      <img src="Truck_photo1.jpg" alt="Film photograph of a vintage truck at night — shot on 35mm" class="analogy-photo"/>
-      <div class="analogy-col-divider"></div>
-      <p class="analogy-col-label">Then — 2003</p>
-      <h2 class="analogy-headline">When Digital Became Infinite,<br><em>Film Became</em><br>Valuable.</h2>
-      <p class="analogy-body">When infinite, free digital photos became possible, something unexpected happened: film photography <strong>surged</strong>. Lomography, large format, darkroom printing — not in spite of digital, but because of it.<br><br>The constraint became the value. The grain, the patience, the 36-frame roll — these weren't inefficiencies to be eliminated. They were <strong>proof of investment</strong>. They were what made the image matter.</p>
+<!-- VERIFICATION ANIMATION -->
+<section class="verify-anim-section">
+  <div class="va-inner">
+    <div class="section-label reveal" style="color:var(--green-lt);">Live on Polygon blockchain</div>
+    <h2 class="va-headline reveal">Watch a certification<br><em>happen in real time.</em></h2>
+    <p class="va-sub reveal">Every OHM certification writes a permanent, cryptographic record to a public blockchain. This is what that looks like.</p>
+    <div class="va-terminal reveal" id="va-terminal">
+      <div class="va-term-header">
+        <div class="va-term-dots">
+          <span class="va-dot red"></span>
+          <span class="va-dot yellow"></span>
+          <span class="va-dot green"></span>
+        </div>
+        <span class="va-term-title">OHM Oracle · Polygon Amoy</span>
+        <div class="va-term-status"><span class="va-pulse"></span>Live</div>
+      </div>
+      <div class="va-term-body" id="va-body">
+        <div class="va-line" id="va-line-1"></div>
+        <div class="va-line" id="va-line-2"></div>
+        <div class="va-line" id="va-line-3"></div>
+        <div class="va-line" id="va-line-4"></div>
+        <div class="va-line" id="va-line-5"></div>
+        <div class="va-line" id="va-line-6"></div>
+        <div class="va-line" id="va-line-7"></div>
+        <div class="va-line" id="va-line-8"></div>
+        <div class="va-result" id="va-result" style="display:none;">
+          <div class="va-seal">
+            <div class="va-seal-ring">
+              <span class="va-seal-check">✓</span>
+            </div>
+            <div class="va-seal-text">
+              <p class="va-seal-title">OHM Certified</p>
+              <p class="va-seal-sub">Human-made · Permanent · Verified</p>
+            </div>
+          </div>
+          <div class="va-chain-info" id="va-chain-info"></div>
+        </div>
+      </div>
     </div>
-
-    <div class="analogy-col">
-      <!-- AI robot photo — right/AI side -->
-      <img src="Ai_Photo1.jpg" alt="AI generated robot with glowing red eyes — machine generated imagery" class="analogy-photo"/>
-      <div class="analogy-col-divider"></div>
-      <p class="analogy-col-label">Now — 2026</p>
-      <h2 class="analogy-headline">When AI Made<br>Everything,<br><em>Human Work</em><br>Became Rare.</h2>
-      <p class="analogy-body">We are at that same inflection point — but for all creative work. AI can generate infinite writing, music, illustration, and code. Instantly. For free.<br><br>Which means human-made work is now what film photography became: <strong>scarce, deliberate, traceable, warm</strong>. The question isn't whether human creativity has value. It's whether buyers can find it — and trust it.<br><br>That's what the OHM seal is for.</p>
-    </div>
-
   </div>
 </section>
 
@@ -1656,6 +1822,27 @@
   </div>
 </section>
 
+<!-- ANALOGY SECTION -->
+<section class="analogy" id="how">
+  <div class="section-label reveal">The analogy that explains everything</div>
+  <div class="analogy-grid reveal">
+    <div class="analogy-col">
+      <img src="Truck_photo1.jpg" alt="Film photograph of a vintage truck at night — shot on 35mm" class="analogy-photo"/>
+      <div class="analogy-col-divider"></div>
+      <p class="analogy-col-label">Then — 2003</p>
+      <h2 class="analogy-headline">When Digital Became Infinite,<br><em>Film Became</em><br>Valuable.</h2>
+      <p class="analogy-body">When infinite, free digital photos became possible, something unexpected happened: film photography <strong>surged</strong>. The constraint became the value. The grain, the patience, the 36-frame roll — these weren't inefficiencies to be eliminated. They were <strong>proof of investment</strong>. They were what made the image matter.</p>
+    </div>
+    <div class="analogy-col">
+      <img src="Ai_Photo1.jpg" alt="AI generated imagery" class="analogy-photo"/>
+      <div class="analogy-col-divider"></div>
+      <p class="analogy-col-label">Now — 2026</p>
+      <h2 class="analogy-headline">When AI Made<br>Everything,<br><em>Human Work</em><br>Became Rare.</h2>
+      <p class="analogy-body">We are at that same inflection point — but for all creative work. AI can generate infinite writing, music, illustration, and code. Instantly. For free. Which means human-made work is now what film photography became: <strong>scarce, deliberate, traceable, warm.</strong> That's what the OHM seal is for.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ABOUT -->
 <section class="about-section" id="about">
   <div class="about-inner">
@@ -1721,7 +1908,7 @@
         <div class="about-value">
           <div class="value-marker"></div>
           <p class="value-title">Creators first, always</p>
-          <p class="value-body">We are an independent certification body. We have no advertisers. Revenue goes back into the verification infrastructure, auditor compensation, and creator grants. We exist to serve the people who make things — not to extract value from them.</p>
+          <p class="value-body">We are a nonprofit. We have no advertisers. Every dollar of revenue goes back into the verification infrastructure, auditor compensation, and creator grants. We exist to serve the people who make things — not to extract value from them.</p>
         </div>
         <div class="about-value">
           <div class="value-marker"></div>
@@ -1738,14 +1925,12 @@
 <footer>
   <div class="footer-logo">Only<em style="font-style:italic; color:var(--green);">Human</em>Made</div>
   <ul class="footer-links">
-    <li><a href="onlyhumanmade.html#about">About</a></li>
+    <li><a href="#about">About</a></li>
     <li><a href="ohm-how-it-works.html">How it works</a></li>
     <li><a href="ohm-pricing.html">Pricing</a></li>
     <li><a href="ohm-registry.html">Registry</a></li>
-    <li><a href="OHM-Certification-Policy.docx">Policy</a></li>
-    <li><a href="mailto:hello@onlyhumanmade.org">Press</a></li>
   </ul>
-  <p class="footer-copy">© 2026 OnlyHumanMade.org · Austin, TX</p>
+  <p class="footer-copy">© 2026 OnlyHumanMade.org · Nonprofit · EIN: 42-2512817 · Austin, TX</p>
 </footer>
 
 <script>
@@ -1857,6 +2042,149 @@
 function openModal(e){if(e)e.preventDefault();document.getElementById('cs-modal').classList.add('visible');}
 function closeModal(){document.getElementById('cs-modal').classList.remove('visible');}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+</script>
+
+<script>
+// ── VERIFICATION ANIMATION ─────────────────────────────────
+const VA_WORKS = [
+  {
+    title: 'Big Bend — 35mm Film Series',
+    creator: 'Rikardo B.',
+    category: 'photography',
+    id: 'OHM-00001',
+    tier: 'Studio',
+    hash: '0xa627f5f7171c96bd807f764f83d3dddde351',
+    block: '39596112',
+    tx: '0xd970f88cdb64abf27faf32c3366fd3215dcb',
+  },
+  {
+    title: 'Editorial Illustration Series',
+    creator: 'Rick Bennett',
+    category: 'illustration',
+    id: 'OHM-00002',
+    tier: 'Studio',
+    hash: '0xfc72efef5b6ecd441c630e19ce33fe3ceecb',
+    block: '39640309',
+    tx: '0x48f9d1a77e9c043ee255181d449c1e40d946',
+  },
+  {
+    title: 'Desert Light — Film Photography',
+    creator: 'Sebastian V.',
+    category: 'photography',
+    id: 'OHM-00003',
+    tier: 'Maker',
+    hash: '0x3d8b1c4a9e5f2710bc6d94a87e13f24c9d01',
+    block: '39681044',
+    tx: '0xc12e88fd4a76391b2df059c3a14e67d82f31',
+  },
+];
+
+let vaIndex = 0;
+let vaRunning = false;
+
+function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+function typeInto(el, html, speed = 18){
+  return new Promise(async resolve => {
+    el.innerHTML = '';
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    const text = tmp.innerHTML;
+    let i = 0;
+    let inTag = false;
+    let out = '';
+    while(i < text.length){
+      if(text[i] === '<') inTag = true;
+      if(!inTag){
+        out += text[i];
+        el.innerHTML = out + '<span class="cursor"></span>';
+        await sleep(speed);
+      } else {
+        out += text[i];
+        el.innerHTML = out + '<span class="cursor"></span>';
+      }
+      if(text[i] === '>') inTag = false;
+      i++;
+    }
+    el.innerHTML = out;
+    resolve();
+  });
+}
+
+async function runVerifyAnim(){
+  if(vaRunning) return;
+  vaRunning = true;
+
+  const work = VA_WORKS[vaIndex % VA_WORKS.length];
+  vaIndex++;
+
+  const lines = ['va-line-1','va-line-2','va-line-3','va-line-4','va-line-5','va-line-6','va-line-7','va-line-8'];
+  const result = document.getElementById('va-result');
+  const chainInfo = document.getElementById('va-chain-info');
+
+  // Clear
+  lines.forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.innerHTML = '';
+  });
+  result.style.display = 'none';
+
+  const L = (id) => document.getElementById(id);
+
+  await sleep(400);
+
+  await typeInto(L('va-line-1'), `<span class="dim">$</span> ohm certify --work <span class="val">"${work.title}"</span>`, 22);
+  await sleep(200);
+
+  await typeInto(L('va-line-2'), `<span class="dim">→</span> Creator: <span class="val">${work.creator}</span> &nbsp;<span class="dim">·</span>&nbsp; Category: <span class="val">${work.category}</span>`, 14);
+  await sleep(150);
+
+  await typeInto(L('va-line-3'), `<span class="dim">→</span> Generating SHA-256 work hash<span class="cursor"></span>`, 20);
+  await sleep(600);
+  L('va-line-3').innerHTML = `<span class="dim">→</span> Work hash: <span class="hash">${work.hash}...</span>`;
+  await sleep(300);
+
+  await typeInto(L('va-line-4'), `<span class="dim">→</span> Auditor decision: <span class="success">APPROVED ✓</span>`, 16);
+  await sleep(250);
+
+  await typeInto(L('va-line-5'), `<span class="dim">→</span> Writing to Polygon blockchain<span class="cursor"></span>`, 18);
+  await sleep(800);
+  L('va-line-5').innerHTML = `<span class="dim">→</span> Tx sent: <span class="hash">${work.tx}...</span>`;
+  await sleep(400);
+
+  await typeInto(L('va-line-6'), `<span class="dim">→</span> Waiting for confirmation<span class="cursor"></span>`, 18);
+  await sleep(900);
+  L('va-line-6').innerHTML = `<span class="success">✓</span> Confirmed · Block: <span class="val">${work.block}</span>`;
+  await sleep(300);
+
+  await typeInto(L('va-line-7'), `<span class="dim">→</span> Registry entry: <span class="val">onlyhumanmade.org/r/${work.id}</span>`, 14);
+  await sleep(200);
+
+  await typeInto(L('va-line-8'), `<span class="success">✓ Certification complete · ${work.id} · ${work.tier} tier</span>`, 16);
+  await sleep(400);
+
+  // Show seal
+  result.style.display = 'block';
+  chainInfo.innerHTML = `Chain: Polygon Amoy &nbsp;·&nbsp; Block: ${work.block} &nbsp;·&nbsp; Gas: ~0.002 POL &nbsp;·&nbsp; Permanent`;
+
+  // Wait then restart
+  await sleep(4500);
+  vaRunning = false;
+  runVerifyAnim();
+}
+
+// Start when section scrolls into view
+const vaObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting && !vaRunning){
+      runVerifyAnim();
+      vaObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+const vaTerminal = document.getElementById('va-terminal');
+if(vaTerminal) vaObserver.observe(vaTerminal);
 </script>
 
 </body>
