@@ -600,18 +600,30 @@
 
   /* PROCESS SECTION */
   .process {
-    padding: 8rem 3rem;
-    background: var(--ink);
+    padding: 7rem 3rem;
+    background: #5A6B53;
     color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+  .process::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    pointer-events: none;
   }
 
   .process-inner {
     max-width: 1200px;
     margin: 0 auto;
+    position: relative;
+    z-index: 2;
   }
 
-  .process .section-label { color: var(--rust-light); }
-  .process .section-label::after { background: rgba(245,240,232,0.15); }
+  .process .section-label { color: rgba(245,240,232,0.5); }
+  .process .section-label::after { background: rgba(245,240,232,0.2); }
 
   .process-headline {
     font-family: 'Playfair Display', Georgia, serif;
@@ -620,34 +632,49 @@
     line-height: 1.15;
     margin-bottom: 4rem;
     max-width: 600px;
+    color: var(--cream);
   }
 
-  .process-headline em { font-style: italic; color: var(--rust-light); }
+  .process-headline em { font-style: italic; color: #C8DCC0; }
 
   .process-steps {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0;
-    border-top: 1px solid rgba(245,240,232,0.12);
+    border-top: 1px solid rgba(245,240,232,0.15);
   }
 
   .step {
     padding: 2.5rem 2rem;
-    border-right: 1px solid rgba(245,240,232,0.12);
-    border-bottom: 1px solid rgba(245,240,232,0.12);
+    border-right: 1px solid rgba(245,240,232,0.1);
+    border-bottom: 1px solid rgba(245,240,232,0.1);
     position: relative;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
   }
 
+  .step.step-visible { opacity: 1; transform: translateY(0); }
   .step:nth-child(2n) { border-right: none; }
   .step:nth-last-child(-n+2) { border-bottom: none; }
 
+  /* Color-coded steps */
+  .step:nth-child(1) { --sc: #C8DCC0; }
+  .step:nth-child(2) { --sc: #97B886; }
+  .step:nth-child(3) { --sc: #F5F0E8; }
+  .step:nth-child(4) { --sc: #C4973A; }
+  .step:nth-child(5) { --sc: #97B886; }
+  .step:nth-child(6) { --sc: #C8DCC0; }
+
   .step-num {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 4rem;
+    font-size: 3.5rem;
     font-weight: 900;
-    color: rgba(245,240,232,0.08);
+    font-style: italic;
+    color: var(--sc);
     line-height: 1;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+    opacity: 0.45;
   }
 
   .step-title {
@@ -655,13 +682,13 @@
     font-size: 11px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--rust-light);
+    color: var(--sc);
     margin-bottom: 0.75rem;
   }
 
   .step-body {
-    font-size: 0.9rem;
-    color: rgba(245,240,232,0.6);
+    font-size: 0.875rem;
+    color: rgba(245,240,232,0.55);
     line-height: 1.8;
   }
 
@@ -1592,7 +1619,7 @@
     <div class="stat-divider"></div>
     <div class="stat-item">
       <span class="stat-num">2026</span>
-      <span class="stat-label">Nonprofit · Austin, TX</span>
+      <span class="stat-label">Est. · Austin, TX</span>
     </div>
   </div>
 </div>
@@ -1822,27 +1849,6 @@
   </div>
 </section>
 
-<!-- ANALOGY SECTION -->
-<section class="analogy" id="how">
-  <div class="section-label reveal">The analogy that explains everything</div>
-  <div class="analogy-grid reveal">
-    <div class="analogy-col">
-      <img src="Truck_photo1.jpg" alt="Film photograph of a vintage truck at night — shot on 35mm" class="analogy-photo"/>
-      <div class="analogy-col-divider"></div>
-      <p class="analogy-col-label">Then — 2003</p>
-      <h2 class="analogy-headline">When Digital Became Infinite,<br><em>Film Became</em><br>Valuable.</h2>
-      <p class="analogy-body">When infinite, free digital photos became possible, something unexpected happened: film photography <strong>surged</strong>. The constraint became the value. The grain, the patience, the 36-frame roll — these weren't inefficiencies to be eliminated. They were <strong>proof of investment</strong>. They were what made the image matter.</p>
-    </div>
-    <div class="analogy-col">
-      <img src="Ai_Photo1.jpg" alt="AI generated imagery" class="analogy-photo"/>
-      <div class="analogy-col-divider"></div>
-      <p class="analogy-col-label">Now — 2026</p>
-      <h2 class="analogy-headline">When AI Made<br>Everything,<br><em>Human Work</em><br>Became Rare.</h2>
-      <p class="analogy-body">We are at that same inflection point — but for all creative work. AI can generate infinite writing, music, illustration, and code. Instantly. For free. Which means human-made work is now what film photography became: <strong>scarce, deliberate, traceable, warm.</strong> That's what the OHM seal is for.</p>
-    </div>
-  </div>
-</section>
-
 <!-- ABOUT -->
 <section class="about-section" id="about">
   <div class="about-inner">
@@ -1930,7 +1936,7 @@
     <li><a href="ohm-pricing.html">Pricing</a></li>
     <li><a href="ohm-registry.html">Registry</a></li>
   </ul>
-  <p class="footer-copy">© 2026 OnlyHumanMade.org · Nonprofit · EIN: 42-2512817 · Austin, TX</p>
+  <p class="footer-copy">© 2026 OnlyHumanMade.org · EIN: 42-2512817 · Austin, TX</p>
 </footer>
 
 <script>
@@ -1946,6 +1952,22 @@
   }, { threshold: 0.12 });
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── STEP ANIMATIONS ──────────────────────────────────────
+  const stepObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        const steps = entry.target.querySelectorAll('.step');
+        steps.forEach((step, i) => {
+          setTimeout(() => step.classList.add('step-visible'), i * 120);
+        });
+        stepObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  const stepsEl = document.querySelector('.process-steps');
+  if(stepsEl) stepObserver.observe(stepsEl);
 
   // ── LIVE SPOTS COUNTER ──────────────────────────────────
   (async function() {
