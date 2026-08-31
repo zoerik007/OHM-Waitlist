@@ -161,7 +161,7 @@
     font-size: 10px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--green-lt);
+    color: rgba(245,240,232,0.75);
     margin-bottom: 1.75rem;
     display: flex;
     align-items: center;
@@ -175,7 +175,7 @@
     display: block;
     width: 32px;
     height: 1px;
-    background: var(--green-lt);
+    background: rgba(245,240,232,0.5);
   }
 
   .hero-eyebrow::after {
@@ -183,7 +183,7 @@
     display: block;
     width: 32px;
     height: 1px;
-    background: var(--green-lt);
+    background: rgba(245,240,232,0.5);
   }
 
   .hero-headline {
@@ -314,19 +314,19 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--ink);
+    color: rgba(245,240,232,0.85);
     font-family: 'DM Mono', monospace;
     font-size: 11px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     text-decoration: none;
-    border: 1.5px solid var(--border-strong);
+    border: 1.5px solid rgba(245,240,232,0.35);
     padding: 0.95rem 1.75rem;
     border-radius: 2px;
     transition: color 0.2s, border-color 0.2s, background 0.2s;
   }
 
-  .btn-ghost:hover { color: var(--cream); background: var(--ink); border-color: var(--ink); }
+  .btn-ghost:hover { color: var(--cream); border-color: var(--cream); background: rgba(245,240,232,0.08); }
 
   /* Seal container removed */
   .seal-container { display: none; }
@@ -1607,11 +1607,6 @@
     <span class="hero-badge-dot"></span>
     OHM Certified ✓
   </div>
-  <div class="hero-badge hero-badge-2">
-    <span class="hero-badge-dot"></span>
-    Human Verified · Est. 2026
-  </div>
-
   <!-- OHM logo watermark -->
   <img src="ohm-logo.png" alt="OHM seal" class="hero-logo-watermark"/>
 
