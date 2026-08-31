@@ -107,23 +107,53 @@
 
   .nav-cta:hover { background: var(--rust) !important; }
 
-  /* HERO */
+  /* HERO — full bleed video background */
   .hero {
     min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding-top: 80px;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 80px;
   }
 
+  /* Video/photo fills the full background */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-bg video,
+  .hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    display: block;
+  }
+
+  /* Multi-layer dark overlay for text legibility */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(to bottom, rgba(26,23,20,0.55) 0%, rgba(26,23,20,0.3) 50%, rgba(26,23,20,0.75) 100%);
+  }
+
+  /* Center content */
   .hero-left {
-    padding: 7rem 3rem 5rem 3rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     position: relative;
     z-index: 2;
+    text-align: center;
+    padding: 5rem 2rem;
+    max-width: 860px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .hero-eyebrow {
@@ -131,7 +161,7 @@
     font-size: 10px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--rust);
+    color: var(--green-lt);
     margin-bottom: 1.75rem;
     display: flex;
     align-items: center;
@@ -145,24 +175,33 @@
     display: block;
     width: 32px;
     height: 1px;
-    background: var(--rust);
+    background: var(--green-lt);
+  }
+
+  .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--green-lt);
   }
 
   .hero-headline {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
     font-weight: 900;
     line-height: 1.0;
     letter-spacing: -0.02em;
-    margin-bottom: 2rem;
+    margin-bottom: 1.75rem;
+    color: var(--cream);
+    text-shadow: 0 2px 40px rgba(26,23,20,0.4);
   }
 
   .hero-headline em {
     font-style: italic;
-    color: var(--rust);
+    color: var(--green-lt);
   }
 
-  /* Each word wrapped by JS */
   .hero-headline .word {
     display: inline-block;
     opacity: 0;
@@ -175,17 +214,16 @@
     transform: translateY(0);
   }
 
-  /* Line breaks need to stay */
   .hero-headline br { display: block; content: ''; }
 
   .hero-sub {
-    font-size: 1.05rem;
-    color: var(--warm-gray);
-    max-width: 440px;
+    font-size: 1rem;
+    color: rgba(245,240,232,0.7);
+    max-width: 560px;
     margin-bottom: 2.5rem;
     opacity: 0;
     animation: fadeUp 0.9s ease forwards 0.5s;
-    line-height: 1.8;
+    line-height: 1.85;
   }
 
   .hero-actions {
@@ -194,6 +232,63 @@
     gap: 1.5rem;
     opacity: 0;
     animation: fadeUp 0.9s ease forwards 0.65s;
+  }
+
+  /* Floating badges — position relative to full hero */
+  .hero-badge {
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 1rem;
+    border-radius: 99px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.1s;
+  }
+
+  .hero-badge-1 {
+    top: 30%;
+    right: 3rem;
+    background: rgba(245,240,232,0.92);
+    color: var(--ink);
+    border: 1px solid rgba(26,23,20,0.1);
+  }
+
+  .hero-badge-2 {
+    bottom: 20%;
+    left: 3rem;
+    background: rgba(90,107,83,0.92);
+    color: var(--cream);
+    border: 1px solid rgba(151,184,134,0.3);
+    animation-delay: 1.3s;
+  }
+
+  .hero-badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  /* OHM logo watermark */
+  .hero-logo-watermark {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    opacity: 0.35;
+    mix-blend-mode: screen;
+    z-index: 3;
   }
 
   .btn-primary {
@@ -233,107 +328,8 @@
 
   .btn-ghost:hover { color: var(--cream); background: var(--ink); border-color: var(--ink); }
 
-  .hero-right {
-    position: relative;
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    overflow: hidden;
-    background: var(--ink);
-  }
-
-  .hero-right::before { display: none; }
-
-  /* Photo fills the right panel */
-  .hero-photo {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 40%;
-    opacity: 0.75;
-  }
-
-  /* Dark gradient over photo — bottom fade */
-  .hero-right::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to bottom,
-      rgba(26,23,20,0.15) 0%,
-      rgba(26,23,20,0.05) 40%,
-      rgba(26,23,20,0.5) 100%
-    );
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  /* Floating badge callouts — Design 2 style */
-  .hero-badge {
-    position: absolute;
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.6rem 1rem;
-    border-radius: 99px;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 8px 32px rgba(26,23,20,0.25);
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 1.1s;
-  }
-
-  .hero-badge-1 {
-    top: 2.5rem;
-    right: 2rem;
-    background: rgba(245,240,232,0.92);
-    color: var(--ink);
-    border: 1px solid rgba(26,23,20,0.1);
-  }
-
-  .hero-badge-2 {
-    bottom: 5rem;
-    left: 2rem;
-    background: rgba(90,107,83,0.92);
-    color: var(--cream);
-    border: 1px solid rgba(151,184,134,0.3);
-    animation-delay: 1.3s;
-  }
-
-  .hero-badge-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .hero-badge-1 .hero-badge-dot { background: var(--rust); }
-  .hero-badge-2 .hero-badge-dot { background: var(--rust-light); }
-
-  /* OHM logo watermark on photo */
-  .hero-logo-watermark {
-    position: absolute;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 3;
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-    opacity: 0;
-    mix-blend-mode: screen;
-    animation: fadeUp 0.8s ease forwards 1.5s;
-  }
-
-  /* Seal container removed — we now use photo layout */
+  /* Seal container removed */
   .seal-container { display: none; }
-  .hero-right-label { display: none; }
 
   /* Large decorative seal */
   .seal-container {
@@ -1506,14 +1502,15 @@
     .nav-links li:last-child { display: list-item; }
 
     /* Hero */
-    .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 66px; }
-    .hero-left { padding: 3rem 1.25rem 2rem; order: 2; }
-    .hero-right { order: 1; height: 260px; min-height: 220px; }
-    .hero-headline { font-size: clamp(2rem, 8vw, 3rem); }
-    .hero-sub { font-size: 0.9rem; }
-    .hero-actions { flex-direction: column; gap: 0.75rem; }
-    .hero-actions a { text-align: center; }
+    .hero { min-height: 100svh; padding-top: 66px; }
+    .hero-left { padding: 3rem 1.5rem; }
+    .hero-headline { font-size: clamp(2.8rem, 10vw, 4rem); }
+    .hero-sub { font-size: 0.9rem; max-width: 100%; }
+    .hero-actions { flex-direction: column; gap: 0.75rem; width: 100%; }
+    .hero-actions a { text-align: center; width: 100%; }
     .hero-badge { display: none; }
+    .hero-badge-1 { top: 20%; right: 1rem; }
+    .hero-badge-2 { bottom: 15%; left: 1rem; }
 
     /* Stat strip */
     .stat-strip { padding: 1.5rem 1rem; }
@@ -1595,6 +1592,30 @@
 
 <!-- HERO -->
 <section class="hero">
+
+  <!-- Full-bleed background media -->
+  <div class="hero-bg">
+    <video id="hero-video" autoplay muted loop playsinline style="display:none;"></video>
+    <img id="hero-img" src="Truck_photo1.jpg" alt="Film photograph — OHM certified work" style="display:none;"/>
+  </div>
+
+  <!-- Dark overlay -->
+  <div class="hero-overlay"></div>
+
+  <!-- Floating badges -->
+  <div class="hero-badge hero-badge-1">
+    <span class="hero-badge-dot"></span>
+    OHM Certified ✓
+  </div>
+  <div class="hero-badge hero-badge-2">
+    <span class="hero-badge-dot"></span>
+    Human Verified · Est. 2026
+  </div>
+
+  <!-- OHM logo watermark -->
+  <img src="ohm-logo.png" alt="OHM seal" class="hero-logo-watermark"/>
+
+  <!-- Centered content -->
   <div class="hero-left">
     <p class="hero-eyebrow">Est. 2026 · Human certification</p>
     <h1 class="hero-headline" id="hero-headline">Your work is<br><em>irreplaceable.</em><br>Prove it.</h1>
@@ -1604,24 +1625,7 @@
       <a href="ohm-how-it-works.html" class="btn-ghost">How it works →</a>
     </div>
   </div>
-  <div class="hero-right">
-    <!-- Rotating media — video or photo picked randomly on each page load -->
-    <video id="hero-video" class="hero-photo" autoplay muted loop playsinline style="display:none;object-fit:cover;width:100%;height:100%;"></video>
-    <img id="hero-img" src="Truck_photo1.jpg" alt="Film photograph — OHM certified work" class="hero-photo" style="display:none;"/>
 
-    <!-- Floating badge callouts -->
-    <div class="hero-badge hero-badge-1">
-      <span class="hero-badge-dot"></span>
-      OHM Certified ✓
-    </div>
-    <div class="hero-badge hero-badge-2">
-      <span class="hero-badge-dot"></span>
-      Human Verified · Est. 2026
-    </div>
-
-    <!-- OHM logo watermark bottom right -->
-    <img src="ohm-logo.png" alt="OHM seal" class="hero-logo-watermark"/>
-  </div>
 </section>
 
 <!-- STAT STRIP -->
